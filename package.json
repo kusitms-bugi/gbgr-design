@@ -1,0 +1,25 @@
+{
+	"name": "gbgr-design",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"build": "turbo run build",
+		"dev": "turbo run dev",
+		"lint": "turbo run lint",
+		"check": "biome check . && pnpm check:rules",
+		"check:rules": "node scripts/validate-react-rules.mjs",
+		"check:write": "biome check . --write",
+		"typecheck": "turbo run typecheck",
+		"release": "turbo build && changeset publish"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.3.11",
+		"turbo": "latest",
+		"typescript": "latest"
+	},
+	"packageManager": "pnpm@10.28.1",
+	"engines": {
+		"node": ">=18.0.0",
+		"pnpm": ">=8.0.0"
+	}
+}

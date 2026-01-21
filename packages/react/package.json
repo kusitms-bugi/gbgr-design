@@ -1,0 +1,21 @@
+{
+	"name": "@gbgr/react",
+	"version": "0.0.0",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "echo 'build script not implemented'"
+	},
+	"peerDependencies": {
+		"react": ">=18",
+		"react-dom": ">=18"
+	},
+	"devDependencies": {
+		"react": "latest",
+		"react-dom": "latest",
+		"typescript": "latest"
+	}
+}

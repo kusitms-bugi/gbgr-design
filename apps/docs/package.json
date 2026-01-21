@@ -1,0 +1,33 @@
+{
+	"name": "docs",
+	"version": "0.0.0",
+	"private": true,
+	"scripts": {
+		"dev": "next dev",
+		"build": "pnpm storybook:build && node ../../scripts/build-storybook.mjs && node ../../scripts/copy-token-dist-to-docs.mjs && next build",
+		"start": "next start",
+		"storybook": "storybook dev -p 6006",
+		"storybook:build": "storybook build"
+	},
+	"dependencies": {
+		"next": "latest",
+		"react": "latest",
+		"react-dom": "latest"
+	},
+	"devDependencies": {
+		"@gbgr/tokens": "workspace:*",
+		"@storybook/addon-essentials": "^8.0.8",
+		"@storybook/addon-interactions": "^8.0.8",
+		"@storybook/addon-links": "^8.0.8",
+		"@storybook/addon-onboarding": "^8.0.8",
+		"@storybook/blocks": "^8.0.8",
+		"@storybook/nextjs": "^8.0.8",
+		"@storybook/react": "^8.0.8",
+		"@storybook/test": "^8.0.8",
+		"@types/node": "latest",
+		"@types/react": "latest",
+		"@types/react-dom": "latest",
+		"storybook": "^8.0.8",
+		"typescript": "latest"
+	}
+}

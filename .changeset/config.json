@@ -1,0 +1,6 @@
+{
+	"changelog": ["@changesets/changelog-github", { "repo": "gbgr/gbgr-design" }],
+	"access": "public",
+	"baseBranch": "main",
+	"ignore": []
+}

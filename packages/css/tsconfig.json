@@ -1,0 +1,8 @@
+{
+	"extends": "../../configs/tsconfig/base.json",
+	"include": ["src"],
+	"compilerOptions": {
+		"module": "ESNext",
+		"composite": true
+	}
+}

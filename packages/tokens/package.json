@@ -1,0 +1,22 @@
+{
+	"name": "@gbgr/tokens",
+	"version": "0.0.0",
+	"main": "./dist/tokens.json",
+	"types": "./dist/tokens.d.ts",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		"./theme.css": "./dist/theme.css",
+		"./tokens.json": "./dist/tokens.json"
+	},
+	"publishConfig": {
+		"access": "public"
+	},
+	"scripts": {
+		"build": "node build/build.mjs"
+	},
+	"devDependencies": {
+		"style-dictionary": "3.9.0"
+	}
+}
