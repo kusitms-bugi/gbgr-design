@@ -39,7 +39,7 @@ The raw design tokens are available as a JSON file:
 ```javascript
 import tokens from '@gbgr/tokens/tokens.json';
 // tokens will be an object containing all design tokens
-console.log(tokens.color.primary.value);
+console.log(tokens.color.semantic.brand.primary);
 ```
 
 ### TypeScript Types
@@ -47,7 +47,7 @@ console.log(tokens.color.primary.value);
 TypeScript declaration file for tokens can be imported for type safety:
 
 ```typescript
-import type { Tokens } from '@gbgr/tokens/tokens.d.ts';
+import type { Tokens } from '@gbgr/tokens';
 // Use the Tokens type for type checking your design token usage
-const myColor: Tokens['color']['primary']['value'] = '#007bff';
+const myColor: Tokens['color']['semantic']['brand']['primary']['value'] = '#ffbf00';
 ```

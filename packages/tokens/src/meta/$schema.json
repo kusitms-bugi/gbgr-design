@@ -1,0 +1,68 @@
+{
+	"$schema": "https://json-schema.org/draft-07/schema#",
+	"title": "Design Tokens Schema",
+	"description": "JSON Schema for design tokens in Tokens Studio format",
+	"type": "object",
+	"patternProperties": {
+		"^.*$": {
+			"type": "object",
+			"description": "Token group (can be nested with slash-separated paths)",
+			"additionalProperties": {
+				"oneOf": [
+					{
+						"type": "object",
+						"description": "Token definition with value and type",
+						"properties": {
+							"value": {
+								"description": "The token value (can be string, number, or object)",
+								"oneOf": [
+									{ "type": "string" },
+									{ "type": "number" },
+									{ "type": "boolean" },
+									{ "type": "object" }
+								]
+							},
+							"type": {
+								"type": "string",
+								"description": "The token type (color, sizing, spacing, etc.)",
+								"enum": [
+									"color",
+									"sizing",
+									"spacing",
+									"borderRadius",
+									"borderWidth",
+									"boxShadow",
+									"typography",
+									"opacity",
+									"fontFamilies",
+									"fontWeights",
+									"lineHeights",
+									"letterSpacing",
+									"paragraphSpacing",
+									"textCase",
+									"textDecoration",
+									"other"
+								]
+							},
+							"description": {
+								"type": "string",
+								"description": "Optional description of the token"
+							},
+							"extensions": {
+								"type": "object",
+								"description": "Additional metadata from design tools"
+							}
+						},
+						"required": ["value", "type"]
+					},
+					{
+						"type": "object",
+						"description": "Nested token group",
+						"additionalProperties": true
+					}
+				]
+			}
+		}
+	},
+	"additionalProperties": false
+}
