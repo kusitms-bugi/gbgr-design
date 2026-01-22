@@ -7,7 +7,7 @@
 		"dist"
 	],
 	"exports": {
-		"./theme.css": "./dist/theme.css",
+		"./index.css": "./dist/index.css",
 		"./tokens.json": "./dist/tokens.json",
 		"./tokens.d.ts": "./dist/tokens.d.ts"
 	},
