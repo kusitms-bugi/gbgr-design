@@ -8,13 +8,20 @@
 	],
 	"exports": {
 		"./theme.css": "./dist/theme.css",
-		"./tokens.json": "./dist/tokens.json"
+		"./tokens.json": "./dist/tokens.json",
+		"./tokens.d.ts": "./dist/tokens.d.ts"
 	},
 	"publishConfig": {
 		"access": "public"
 	},
 	"scripts": {
-		"build": "node build/build.mjs"
+		"build": "npm run clean && node build/build.mjs",
+		"dev": "node build/build.mjs && node build/watch.mjs",
+		"watch": "node build/watch.mjs",
+		"validate": "node build/validate.mjs",
+		"clean": "rm -rf dist",
+		"prepublishOnly": "npm run clean && npm run build && npm run validate",
+		"typecheck": "tsc --noEmit"
 	},
 	"devDependencies": {
 		"style-dictionary": "3.9.0"

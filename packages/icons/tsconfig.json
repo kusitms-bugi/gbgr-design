@@ -1,9 +1,9 @@
 {
-  "extends": "../../configs/tsconfig/react.json",
-  "include": ["src"],
-  "compilerOptions": {
-    "outDir": "dist",
-    "module": "ESNext",
-    "composite": true
-  }
+	"extends": "../../configs/tsconfig/react.json",
+	"include": ["src"],
+	"compilerOptions": {
+		"outDir": "dist",
+		"module": "ESNext",
+		"composite": true
+	}
 }
