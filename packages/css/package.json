@@ -7,5 +7,15 @@
 	"sideEffects": [
 		"**/*.css"
 	],
-	"main": "src/index.css"
+	"main": "src/index.css",
+	"files": [
+		"src"
+	],
+	"exports": {
+		".": "./src/index.css",
+		"./src/index.css": "./src/index.css"
+	},
+	"dependencies": {
+		"@gbgr/tokens": "workspace:*"
+	}
 }
