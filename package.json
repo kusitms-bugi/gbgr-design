@@ -5,6 +5,8 @@
 	"scripts": {
 		"build": "turbo run build",
 		"dev": "turbo run dev",
+		"docs:dev": "pnpm --filter docs dev",
+		"docs:build": "pnpm --filter docs build",
 		"lint": "turbo run lint",
 		"check": "biome check . && pnpm check:rules",
 		"check:rules": "node scripts/validate-react-rules.mjs",
