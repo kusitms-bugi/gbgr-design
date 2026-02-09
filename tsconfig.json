@@ -5,7 +5,6 @@
 		{ "path": "./packages/css" },
 		{ "path": "./packages/icons" },
 		{ "path": "./packages/react" },
-		{ "path": "./packages/tokens" },
-		{ "path": "./packages/ui" }
+		{ "path": "./packages/tokens" }
 	]
 }

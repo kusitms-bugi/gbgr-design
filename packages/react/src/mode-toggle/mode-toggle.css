@@ -1,0 +1,92 @@
+.gbgr-mode-toggle {
+	--gbgr-mode-toggle-width: 62px;
+	--gbgr-mode-toggle-height: 30px;
+	--gbgr-mode-toggle-padding: 3px;
+	--gbgr-mode-toggle-thumb: 24px;
+	--gbgr-mode-toggle-icon: 16px;
+
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: var(--gbgr-mode-toggle-width);
+	height: var(--gbgr-mode-toggle-height);
+	padding: 0;
+	border: 0;
+	border-radius: var(--radius-full);
+	background: var(--color-component-button-mode-change-bg);
+	cursor: pointer;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+}
+
+.gbgr-mode-toggle:disabled {
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+.gbgr-mode-toggle:focus-visible {
+	outline: 2px solid var(--border-active);
+	outline-offset: 2px;
+}
+
+.gbgr-mode-toggle__thumb {
+	position: absolute;
+	top: var(--gbgr-mode-toggle-padding);
+	left: var(--gbgr-mode-toggle-padding);
+	width: var(--gbgr-mode-toggle-thumb);
+	height: var(--gbgr-mode-toggle-thumb);
+	border-radius: var(--radius-full);
+	background: var(--color-component-button-mode-change-thumb-on);
+	transition:
+		transform 160ms ease,
+		background-color 160ms ease;
+}
+
+.gbgr-mode-toggle[data-value="dark"] .gbgr-mode-toggle__thumb {
+	transform: translateX(
+		calc(
+			var(--gbgr-mode-toggle-width) -
+			(var(--gbgr-mode-toggle-padding) * 2) -
+			var(--gbgr-mode-toggle-thumb)
+		)
+	);
+}
+
+.gbgr-mode-toggle__icon {
+	position: absolute;
+	top: 50%;
+	width: var(--gbgr-mode-toggle-icon);
+	height: var(--gbgr-mode-toggle-icon);
+	transform: translateY(-50%);
+	color: var(--color-component-button-mode-change-switch-off);
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+	transition:
+		color 160ms ease,
+		opacity 160ms ease;
+}
+
+.gbgr-mode-toggle__icon svg {
+	width: var(--gbgr-mode-toggle-icon);
+	height: var(--gbgr-mode-toggle-icon);
+	display: block;
+}
+
+.gbgr-mode-toggle__icon--light {
+	left: calc(var(--gbgr-mode-toggle-padding) + 4px);
+}
+
+.gbgr-mode-toggle__icon--dark {
+	right: calc(var(--gbgr-mode-toggle-padding) + 4px);
+}
+
+.gbgr-mode-toggle[data-value="light"] .gbgr-mode-toggle__icon--light {
+	color: var(--color-component-button-mode-change-switch-on);
+}
+
+.gbgr-mode-toggle[data-value="dark"] .gbgr-mode-toggle__icon--dark {
+	color: var(--color-component-button-mode-change-switch-on);
+}

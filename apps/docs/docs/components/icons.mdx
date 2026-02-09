@@ -1,0 +1,62 @@
+---
+title: Icons
+---
+
+import React from "react"
+import * as Icons from "@gbgr/icons"
+
+export function IconsGrid() {
+  const labelFor = (name) =>
+    name
+      .replace(/Icon$/, "")
+      .replace(/([a-z])([A-Z0-9])/g, "$1 $2")
+      .replace(/([0-9])([a-zA-Z])/g, "$1 $2")
+
+  const entries = Object.entries(Icons)
+    .filter(([name, value]) => name.endsWith("Icon") && typeof value === "function")
+    .sort(([a], [b]) => a.localeCompare(b))
+
+  return (
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fill, minmax(140px, 1fr))",
+        gap: 16,
+        marginTop: 16,
+      }}
+    >
+      {entries.map(([name, Icon]) => (
+        <div
+          key={name}
+          style={{
+            border: "1px solid var(--border-depth2)",
+            borderRadius: 12,
+            padding: 12,
+            background: "var(--color-neutral-white)",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "center", padding: "12px 0" }}>
+            <Icon width={24} height={24} />
+          </div>
+          <div style={{ fontSize: 12, opacity: 0.75, wordBreak: "break-word" }}>
+            {labelFor(name)}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+}
+
+## Usage
+
+```tsx
+import { SunIcon } from "@gbgr/icons"
+
+export function Example() {
+  return <SunIcon width={24} height={24} />
+}
+```
+
+## Gallery
+
+<IconsGrid />

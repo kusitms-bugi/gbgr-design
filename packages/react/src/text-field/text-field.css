@@ -1,0 +1,108 @@
+.gbgr-text-field {
+	display: grid;
+	gap: var(--spacing-1);
+	color: var(--text-default);
+}
+
+.gbgr-text-field__control {
+	position: relative;
+	display: flex;
+	align-items: center;
+	gap: var(--spacing-2);
+	min-height: 60px;
+	padding: 0 var(--spacing-5);
+	border-radius: var(--radius-full);
+	border: 1px solid var(--border-depth2);
+	background: var(--color-neutral-white);
+	transition: border-color 120ms ease;
+}
+
+.gbgr-text-field__control:focus-within {
+	border-color: var(--border-active);
+}
+
+.gbgr-text-field[data-state="success"] .gbgr-text-field__control {
+	border-color: var(--color-semantic-notification-success);
+}
+
+.gbgr-text-field[data-state="error"] .gbgr-text-field__control {
+	border-color: var(--color-semantic-notification-error);
+}
+
+.gbgr-text-field__input {
+	flex: 1 1 auto;
+	min-width: 0;
+	border: 0;
+	background: transparent;
+	outline: none;
+	font: var(--body-md-regular);
+	color: inherit;
+}
+
+.gbgr-text-field__input::placeholder {
+	color: color-mix(in srgb, var(--text-default) 40%, transparent);
+}
+
+.gbgr-text-field__end {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	color: color-mix(in srgb, var(--text-default) 55%, transparent);
+}
+
+.gbgr-text-field__sub {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing-2);
+	padding-left: var(--spacing-2);
+	font: var(--caption-sm-regular);
+}
+
+.gbgr-text-field[data-state="success"] .gbgr-text-field__sub {
+	color: var(--color-semantic-notification-success);
+}
+
+.gbgr-text-field[data-state="error"] .gbgr-text-field__sub {
+	color: var(--color-semantic-notification-error);
+}
+
+.gbgr-text-field__sub-icon {
+	display: inline-flex;
+	width: 16px;
+	height: 16px;
+	align-items: center;
+	justify-content: center;
+}
+
+.gbgr-text-field__sub-icon svg {
+	width: 16px;
+	height: 16px;
+	display: block;
+}
+
+.gbgr-text-field__button {
+	appearance: none;
+	border: 0;
+	background: transparent;
+	padding: 0;
+	cursor: pointer;
+	color: inherit;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 24px;
+	height: 24px;
+	border-radius: 6px;
+}
+
+.gbgr-text-field__button:focus-visible {
+	outline: 2px solid var(--border-active);
+	outline-offset: 2px;
+}
+
+.gbgr-text-field__button:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+}

@@ -1,5 +1,15 @@
 {
-	"extends": "../../configs/tsconfig/next.json",
-	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-	"exclude": ["node_modules"]
+	"compilerOptions": {
+		"target": "ES2022",
+		"lib": ["DOM", "DOM.Iterable", "ES2022"],
+		"jsx": "react-jsx",
+		"module": "ESNext",
+		"moduleResolution": "Bundler",
+		"resolveJsonModule": true,
+		"noEmit": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"types": ["@docusaurus/module-type-aliases", "@docusaurus/theme-classic"]
+	},
+	"include": ["src", "docusaurus.config.ts", "sidebars.ts"]
 }

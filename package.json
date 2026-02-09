@@ -5,15 +5,23 @@
 	"scripts": {
 		"build": "turbo run build",
 		"dev": "turbo run dev",
+		"docs:dev": "pnpm --filter docs dev",
+		"docs:build": "pnpm --filter docs build",
 		"lint": "turbo run lint",
 		"check": "biome check . && pnpm check:rules",
 		"check:rules": "node scripts/validate-react-rules.mjs",
 		"check:write": "biome check . --write",
+		"changeset": "changeset",
+		"changeset:version": "changeset version",
+		"changeset:publish": "changeset publish",
 		"typecheck": "turbo run typecheck",
 		"release": "turbo build && changeset publish"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.11",
+		"@changesets/cli": "latest",
+		"@types/react": "latest",
+		"@types/react-dom": "latest",
 		"turbo": "latest",
 		"typescript": "latest"
 	},

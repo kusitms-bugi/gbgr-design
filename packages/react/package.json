@@ -3,17 +3,41 @@
 	"version": "0.0.0",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
+	"files": [
+		"dist",
+		"src"
+	],
 	"publishConfig": {
 		"access": "public"
 	},
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./accordion.css": "./src/accordion/accordion.css",
+		"./button.css": "./src/button/button.css",
+		"./mode-toggle.css": "./src/mode-toggle/mode-toggle.css",
+		"./text-field.css": "./src/text-field/text-field.css",
+		"./styles.css": "./src/styles.css"
+	},
+	"dependencies": {
+		"@gbgr/icons": "workspace:*",
+		"@gbgr/react-headless": "workspace:*",
+		"clsx": "^2.1.1"
+	},
 	"scripts": {
-		"build": "echo 'build script not implemented'"
+		"build": "pnpm --filter @gbgr/react-headless build && tsc -p tsconfig.json",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"clean": "rm -rf dist"
 	},
 	"peerDependencies": {
 		"react": ">=18",
 		"react-dom": ">=18"
 	},
 	"devDependencies": {
+		"@types/react": "latest",
+		"@types/react-dom": "latest",
 		"react": "latest",
 		"react-dom": "latest",
 		"typescript": "latest"
