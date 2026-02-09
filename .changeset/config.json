@@ -2,5 +2,5 @@
 	"changelog": false,
 	"access": "public",
 	"baseBranch": "main",
-	"ignore": []
+	"ignore": ["docs"]
 }
