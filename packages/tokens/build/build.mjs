@@ -14,6 +14,16 @@ function ensureDir(dir) {
   if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
 }
 
+function isTokenLeaf(v) {
+	return (
+		v &&
+		typeof v === "object" &&
+		!Array.isArray(v) &&
+		"value" in v &&
+		"type" in v
+	)
+}
+
 function deepMerge(target, source) {
 	for (const [k, v] of Object.entries(source ?? {})) {
 		if (v && typeof v === "object" && !Array.isArray(v)) {
@@ -24,6 +34,35 @@ function deepMerge(target, source) {
 		}
 	}
 	return target
+}
+
+function isValidIdentifier(key) {
+	return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(key)
+}
+
+function tokenLeafTsType(leaf) {
+	const valueType = typeof leaf?.value === "number" ? "number" : "string"
+	const tokenType =
+		typeof leaf?.type === "string" ? JSON.stringify(leaf.type) : "string"
+	return `TokenLeaf<${valueType}, ${tokenType}>`
+}
+
+function toTsType(node, indentLevel = 0) {
+	if (isTokenLeaf(node)) return tokenLeafTsType(node)
+	if (!node || typeof node !== "object" || Array.isArray(node)) return "unknown"
+
+	const indent = "\t".repeat(indentLevel)
+	const nextIndent = "\t".repeat(indentLevel + 1)
+
+	const entries = Object.entries(node)
+	if (entries.length === 0) return "Record<string, unknown>"
+
+	const lines = entries.map(([key, value]) => {
+		const prop = isValidIdentifier(key) ? key : JSON.stringify(key)
+		return `${nextIndent}${prop}: ${toTsType(value, indentLevel + 1)};`
+	})
+
+	return `{\n${lines.join("\n")}\n${indent}}`
 }
 
 // --- Custom Transforms ---
@@ -101,6 +140,32 @@ async function main() {
   // Style-dictionary needs a single object. We will select the active set later.
   const source = deepMerge(deepMerge({}, tokenSets.light), tokenSets.global);
 
+	// 1.1 Emit JSON + TypeScript outputs for consumers/validation
+	writeFileSync(
+		join(distDir, "sd.input.json"),
+		JSON.stringify(source, null, 2),
+		"utf-8",
+	)
+
+	writeFileSync(
+		join(distDir, "tokens.json"),
+		JSON.stringify(source, null, 2),
+		"utf-8",
+	)
+
+	const tokensDts = `export type TokenLeaf<TValue = string | number, TType extends string = string> = {
+\tvalue: TValue;
+\ttype: TType;
+\t[key: string]: unknown;
+};
+
+export type Tokens = ${toTsType(source, 0)};
+
+declare const tokens: Tokens;
+export default tokens;
+`
+
+	writeFileSync(join(distDir, "tokens.d.ts"), tokensDts, "utf-8")
 
   // 2. Find differences between light and dark themes
   console.log("🌗 Comparing light and dark themes...")
