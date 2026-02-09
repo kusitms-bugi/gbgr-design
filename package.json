@@ -4,6 +4,7 @@
 	"private": true,
 	"scripts": {
 		"build": "turbo run build",
+		"postbuild": "node scripts/sync-vercel-output.mjs",
 		"dev": "turbo run dev",
 		"docs:dev": "pnpm --filter docs dev",
 		"docs:build": "pnpm --filter docs build",
