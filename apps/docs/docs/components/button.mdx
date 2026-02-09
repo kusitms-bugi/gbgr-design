@@ -1,0 +1,88 @@
+---
+title: Button
+---
+
+export const sizes = [
+  { px: "32px", key: "xs", cls: "gbgr-button--size-xs" },
+  { px: "36px", key: "sm", cls: "gbgr-button--size-sm" },
+  { px: "40px", key: "md", cls: "gbgr-button--size-md" },
+  { px: "44px", key: "lg", cls: "gbgr-button--size-lg" },
+  { px: "54px", key: "xl", cls: "gbgr-button--size-xl" },
+];
+
+export const states = [
+  { label: "Default", attrs: {} },
+  { label: "Hover", attrs: { "data-state": "hover" } },
+  { label: "Pressed", attrs: { "data-state": "pressed" } },
+  { label: "Disabled", attrs: { disabled: true } },
+];
+
+export function ButtonGrid({ tone, title }) {
+  const toneClass =
+    tone === "primary"
+      ? "gbgr-button--tone-primary"
+      : tone === "sub"
+        ? "gbgr-button--tone-sub"
+        : "gbgr-button--tone-grey";
+
+  return (
+    <div style={{ marginTop: 24 }}>
+      <h2 style={{ marginBottom: 12 }}>{title}</h2>
+      <div style={{ overflowX: "auto" }}>
+        <table style={{ width: "100%", borderCollapse: "separate", borderSpacing: "12px 10px" }}>
+          <thead>
+            <tr>
+              <th style={{ width: 120, textAlign: "left", fontWeight: 600 }}></th>
+              {sizes.map((s) => (
+                <th key={s.key} style={{ textAlign: "center", fontWeight: 600 }}>
+                  <div style={{ fontSize: 12, opacity: 0.7 }}>{s.px}</div>
+                  <div>{s.key}</div>
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody>
+            {states.map((st) => (
+              <tr key={st.label}>
+                <td style={{ width: 120, textAlign: "left", fontSize: 12, opacity: 0.7 }}>
+                  {st.label}
+                </td>
+                {sizes.map((s) => (
+                  <td key={`${st.label}-${s.key}`} style={{ textAlign: "center" }}>
+                    <button
+                      type="button"
+                      className={`gbgr-button ${s.cls} ${toneClass}`}
+                      {...st.attrs}
+                    >
+                      <span className="gbgr-button__icon" aria-hidden="true">
+                        <span className="gbgr-button__icon-placeholder" />
+                      </span>
+                      Button
+                    </button>
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+<ButtonGrid title="Primary" tone="primary" />
+<ButtonGrid title="Sub" tone="sub" />
+<ButtonGrid title="Grey" tone="grey" />
+
+## Usage (React)
+
+`@gbgr/react`의 `Button`을 쓰는 경우:
+
+```tsx
+import { Button } from "@gbgr/react";
+import "@gbgr/react/styles.css";
+
+export function Example() {
+  return <Button tone="primary">Save</Button>;
+}
+```

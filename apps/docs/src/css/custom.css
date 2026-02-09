@@ -1,3 +1,6 @@
+@import "@gbgr/css";
+@import "@gbgr/react/styles.css";
+
 :root {
 	--ifm-color-primary: #0b5fff;
 	--ifm-color-primary-dark: #0a55e6;

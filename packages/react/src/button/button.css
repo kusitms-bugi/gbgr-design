@@ -1,0 +1,140 @@
+.gbgr-button {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--spacing-2);
+	border: 0;
+	border-radius: var(--radius-full);
+	font-weight: var(--font-weights-pretendard-2);
+	cursor: pointer;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	transition:
+		background-color 120ms ease,
+		color 120ms ease,
+		transform 60ms ease;
+}
+
+.gbgr-button__icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 16px;
+	height: 16px;
+	flex: 0 0 auto;
+	color: currentColor;
+}
+
+.gbgr-button__icon > svg {
+	width: 16px;
+	height: 16px;
+	display: block;
+}
+
+/* Docs/demo only: simple circle placeholder inside the icon slot */
+.gbgr-button__icon-placeholder {
+	width: 14px;
+	height: 14px;
+	border-radius: var(--radius-full);
+	border: 2px solid currentColor;
+}
+
+.gbgr-button:focus-visible {
+	outline: 2px solid var(--border-active);
+	outline-offset: 2px;
+}
+
+.gbgr-button:disabled {
+	cursor: not-allowed;
+}
+
+.gbgr-button--size-xs {
+	min-height: 32px;
+	padding: var(--spacing-2) var(--spacing-3);
+	font-size: var(--font-size-2);
+}
+
+.gbgr-button--size-sm {
+	min-height: 36px;
+	padding: var(--spacing-2) var(--spacing-4);
+	font-size: var(--font-size-3);
+}
+
+.gbgr-button--size-md {
+	min-height: 40px;
+	padding: var(--spacing-3) var(--spacing-4);
+	font-size: var(--font-size-3);
+}
+
+.gbgr-button--size-lg {
+	min-height: 44px;
+	padding: var(--spacing-3) var(--spacing-5);
+	font-size: var(--font-size-4);
+}
+
+.gbgr-button--size-xl {
+	min-height: 54px;
+	padding: var(--spacing-4) var(--spacing-6);
+	font-size: var(--font-size-5);
+}
+
+.gbgr-button--tone-primary {
+	background: var(--color-component-button-base-bg-primary-default);
+	color: var(--color-component-button-base-text-primary-default);
+}
+
+.gbgr-button--tone-primary:hover:not(:disabled),
+.gbgr-button--tone-primary[data-state="hover"]:not(:disabled) {
+	background: var(--color-component-button-base-bg-primary-hover);
+}
+
+.gbgr-button--tone-primary:active:not(:disabled),
+.gbgr-button--tone-primary[data-state="pressed"]:not(:disabled) {
+	background: var(--color-component-button-base-bg-primary-pressed);
+}
+
+.gbgr-button--tone-primary:disabled {
+	background: var(--color-component-button-base-bg-primary-disabled);
+	color: var(--color-component-button-base-text-primary-disabled);
+}
+
+.gbgr-button--tone-sub {
+	background: var(--color-component-button-base-bg-sub-default);
+	color: var(--color-component-button-base-text-sub-default);
+}
+
+.gbgr-button--tone-sub:hover:not(:disabled),
+.gbgr-button--tone-sub[data-state="hover"]:not(:disabled) {
+	background: var(--color-component-button-base-bg-sub-hover);
+}
+
+.gbgr-button--tone-sub:active:not(:disabled),
+.gbgr-button--tone-sub[data-state="pressed"]:not(:disabled) {
+	background: var(--color-component-button-base-bg-sub-pressed);
+	color: var(--color-component-button-base-text-sub-pressed);
+}
+
+.gbgr-button--tone-sub:disabled {
+	background: var(--color-component-button-base-bg-sub-default);
+	color: var(--color-component-button-base-text-sub-disabled);
+}
+
+.gbgr-button--tone-grey {
+	background: var(--color-component-button-base-bg-grey-default);
+	color: var(--color-component-button-base-text-grey-default);
+}
+
+.gbgr-button--tone-grey:hover:not(:disabled),
+.gbgr-button--tone-grey[data-state="hover"]:not(:disabled) {
+	background: var(--color-component-button-base-bg-grey-hover);
+}
+
+.gbgr-button--tone-grey:active:not(:disabled),
+.gbgr-button--tone-grey[data-state="pressed"]:not(:disabled) {
+	background: var(--color-component-button-base-bg-grey-pressed);
+}
+
+.gbgr-button--tone-grey:disabled {
+	background: var(--color-component-button-base-bg-grey-disabled);
+	color: var(--color-component-button-base-text-grey-disabled);
+}

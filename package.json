@@ -16,6 +16,8 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.3.11",
+		"@types/react": "latest",
+		"@types/react-dom": "latest",
 		"turbo": "latest",
 		"typescript": "latest"
 	},

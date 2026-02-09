@@ -3,14 +3,17 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"predev": "node scripts/generate-token-data.mjs",
+		"predev": "node scripts/generate-token-data.mjs && pnpm --filter @gbgr/icons build && pnpm --filter @gbgr/react-headless build && pnpm --filter @gbgr/react build",
 		"dev": "docusaurus start --port 3100",
-		"prebuild": "node scripts/generate-token-data.mjs",
+		"prebuild": "node scripts/generate-token-data.mjs && pnpm --filter @gbgr/icons build && pnpm --filter @gbgr/react-headless build && pnpm --filter @gbgr/react build",
 		"build": "docusaurus build --out-dir dist",
 		"start": "docusaurus serve --dir dist --port 3100",
 		"typecheck": "tsc -p tsconfig.json --noEmit"
 	},
 	"dependencies": {
+		"@gbgr/css": "workspace:*",
+		"@gbgr/icons": "workspace:*",
+		"@gbgr/react": "workspace:*",
 		"@docusaurus/core": "^3.6.0",
 		"@docusaurus/module-type-aliases": "^3.6.0",
 		"@docusaurus/preset-classic": "^3.6.0",
