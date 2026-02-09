@@ -15,6 +15,7 @@
 			"import": "./dist/index.js",
 			"types": "./dist/index.d.ts"
 		},
+		"./accordion.css": "./src/accordion/accordion.css",
 		"./button.css": "./src/button/button.css",
 		"./mode-toggle.css": "./src/mode-toggle/mode-toggle.css",
 		"./text-field.css": "./src/text-field/text-field.css",

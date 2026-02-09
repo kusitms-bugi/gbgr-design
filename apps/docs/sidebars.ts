@@ -8,6 +8,7 @@ const sidebars: SidebarsConfig = {
 			label: "Components",
 			items: [
 				"components/button",
+				"components/accordion",
 				"components/mode-toggle",
 				"components/text-field",
 				"components/icons",

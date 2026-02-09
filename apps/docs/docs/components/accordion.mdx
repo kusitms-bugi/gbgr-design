@@ -1,0 +1,106 @@
+---
+title: Accordion
+---
+
+import React from "react";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionHeader,
+  AccordionItem,
+  AccordionTrigger,
+} from "@gbgr/react";
+
+## Usage (React)
+
+### Single
+
+```tsx
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@gbgr/react"
+import "@gbgr/react/styles.css"
+
+export function Example() {
+  return (
+    <Accordion type="single" defaultValue="item-1" collapsible>
+      <AccordionHeader>자주 묻는 질문</AccordionHeader>
+      <AccordionItem value="item-1">
+        <AccordionTrigger>웹캠을 사용하는데 보안이나 사생활 침해 걱정은 없나요?</AccordionTrigger>
+        <AccordionContent>컨텐츠</AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}
+```
+
+### Multiple
+
+```tsx
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@gbgr/react"
+import "@gbgr/react/styles.css"
+
+export function Example() {
+  return (
+    <Accordion type="multiple" defaultValue={["item-1", "item-3"]}>
+      <AccordionHeader size="md">자주 묻는 질문</AccordionHeader>
+      <AccordionItem value="item-1">
+        <AccordionTrigger>Item 1</AccordionTrigger>
+        <AccordionContent>Content 1</AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-2">
+        <AccordionTrigger>Item 2</AccordionTrigger>
+        <AccordionContent>Content 2</AccordionContent>
+      </AccordionItem>
+      <AccordionItem value="item-3">
+        <AccordionTrigger>Item 3</AccordionTrigger>
+        <AccordionContent>Content 3</AccordionContent>
+      </AccordionItem>
+    </Accordion>
+  )
+}
+```
+
+## Demo
+
+export function AccordionDemo() {
+  const [value, setValue] = React.useState(null)
+
+  return (
+    <div style={{ display: "grid", gap: 12 }}>
+      <Accordion type="single" value={value} onValueChange={setValue} collapsible>
+        <AccordionHeader>자주 묻는 질문</AccordionHeader>
+        <AccordionItem value="faq-1">
+          <AccordionTrigger>거북기린은 무엇인가요?</AccordionTrigger>
+          <AccordionContent>
+            문서/데모용 아코디언입니다. compound pattern으로 구성되어 있어요.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="faq-2">
+          <AccordionTrigger>아이템은 몇 개까지 되나요?</AccordionTrigger>
+          <AccordionContent>
+            `type="multiple"`로 바꾸면 여러 개를 동시에 펼칠 수 있습니다.
+          </AccordionContent>
+        </AccordionItem>
+        <AccordionItem value="faq-3" disabled>
+          <AccordionTrigger>비활성화 아이템</AccordionTrigger>
+          <AccordionContent>disabled</AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
+      <div style={{ fontSize: 12, opacity: 0.7 }}>
+        value: {value ?? "null"}
+      </div>
+    </div>
+  )
+}
+
+<AccordionDemo />
