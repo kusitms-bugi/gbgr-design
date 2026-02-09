@@ -152,6 +152,25 @@ importers:
         specifier: 3.9.0
         version: 3.9.0
 
+  packages/ui:
+    dependencies:
+      '@gbgr/css':
+        specifier: workspace:*
+        version: link:../css
+      '@gbgr/icons':
+        specifier: workspace:*
+        version: link:../icons
+      '@gbgr/react':
+        specifier: workspace:*
+        version: link:../react
+    devDependencies:
+      react:
+        specifier: latest
+        version: 19.2.3
+      react-dom:
+        specifier: latest
+        version: 19.2.3(react@19.2.3)
+
 packages:
 
   '@algolia/abtesting@1.13.0':
