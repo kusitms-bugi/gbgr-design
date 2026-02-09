@@ -61,7 +61,6 @@ Thumbs.db
 
 # Build results
 dist/
-build/
 *.tsbuildinfo
 
 # Next.js
@@ -89,7 +88,6 @@ storybook-static/
 
 # Package specific build outputs
 packages/*/dist/
-packages/*/build/
 packages/*/node_modules/
 
 # Apps specific
