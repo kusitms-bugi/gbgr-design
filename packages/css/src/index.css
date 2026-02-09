@@ -1,2 +1,2 @@
 @import "./reset.css";
-@import '../../tokens/dist/index.css';
+@import "@gbgr/tokens/index.css";
