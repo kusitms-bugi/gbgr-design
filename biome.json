@@ -35,5 +35,46 @@
 		"formatter": {
 			"semicolons": "asNeeded"
 		}
-	}
+	},
+
+	"overrides": [
+		{
+			"include": ["apps/docs/src/generated/**"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			},
+			"assist": {
+				"actions": {
+					"source": {
+						"organizeImports": "off"
+					}
+				}
+			}
+		},
+		{
+			"include": ["packages/icons/src/components/**"],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"noSvgWithoutTitle": {
+							"level": "off"
+						}
+					}
+				}
+			},
+			"formatter": {
+				"enabled": false
+			},
+			"assist": {
+				"actions": {
+					"source": {
+						"organizeImports": "off"
+					}
+				}
+			}
+		}
+	]
 }
