@@ -33,3 +33,13 @@ export function Example() {
 	);
 }
 ```
+
+### 3) (선택) 컴포넌트별 CSS만 import
+
+`@gbgr/ui/styles.css` 대신 필요한 CSS만 가져오고 싶으면 아래처럼 import 할 수 있습니다.
+이 경우 토큰/리셋이 필요하면 `@gbgr/css`도 함께 import 하세요.
+
+```ts
+import "@gbgr/css";
+import "@gbgr/ui/button.css";
+```
