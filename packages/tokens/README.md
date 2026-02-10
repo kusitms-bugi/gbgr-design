@@ -55,6 +55,6 @@ const myColor: Tokens['color']['semantic']['brand']['primary']['value'] = '#ffbf
 ## 언제 사용하나요?
 
 - **JSON/TypeScript 타입이 필요한 경우**: 런타임에 토큰 값을 사용하거나 타입 체크가 필요할 때
-- **CSS 변수만 필요하고 Reset은 불필요한 경우**: 기존 프로젝트에 토큰만 추가하거나 자체 Reset을 사용하는 경우
+- **CSS 변수만 필요한 경우**: 기존 프로젝트에 토큰만 추가하거나 자체 전역 스타일 체계를 사용하는 경우
 - **특정 테마 파일만 필요한 경우**: `theme.css`, `theme.light.css`, `theme.dark.css` 등 특정 파일만 import할 때
 - **다른 패키지에서 내부적으로 사용**: 컴포넌트 라이브러리 개발 시 내부적으로 토큰 값을 참조해야 할 때

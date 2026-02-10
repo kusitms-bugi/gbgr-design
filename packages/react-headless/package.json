@@ -1,6 +1,6 @@
 {
 	"name": "@gbgr/react-headless",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"files": [
@@ -8,10 +8,9 @@
 	],
 	"exports": {
 		".": {
+			"types": "./dist/index.d.ts",
 			"import": "./dist/index.js",
-			"require": "./dist/index.js",
-			"default": "./dist/index.js",
-			"types": "./dist/index.d.ts"
+			"require": "./dist/index.js"
 		},
 		"./*": "./dist/*"
 	},
@@ -21,6 +20,8 @@
 	"scripts": {
 		"build": "rm -rf dist tsconfig.tsbuildinfo && tsc -b tsconfig.json --force",
 		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
 		"clean": "rm -rf dist tsconfig.tsbuildinfo && find src -type f \\( -name '*.js' -o -name '*.js.map' -o -name '*.d.ts' -o -name '*.d.ts.map' \\) -delete"
 	},
 	"peerDependencies": {

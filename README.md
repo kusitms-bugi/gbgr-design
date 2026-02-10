@@ -30,4 +30,5 @@ pnpm changeset:publish
 ### 자동 배포 (GitHub Actions)
 
 - `main`에 머지되면 Release workflow가 버전 PR 생성/퍼블리시를 처리합니다.
+- 버전 PR 생성 시 각 패키지 `CHANGELOG.md`가 자동 갱신됩니다.
 - `NPM_TOKEN` secret이 필요합니다.

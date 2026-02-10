@@ -10,7 +10,7 @@ pnpm add @gbgr/ui
 
 ## 사용법
 
-### 1) 전역 스타일(Reset + Tokens + 컴포넌트 스타일) 한 번에 로드
+### 1) 전역 스타일(Tokens + 컴포넌트 스타일) 한 번에 로드
 
 앱 진입점에서 아래 한 줄만 import 하세요:
 
@@ -37,7 +37,7 @@ export function Example() {
 ### 3) (선택) 컴포넌트별 CSS만 import
 
 `@gbgr/ui/styles.css` 대신 필요한 CSS만 가져오고 싶으면 아래처럼 import 할 수 있습니다.
-이 경우 토큰/리셋이 필요하면 `@gbgr/css`도 함께 import 하세요.
+이 경우 토큰이 필요하면 `@gbgr/css`도 함께 import 하세요.
 
 ```ts
 import "@gbgr/css";

@@ -1,5 +1,5 @@
 {
-	"changelog": false,
+	"changelog": ["@changesets/changelog-git", null],
 	"access": "public",
 	"baseBranch": "main",
 	"ignore": ["docs"]

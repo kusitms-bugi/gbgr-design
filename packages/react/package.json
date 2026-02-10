@@ -1,6 +1,6 @@
 {
 	"name": "@gbgr/react",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"files": [
@@ -29,6 +29,8 @@
 	"scripts": {
 		"build": "pnpm --filter @gbgr/react-headless build && tsc -p tsconfig.json",
 		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"test": "vitest run",
+		"test:watch": "vitest",
 		"clean": "rm -rf dist"
 	},
 	"peerDependencies": {

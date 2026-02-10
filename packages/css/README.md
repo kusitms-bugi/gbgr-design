@@ -1,6 +1,6 @@
 # @gbgr/css
 
-GBGR Design System을 위한 전역 CSS 스타일을 제공하는 패키지입니다. CSS Reset과 디자인 토큰(CSS 변수)을 포함합니다.
+GBGR Design System을 위한 전역 CSS 스타일을 제공하는 패키지입니다. 디자인 토큰(CSS 변수)을 제공합니다.
 
 ## 설치
 
@@ -21,12 +21,11 @@ yarn add @gbgr/css
 import '@gbgr/css';
 ```
 
-이렇게 하면 CSS Reset이 적용되고, 모든 디자인 토큰이 CSS 변수로 사용 가능해집니다 (예: `var(--color-semantic-brand-primary)`).
+이렇게 하면 모든 디자인 토큰이 CSS 변수로 사용 가능해집니다 (예: `var(--color-semantic-brand-primary)`).
 
 ## 언제 사용하나요?
 
-- **새 프로젝트를 시작할 때**: Reset과 Tokens를 한 번에 적용하고 싶을 때
-- **CSS Reset이 필요한 경우**: 브라우저 기본 스타일을 리셋하고 싶을 때
+- **새 프로젝트를 시작할 때**: 디자인 토큰(CSS 변수)을 바로 적용하고 싶을 때
 - **간단하게 시작하고 싶을 때**: 최소한의 설정으로 디자인 시스템을 적용하고 싶을 때
 
 대부분의 애플리케이션에서는 이 패키지를 사용하는 것을 권장합니다. 특수한 요구사항이 있는 경우에만 `@gbgr/tokens`를 직접 사용하세요.
