@@ -39,6 +39,22 @@
 
 	"overrides": [
 		{
+			"includes": ["apps/docs/.docusaurus/**"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			},
+			"assist": {
+				"actions": {
+					"source": {
+						"organizeImports": "off"
+					}
+				}
+			}
+		},
+		{
 			"includes": ["apps/docs/src/generated/**"],
 			"linter": {
 				"enabled": false

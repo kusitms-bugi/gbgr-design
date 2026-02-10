@@ -18,7 +18,7 @@ export const ModeToggle = React.forwardRef<HTMLButtonElement, ModeToggleProps>(
 	(props, ref) => {
 		const { className, ...rest } = props
 
-		const { value: currentValue, buttonProps } = useModeToggle(rest)
+		const { buttonProps } = useModeToggle(rest)
 
 		return (
 			<button

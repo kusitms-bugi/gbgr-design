@@ -296,7 +296,6 @@ export default tokens;
 					},
 				],
 			},
-
 		},
 	})
 
