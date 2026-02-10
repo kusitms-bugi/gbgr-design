@@ -1,2 +1,2 @@
-export * from "@gbgr/react"
 export * from "@gbgr/icons"
+export * from "@gbgr/react"

@@ -71,4 +71,3 @@ export function useModeToggle(props: UseModeToggleProps) {
 		} as React.ButtonHTMLAttributes<HTMLButtonElement> & DataAttributes,
 	}
 }
-

@@ -1,5 +1,9 @@
-import { useAccordion, type AccordionType, type UseAccordionProps } from "@gbgr/react-headless"
 import { MinusIcon, PlusIcon } from "@gbgr/icons"
+import {
+	type AccordionType,
+	type UseAccordionProps,
+	useAccordion,
+} from "@gbgr/react-headless"
 import clsx from "clsx"
 import * as React from "react"
 
@@ -17,20 +21,21 @@ export type AccordionHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
 	size?: "lg" | "md"
 }
 
-export const AccordionHeader = React.forwardRef<HTMLDivElement, AccordionHeaderProps>(
-	({ className, size = "lg", children, ...props }, ref) => {
-		return (
-			<div
-				{...props}
-				ref={ref}
-				className={clsx("gbgr-accordion__header", className)}
-				data-size={size}
-			>
-				<h2 className="gbgr-accordion__header-title">{children}</h2>
-			</div>
-		)
-	},
-)
+export const AccordionHeader = React.forwardRef<
+	HTMLDivElement,
+	AccordionHeaderProps
+>(({ className, size = "lg", children, ...props }, ref) => {
+	return (
+		<div
+			{...props}
+			ref={ref}
+			className={clsx("gbgr-accordion__header", className)}
+			data-size={size}
+		>
+			<h2 className="gbgr-accordion__header-title">{children}</h2>
+		</div>
+	)
+})
 
 AccordionHeader.displayName = "AccordionHeader"
 
@@ -47,9 +52,8 @@ type AccordionItemContextValue = {
 	disabled?: boolean
 }
 
-const AccordionItemContext = React.createContext<AccordionItemContextValue | null>(
-	null,
-)
+const AccordionItemContext =
+	React.createContext<AccordionItemContextValue | null>(null)
 
 function useAccordionItemContext() {
 	const ctx = React.useContext(AccordionItemContext)
@@ -114,26 +118,27 @@ export type AccordionItemProps = React.HTMLAttributes<HTMLDivElement> & {
 	disabled?: boolean
 }
 
-export const AccordionItem = React.forwardRef<HTMLDivElement, AccordionItemProps>(
-	(props, ref) => {
-		const { value, disabled, className, children, ...rest } = props
-		const accordion = useAccordionContext()
+export const AccordionItem = React.forwardRef<
+	HTMLDivElement,
+	AccordionItemProps
+>((props, ref) => {
+	const { value, disabled, className, children, ...rest } = props
+	const accordion = useAccordionContext()
 
-		const itemProps = accordion.getItemProps({ value, disabled }, rest)
+	const itemProps = accordion.getItemProps({ value, disabled }, rest)
 
-		return (
-			<AccordionItemContext.Provider value={{ value, disabled }}>
-				<div
-					{...itemProps}
-					ref={ref}
-					className={clsx("gbgr-accordion__item", className)}
-				>
-					{children}
-				</div>
-			</AccordionItemContext.Provider>
-		)
-	},
-)
+	return (
+		<AccordionItemContext.Provider value={{ value, disabled }}>
+			<div
+				{...itemProps}
+				ref={ref}
+				className={clsx("gbgr-accordion__item", className)}
+			>
+				{children}
+			</div>
+		</AccordionItemContext.Provider>
+	)
+})
 
 AccordionItem.displayName = "AccordionItem"
 

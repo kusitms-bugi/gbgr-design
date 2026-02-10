@@ -52,13 +52,13 @@ export function useAccordion(props: UseAccordionProps) {
 			typeof defaultValue === "string" ? defaultValue : null,
 		)
 
-	const [uncontrolledMultiple, setUncontrolledMultiple] = React.useState<
-		AccordionMultipleValue
-	>(Array.isArray(defaultValue) ? defaultValue : [])
+	const [uncontrolledMultiple, setUncontrolledMultiple] =
+		React.useState<AccordionMultipleValue>(
+			Array.isArray(defaultValue) ? defaultValue : [],
+		)
 
 	const currentValue =
-		value ??
-		(type === "multiple" ? uncontrolledMultiple : uncontrolledSingle)
+		value ?? (type === "multiple" ? uncontrolledMultiple : uncontrolledSingle)
 
 	const setValue = React.useCallback(
 		(next: AccordionSingleValue | AccordionMultipleValue) => {
@@ -160,7 +160,9 @@ export function useAccordion(props: UseAccordionProps) {
 			const ids = getItemIds(itemValue)
 			const { open, itemIsDisabled } = getItemState(itemValue, itemDisabled)
 
-			const handleClickInternal = (event: React.MouseEvent<HTMLButtonElement>) => {
+			const handleClickInternal = (
+				event: React.MouseEvent<HTMLButtonElement>,
+			) => {
 				if (itemIsDisabled) {
 					event.preventDefault()
 					event.stopPropagation()

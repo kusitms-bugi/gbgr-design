@@ -1,6 +1,6 @@
-import * as React from "react";
+import type * as React from "react"
 
-type Handler<E> = ((event: E) => void) | undefined;
+type Handler<E> = ((event: E) => void) | undefined
 
 export function composeEventHandlers<E extends React.SyntheticEvent>(
 	originalHandler: Handler<E>,
@@ -8,13 +8,12 @@ export function composeEventHandlers<E extends React.SyntheticEvent>(
 	options?: { checkDefaultPrevented?: boolean },
 ) {
 	return (event: E) => {
-		originalHandler?.(event);
+		originalHandler?.(event)
 
 		if (options?.checkDefaultPrevented !== false && event.defaultPrevented) {
-			return;
+			return
 		}
 
-		ourHandler?.(event);
-	};
+		ourHandler?.(event)
+	}
 }
-

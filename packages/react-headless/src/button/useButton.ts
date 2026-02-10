@@ -1,20 +1,20 @@
-import * as React from "react";
-import { composeEventHandlers } from "../internal/composeEventHandlers";
-import type { DataAttributes } from "../internal/types";
+import * as React from "react"
+import { composeEventHandlers } from "../internal/composeEventHandlers"
+import type { DataAttributes } from "../internal/types"
 
-export type ButtonPressEvent = React.MouseEvent | React.KeyboardEvent;
+export type ButtonPressEvent = React.MouseEvent | React.KeyboardEvent
 
-type InteractionState = "idle" | "hovered" | "pressed" | "disabled" | "loading";
+type InteractionState = "idle" | "hovered" | "pressed" | "disabled" | "loading"
 
 export type UseButtonProps = Omit<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	"disabled" | "type"
 > & {
-	disabled?: boolean;
-	loading?: boolean;
-	type?: "button" | "submit" | "reset";
-	onPress?: (event: ButtonPressEvent) => void;
-};
+	disabled?: boolean
+	loading?: boolean
+	type?: "button" | "submit" | "reset"
+	onPress?: (event: ButtonPressEvent) => void
+}
 
 function isPointInRect(clientX: number, clientY: number, rect: DOMRect) {
 	return (
@@ -22,7 +22,7 @@ function isPointInRect(clientX: number, clientY: number, rect: DOMRect) {
 		clientX <= rect.right &&
 		clientY >= rect.top &&
 		clientY <= rect.bottom
-	);
+	)
 }
 
 type MachineEvent =
@@ -30,7 +30,7 @@ type MachineEvent =
 	| { type: "POINTER_LEAVE" }
 	| { type: "POINTER_DOWN"; pointerId: number }
 	| { type: "POINTER_UP"; pointerId: number; isInside: boolean }
-	| { type: "POINTER_CANCEL" };
+	| { type: "POINTER_CANCEL" }
 
 export function useButton(props: UseButtonProps) {
 	const {
@@ -45,63 +45,63 @@ export function useButton(props: UseButtonProps) {
 		onPointerUp,
 		onPointerCancel,
 		...buttonProps
-	} = props;
+	} = props
 
-	const isDisabled = disabled || loading;
+	const isDisabled = disabled || loading
 
 	const [internalState, setInternalState] = React.useState<
 		"idle" | "hovered" | "pressed"
-	>("idle");
+	>("idle")
 
-	const isPressedRef = React.useRef(false);
+	const isPressedRef = React.useRef(false)
 
 	React.useEffect(() => {
 		if (isDisabled) {
-			isPressedRef.current = false;
-			setInternalState("idle");
+			isPressedRef.current = false
+			setInternalState("idle")
 		}
-	}, [isDisabled]);
+	}, [isDisabled])
 
 	const interactionState: InteractionState = disabled
 		? "disabled"
 		: loading
 			? "loading"
-			: internalState;
+			: internalState
 
 	const send = React.useCallback(
 		(event: MachineEvent) => {
-			if (isDisabled) return;
+			if (isDisabled) return
 
 			setInternalState((prev) => {
 				switch (event.type) {
 					case "POINTER_ENTER": {
-						if (isPressedRef.current) return prev;
-						return "hovered";
+						if (isPressedRef.current) return prev
+						return "hovered"
 					}
 					case "POINTER_LEAVE": {
-						if (isPressedRef.current) return prev;
-						return "idle";
+						if (isPressedRef.current) return prev
+						return "idle"
 					}
 					case "POINTER_DOWN": {
-						isPressedRef.current = true;
-						return "pressed";
+						isPressedRef.current = true
+						return "pressed"
 					}
 					case "POINTER_UP": {
-						isPressedRef.current = false;
-						return event.isInside ? "hovered" : "idle";
+						isPressedRef.current = false
+						return event.isInside ? "hovered" : "idle"
 					}
 					case "POINTER_CANCEL": {
-						isPressedRef.current = false;
-						return "idle";
+						isPressedRef.current = false
+						return "idle"
 					}
 					default: {
-						return prev;
+						return prev
 					}
 				}
-			});
+			})
 		},
 		[isDisabled],
-	);
+	)
 
 	const events = React.useMemo(
 		() => ({
@@ -114,64 +114,64 @@ export function useButton(props: UseButtonProps) {
 			pointerCancel: () => send({ type: "POINTER_CANCEL" }),
 		}),
 		[send],
-	);
+	)
 
 	const handlePointerEnterInternal = React.useCallback(() => {
-		events.pointerEnter();
-	}, [events]);
+		events.pointerEnter()
+	}, [events])
 
 	const handlePointerLeaveInternal = React.useCallback(() => {
-		events.pointerLeave();
-	}, [events]);
+		events.pointerLeave()
+	}, [events])
 
 	const handlePointerDownInternal = React.useCallback(
 		(event: React.PointerEvent<HTMLButtonElement>) => {
-			if (isDisabled) return;
-			if (event.button !== 0) return;
+			if (isDisabled) return
+			if (event.button !== 0) return
 
-			events.pointerDown(event.pointerId);
+			events.pointerDown(event.pointerId)
 
 			try {
-				event.currentTarget.setPointerCapture(event.pointerId);
+				event.currentTarget.setPointerCapture(event.pointerId)
 			} catch {
 				// ignore
 			}
 		},
 		[events, isDisabled],
-	);
+	)
 
 	const handlePointerUpInternal = React.useCallback(
 		(event: React.PointerEvent<HTMLButtonElement>) => {
-			if (isDisabled) return;
+			if (isDisabled) return
 
-			const rect = event.currentTarget.getBoundingClientRect();
-			const isInside = isPointInRect(event.clientX, event.clientY, rect);
-			events.pointerUp(event.pointerId, isInside);
+			const rect = event.currentTarget.getBoundingClientRect()
+			const isInside = isPointInRect(event.clientX, event.clientY, rect)
+			events.pointerUp(event.pointerId, isInside)
 
 			try {
-				event.currentTarget.releasePointerCapture(event.pointerId);
+				event.currentTarget.releasePointerCapture(event.pointerId)
 			} catch {
 				// ignore
 			}
 		},
 		[events, isDisabled],
-	);
+	)
 
 	const handlePointerCancelInternal = React.useCallback(() => {
-		events.pointerCancel();
-	}, [events]);
+		events.pointerCancel()
+	}, [events])
 
 	const handleClick = React.useCallback(
 		(event: React.MouseEvent<HTMLButtonElement>) => {
 			if (isDisabled) {
-				event.preventDefault();
-				event.stopPropagation();
-				return;
+				event.preventDefault()
+				event.stopPropagation()
+				return
 			}
-			onPress?.(event);
+			onPress?.(event)
 		},
 		[isDisabled, onPress],
-	);
+	)
 
 	return {
 		state: interactionState,
@@ -205,5 +205,5 @@ export function useButton(props: UseButtonProps) {
 				handlePointerCancelInternal,
 			),
 		} as React.ButtonHTMLAttributes<HTMLButtonElement> & DataAttributes,
-	};
+	}
 }
