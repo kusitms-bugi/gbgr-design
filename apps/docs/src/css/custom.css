@@ -1,13 +1,39 @@
 @import "@gbgr/css";
 @import "@gbgr/react/styles.css";
+@import "@gbgr/react/mode-toggle.css";
 
 :root {
-	--ifm-color-primary: #0b5fff;
-	--ifm-color-primary-dark: #0a55e6;
-	--ifm-color-primary-darker: #094fd9;
-	--ifm-color-primary-darkest: #0741b3;
-	--ifm-color-primary-light: #2a72ff;
-	--ifm-color-primary-lighter: #3a7cff;
-	--ifm-color-primary-lightest: #689bff;
+	/* Infima theme colors (Docusaurus) mapped to GBGR tokens */
+	--ifm-color-primary: var(--color-semantic-brand-primary);
+	--ifm-color-primary-dark: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 85%,
+		#000
+	);
+	--ifm-color-primary-darker: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 75%,
+		#000
+	);
+	--ifm-color-primary-darkest: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 60%,
+		#000
+	);
+	--ifm-color-primary-light: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 85%,
+		#fff
+	);
+	--ifm-color-primary-lighter: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 75%,
+		#fff
+	);
+	--ifm-color-primary-lightest: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 60%,
+		#fff
+	);
 	--ifm-code-font-size: 95%;
 }

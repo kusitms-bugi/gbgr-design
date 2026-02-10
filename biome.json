@@ -71,7 +71,10 @@
 			}
 		},
 		{
-			"includes": ["packages/icons/src/components/**"],
+			"includes": [
+				"packages/icons/src/components/**",
+				"packages/icons/src/types.ts"
+			],
 			"linter": {
 				"rules": {
 					"a11y": {
