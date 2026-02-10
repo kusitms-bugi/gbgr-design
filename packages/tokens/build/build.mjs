@@ -132,6 +132,21 @@ StyleDictionary.registerFormat({
 
 // --- Main Build Logic ---
 
+function normalizePathSegmentForTokenName(segment) {
+	return String(segment)
+		.trim()
+		.replace(/\s+/g, "-")
+		.replace(/_/g, "-")
+		.replace(/[^\w-]+/g, "-")
+		.replace(/-+/g, "-")
+		.replace(/^-|-$/g, "")
+		.toLowerCase()
+}
+
+function pathToTokenName(pathSegments) {
+	return pathSegments.map(normalizePathSegmentForTokenName).join("-")
+}
+
 async function main() {
 	console.log("🚀 Starting token build process...")
 	ensureDir(distDir)
@@ -207,7 +222,7 @@ export default tokens;
 			if (typeof light[key] === "object" && light[key] !== null) {
 				if ("value" in light[key] && "value" in dark[key]) {
 					if (light[key].value !== dark[key].value) {
-						changedTokenNames.add(currentPath.join("-"))
+						changedTokenNames.add(pathToTokenName(currentPath))
 					}
 				} else {
 					findDiffs(light[key], dark[key], currentPath)
@@ -223,9 +238,6 @@ export default tokens;
 	const sd = StyleDictionary.extend({
 		// We pass 'source' here, which is the merged light+global tokens
 		tokens: source,
-
-		// We'll also pass the raw dark tokens so we can access them in the platform config
-		darkTokens: tokenSets.dark,
 
 		platforms: {
 			// --- Platform: tokens.base.css ---
@@ -285,17 +297,34 @@ export default tokens;
 				],
 			},
 
-			// --- Platform: theme.dark.css (override-only) ---
+		},
+	})
+
+	console.log("🏗️ Building tokens with Style Dictionary...")
+	sd.buildAllPlatforms()
+	console.log("✅ Style Dictionary build complete.")
+
+	// 3.1 Build dark overrides with a dedicated Style Dictionary instance.
+	//     Style Dictionary config isn't reliably "per-platform" for tokens, so we run a second build with dark tokens.
+	const darkSource = deepMerge(deepMerge({}, tokenSets.dark), tokenSets.global)
+
+	const sdDarkCss = StyleDictionary.extend({
+		tokens: darkSource,
+		platforms: {
 			dark: {
-				// Use the dark tokens for this platform
-				tokens: tokenSets.dark,
 				transformGroup: "css",
+				transforms: [
+					"attribute/cti",
+					"name/cti/kebab",
+					"gbgr/fontWeight",
+					"gbgr/px",
+					"color/css",
+				],
 				buildPath: `${distDir}/`,
 				files: [
 					{
 						destination: "theme.dark.css",
 						format: "css/dark-theme-override",
-						// Filter to only include tokens that were different from light theme
 						filter: (token) => changedTokenNames.has(token.name),
 						options: {
 							fileHeader: "gbgr/fileHeader",
@@ -306,9 +335,7 @@ export default tokens;
 		},
 	})
 
-	console.log("🏗️ Building tokens with Style Dictionary...")
-	sd.buildAllPlatforms()
-	console.log("✅ Style Dictionary build complete.")
+	sdDarkCss.buildAllPlatforms()
 
 	// 4. Create entrypoint CSS files
 	console.log("✍️ Creating entrypoint CSS files...")
