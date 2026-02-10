@@ -1,6 +1,6 @@
 {
 	"name": "@gbgr/tokens",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"main": "./dist/tokens.json",
 	"types": "./dist/tokens.d.ts",
 	"files": [
