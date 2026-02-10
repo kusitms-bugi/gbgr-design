@@ -109,12 +109,23 @@ StyleDictionary.registerFormat({
   name: "css/dark-theme-override",
   formatter: function ({ dictionary, file }) {
     let output = StyleDictionary.formatHelpers.fileHeader({ file })
-    output += ':root[data-theme="dark"] {\n'
-    output += StyleDictionary.formatHelpers.formattedVariables({
+    const vars = StyleDictionary.formatHelpers.formattedVariables({
       format: "css",
       dictionary,
     })
-    output += "\n}\n"
+
+    // 1) Explicit app theme toggle (`data-theme="dark"`) on either <html> (:root) or <body> (or any container).
+    output += ':root[data-theme="dark"], [data-theme="dark"] {\n'
+    output += vars
+    output += "\n}\n\n"
+
+    // 2) Automatic dark mode when the app doesn't set `data-theme` at all.
+    //    Keeps explicit `data-theme="light"` (or any custom value) from being overridden.
+    output += "@media (prefers-color-scheme: dark) {\n"
+    output += "\t:root:not([data-theme]) {\n"
+    output += vars
+    output += "\n\t}\n"
+    output += "}\n"
     return output
   },
 })
