@@ -39,7 +39,7 @@
 
 	"overrides": [
 		{
-			"include": ["apps/docs/src/generated/**"],
+			"includes": ["apps/docs/src/generated/**"],
 			"linter": {
 				"enabled": false
 			},
@@ -55,7 +55,7 @@
 			}
 		},
 		{
-			"include": ["packages/icons/src/components/**"],
+			"includes": ["packages/icons/src/components/**"],
 			"linter": {
 				"rules": {
 					"a11y": {
