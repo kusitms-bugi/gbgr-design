@@ -7,8 +7,8 @@ describe("react 엔트리 export", () => {
 		const source = readFileSync(resolve(__dirname, "./index.ts"), "utf8")
 
 		expect(source).toContain("Accordion,\n\tAccordionContent")
-		expect(source).toContain('export { Button }')
-		expect(source).toContain('export { ModeToggle }')
-		expect(source).toContain('export { TextField }')
+		expect(source).toContain("export { Button }")
+		expect(source).toContain("export { ModeToggle }")
+		expect(source).toContain("export { TextField }")
 	})
 })

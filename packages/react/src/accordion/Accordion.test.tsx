@@ -9,8 +9,12 @@ describe("Accordion", () => {
 		expect(source).toContain('Accordion.displayName = "Accordion"')
 		expect(source).toContain('AccordionHeader.displayName = "AccordionHeader"')
 		expect(source).toContain('AccordionItem.displayName = "AccordionItem"')
-		expect(source).toContain('AccordionTrigger.displayName = "AccordionTrigger"')
-		expect(source).toContain('AccordionContent.displayName = "AccordionContent"')
+		expect(source).toContain(
+			'AccordionTrigger.displayName = "AccordionTrigger"',
+		)
+		expect(source).toContain(
+			'AccordionContent.displayName = "AccordionContent"',
+		)
 	})
 
 	it("헤더와 콘텐츠를 분리하는 구조를 유지한다", () => {

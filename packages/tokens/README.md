@@ -16,11 +16,11 @@ yarn add @gbgr/tokens
 
 ### CSS 변수
 
-생성된 `theme.css`를 import하여 디자인 토큰을 CSS 변수로 사용할 수 있습니다:
+생성된 `index.css`를 import하여 디자인 토큰을 CSS 변수로 사용할 수 있습니다:
 
 ```javascript
 // 애플리케이션의 진입점 파일 또는 전역 CSS 파일에서
-import '@gbgr/tokens/theme.css';
+import '@gbgr/tokens/index.css';
 ```
 
 그리고 CSS에서 다음과 같이 사용할 수 있습니다:
@@ -56,5 +56,5 @@ const myColor: Tokens['color']['semantic']['brand']['primary']['value'] = '#ffbf
 
 - **JSON/TypeScript 타입이 필요한 경우**: 런타임에 토큰 값을 사용하거나 타입 체크가 필요할 때
 - **CSS 변수만 필요한 경우**: 기존 프로젝트에 토큰만 추가하거나 자체 전역 스타일 체계를 사용하는 경우
-- **특정 테마 파일만 필요한 경우**: `theme.css`, `theme.light.css`, `theme.dark.css` 등 특정 파일만 import할 때
+- **특정 산출물만 필요한 경우**: `index.css`, `tokens.json`, `tokens.d.ts` 중 필요한 파일만 import할 때
 - **다른 패키지에서 내부적으로 사용**: 컴포넌트 라이브러리 개발 시 내부적으로 토큰 값을 참조해야 할 때

@@ -15,7 +15,7 @@
 
 ## Guardrails
 - Do not hardcode generated token values in docs when they can be imported from package outputs.
-- Keep code snippets consistent with current exports from `@gbgr/react`, `@gbgr/ui`, and `@gbgr/icons`.
+- Keep code snippets consistent with current exports from `@gbgr/react`, `@gbgr/icons`, and `@gbgr/css`.
 - Prefer editing `apps/docs/src` and `apps/docs/docs` content; avoid changing build scripts unless required.
 
 ## Deploy
