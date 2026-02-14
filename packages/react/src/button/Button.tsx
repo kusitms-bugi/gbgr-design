@@ -1,10 +1,14 @@
+import {
+	type ButtonPressEvent as HeadlessButtonPressEvent,
+	useButton,
+} from "@gbgr/react-headless"
 import clsx from "clsx"
 import * as React from "react"
 
 export type ButtonTone = "primary" | "sub" | "grey"
 export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl"
 
-export type ButtonPressEvent = React.MouseEvent<HTMLButtonElement>
+export type ButtonPressEvent = HeadlessButtonPressEvent
 
 export type ButtonProps = Omit<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -12,6 +16,7 @@ export type ButtonProps = Omit<
 > & {
 	tone?: ButtonTone
 	size?: ButtonSize
+	loading?: boolean
 	type?: "button" | "submit" | "reset"
 	onPress?: (event: ButtonPressEvent) => void
 	startIcon?: React.ReactNode
@@ -25,7 +30,6 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 			size = "md",
 			className,
 			type = "button",
-			onClick,
 			onPress,
 			startIcon,
 			endIcon,
@@ -33,22 +37,16 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 			...rest
 		} = props
 
-		const handleClick = React.useCallback(
-			(event: React.MouseEvent<HTMLButtonElement>) => {
-				onClick?.(event)
-				if (!event.defaultPrevented) {
-					onPress?.(event)
-				}
-			},
-			[onClick, onPress],
-		)
+		const { buttonProps } = useButton({
+			...rest,
+			type,
+			onPress,
+		})
 
 		return (
 			<button
-				{...rest}
+				{...buttonProps}
 				ref={ref}
-				type={type}
-				onClick={handleClick}
 				className={clsx(
 					"gbgr-button",
 					size === "xs"
