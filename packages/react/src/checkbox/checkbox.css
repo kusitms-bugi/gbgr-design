@@ -26,8 +26,8 @@
 	width: 20px;
 	height: 20px;
 	border-radius: 10px;
-	background: var(--25, #e3e1df);
-	color: var(--stroke-0, #fff);
+	background: var(--color-global-grey-100);
+	color: var(--color-global-grey-0);
 	flex: 0 0 auto;
 	transition: background-color 120ms ease;
 }
@@ -45,7 +45,7 @@
 
 .gbgr-checkbox[data-state="hovered"] .gbgr-checkbox__control,
 .gbgr-checkbox[data-state="pressed"] .gbgr-checkbox__control {
-	background: var(--25, #c6c5c3);
+	background: var(--color-global-grey-200);
 }
 
 .gbgr-checkbox[data-checked="checked"] .gbgr-checkbox__control {
