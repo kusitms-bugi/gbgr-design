@@ -28,7 +28,7 @@
 		"clsx": "^2.1.1"
 	},
 	"scripts": {
-		"build": "pnpm --filter @gbgr/react-headless build && tsc -p tsconfig.json",
+		"build": "rm -rf dist tsconfig.tsbuildinfo && pnpm --filter @gbgr/react-headless build && tsc -p tsconfig.json",
 		"typecheck": "tsc -p tsconfig.json --noEmit",
 		"test": "vitest run",
 		"test:watch": "vitest",
