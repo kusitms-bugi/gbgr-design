@@ -17,6 +17,7 @@
 		},
 		"./accordion.css": "./src/accordion/accordion.css",
 		"./button.css": "./src/button/button.css",
+		"./checkbox.css": "./src/checkbox/checkbox.css",
 		"./mode-toggle.css": "./src/mode-toggle/mode-toggle.css",
 		"./text-field.css": "./src/text-field/text-field.css",
 		"./styles.css": "./src/styles.css"

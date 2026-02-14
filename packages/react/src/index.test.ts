@@ -8,6 +8,7 @@ describe("react 엔트리 export", () => {
 
 		expect(source).toContain("Accordion,\n\tAccordionContent")
 		expect(source).toContain("export { Button }")
+		expect(source).toContain("export { Checkbox }")
 		expect(source).toContain("export { ModeToggle }")
 		expect(source).toContain("export { TextField }")
 	})
