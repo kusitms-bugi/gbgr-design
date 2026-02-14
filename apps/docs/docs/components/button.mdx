@@ -86,3 +86,19 @@ export function Example() {
   return <Button tone="primary">Save</Button>;
 }
 ```
+
+## Usage (UI)
+
+앱에서 고수준 통합 패키지(`@gbgr/ui`)를 쓰는 경우:
+
+```tsx
+import { Button } from "@gbgr/ui";
+import "@gbgr/ui/styles.css";
+
+export function Example() {
+  return <Button tone="primary">Save</Button>;
+}
+```
+
+`@gbgr/react`는 컴포넌트 레벨 제어가 필요한 저수준 선택지이고,
+`@gbgr/ui`는 토큰/스타일/컴포넌트를 함께 가져오는 고수준 선택지입니다.

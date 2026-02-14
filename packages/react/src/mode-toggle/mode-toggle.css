@@ -44,6 +44,7 @@
 }
 
 .gbgr-mode-toggle[data-value="dark"] .gbgr-mode-toggle__thumb {
+	background: var(--color-component-button-mode-change-thumb-off);
 	transform: translateX(
 		calc(
 			var(--gbgr-mode-toggle-width) -

@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"build": "turbo run build",
+		"build": "turbo run build --filter=@gbgr/* && pnpm --filter docs build",
 		"postbuild": "node scripts/sync-vercel-output.mjs",
 		"dev": "turbo run dev",
 		"test": "turbo run test",
@@ -16,7 +16,7 @@
 		"changeset": "changeset",
 		"changeset:version": "changeset version",
 		"changeset:publish": "changeset publish",
-		"typecheck": "turbo run typecheck",
+		"typecheck": "pnpm --filter @gbgr/icons --filter @gbgr/react-headless --filter @gbgr/react run build && turbo run typecheck",
 		"release": "turbo run build --filter=@gbgr/* && changeset publish"
 	},
 	"devDependencies": {

@@ -14,13 +14,21 @@ yarn add @gbgr/tokens
 
 ## 사용법
 
+### 권장 import 경로
+
+토큰 소비는 아래 3개 경로를 기준으로 사용하세요.
+
+- CSS 변수: `@gbgr/tokens/index.css`
+- 런타임 토큰(JSON): `@gbgr/tokens/tokens.json`
+- 타입 선언: `@gbgr/tokens/tokens.d.ts`
+
 ### CSS 변수
 
 생성된 `index.css`를 import하여 디자인 토큰을 CSS 변수로 사용할 수 있습니다:
 
-```javascript
+```ts
 // 애플리케이션의 진입점 파일 또는 전역 CSS 파일에서
-import '@gbgr/tokens/index.css';
+import "@gbgr/tokens/index.css";
 ```
 
 그리고 CSS에서 다음과 같이 사용할 수 있습니다:
@@ -36,20 +44,23 @@ import '@gbgr/tokens/index.css';
 
 원시 디자인 토큰은 JSON 파일로 제공됩니다:
 
-```javascript
-import tokens from '@gbgr/tokens/tokens.json';
+```ts
+import tokens from "@gbgr/tokens/tokens.json";
 // tokens는 모든 디자인 토큰을 포함하는 객체입니다
 console.log(tokens.color.semantic.brand.primary);
 ```
 
 ### TypeScript 타입
 
-타입 안전성을 위해 TypeScript 선언 파일을 import할 수 있습니다:
+타입 안전성이 필요하면 `tokens.json`에서 타입을 추론하거나,
+필요 시 선언 경로(`@gbgr/tokens/tokens.d.ts`)를 참조하세요:
 
 ```typescript
-import type { Tokens } from '@gbgr/tokens';
-// Tokens 타입을 사용하여 디자인 토큰 사용에 대한 타입 체크를 수행합니다
-const myColor: Tokens['color']['semantic']['brand']['primary']['value'] = '#ffbf00';
+import tokens from "@gbgr/tokens/tokens.json";
+
+type Tokens = typeof tokens;
+const myColor: Tokens["color"]["semantic"]["brand"]["primary"]["value"] =
+	"#ffbf00";
 ```
 
 ## 언제 사용하나요?

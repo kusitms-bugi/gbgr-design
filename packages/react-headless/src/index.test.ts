@@ -8,6 +8,7 @@ describe("react-headless 엔트리 export", () => {
 
 		expect(source).toContain("export { useAccordion }")
 		expect(source).toContain("export { useButton }")
+		expect(source).toContain("export { useCheckbox }")
 		expect(source).toContain("export { useModeToggle }")
 		expect(source).toContain("export { useTextField }")
 	})

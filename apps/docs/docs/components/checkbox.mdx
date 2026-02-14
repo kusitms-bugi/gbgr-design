@@ -1,0 +1,100 @@
+---
+title: Checkbox
+---
+
+import React from "react"
+import { Checkbox } from "@gbgr/react"
+import "@gbgr/react/styles.css"
+
+## Demo
+
+export function CheckboxStateGrid() {
+  return (
+    <div style={{ display: "grid", gap: 12 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ width: 100, fontSize: 12, opacity: 0.7 }}>Inactive</span>
+        <button type="button" className="gbgr-checkbox" aria-checked="false" role="checkbox" data-checked="unchecked">
+          <span className="gbgr-checkbox__control" aria-hidden="true">
+            <svg className="gbgr-checkbox__mark" viewBox="0 0 10.5 7.5" fill="none" aria-hidden="true">
+              <path d="M1 3.69061L4 6.5L9.5 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ width: 100, fontSize: 12, opacity: 0.7 }}>Inactive Hover</span>
+        <button type="button" className="gbgr-checkbox" aria-checked="false" role="checkbox" data-checked="unchecked" data-state="hovered">
+          <span className="gbgr-checkbox__control" aria-hidden="true">
+            <svg className="gbgr-checkbox__mark" viewBox="0 0 10.5 7.5" fill="none" aria-hidden="true">
+              <path d="M1 3.69061L4 6.5L9.5 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ width: 100, fontSize: 12, opacity: 0.7 }}>Active</span>
+        <button type="button" className="gbgr-checkbox" aria-checked="true" role="checkbox" data-checked="checked">
+          <span className="gbgr-checkbox__control" aria-hidden="true">
+            <svg className="gbgr-checkbox__mark" viewBox="0 0 10.5 7.5" fill="none" aria-hidden="true">
+              <path d="M1 3.69061L4 6.5L9.5 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+      </div>
+
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ width: 100, fontSize: 12, opacity: 0.7 }}>Active Hover</span>
+        <button type="button" className="gbgr-checkbox" aria-checked="true" role="checkbox" data-checked="checked" data-state="hovered">
+          <span className="gbgr-checkbox__control" aria-hidden="true">
+            <svg className="gbgr-checkbox__mark" viewBox="0 0 10.5 7.5" fill="none" aria-hidden="true">
+              <path d="M1 3.69061L4 6.5L9.5 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export function CheckboxInteractiveDemo() {
+  const [checked, setChecked] = React.useState(false)
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <Checkbox checked={checked} onCheckedChange={setChecked} aria-label="Agreement checkbox">
+        약관에 동의합니다
+      </Checkbox>
+      <span style={{ fontSize: 12, opacity: 0.7 }}>checked: {String(checked)}</span>
+    </div>
+  )
+}
+
+<CheckboxStateGrid />
+
+<div style={{ height: 16 }} />
+
+<CheckboxInteractiveDemo />
+
+## Usage (React)
+
+```tsx
+import { Checkbox } from "@gbgr/react"
+import "@gbgr/react/styles.css"
+
+export function Example() {
+  return <Checkbox defaultChecked>Agree</Checkbox>
+}
+```
+
+## Usage (UI)
+
+```tsx
+import { Checkbox } from "@gbgr/ui"
+import "@gbgr/ui/styles.css"
+
+export function Example() {
+  return <Checkbox defaultChecked>Agree</Checkbox>
+}
+```

@@ -20,6 +20,7 @@
 		},
 		"./accordion.css": "./src/accordion.css",
 		"./button.css": "./src/button.css",
+		"./checkbox.css": "./src/checkbox.css",
 		"./mode-toggle.css": "./src/mode-toggle.css",
 		"./text-field.css": "./src/text-field.css",
 		"./styles.css": "./src/styles.css"

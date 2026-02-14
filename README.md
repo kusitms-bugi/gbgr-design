@@ -12,6 +12,8 @@ pnpm --filter docs dev
 
 이 레포는 Changesets 기반으로 `@gbgr/*` 패키지를 배포합니다.
 
+- 운영 전략 문서: [`RELEASE_STRATEGY.md`](./RELEASE_STRATEGY.md)
+
 ### PR 규칙
 
 - `packages/` 하위에 코드 변경이 있으면 Changeset을 추가하세요: `pnpm changeset`

@@ -1,6 +1,5 @@
 @import "@gbgr/css";
 @import "@gbgr/react/styles.css";
-@import "@gbgr/react/mode-toggle.css";
 
 :root {
 	/* Infima theme colors (Docusaurus) mapped to GBGR tokens */

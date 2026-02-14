@@ -11,7 +11,13 @@
 
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!!**/dist", "!!**/.next", "!!**/storybook-static"]
+		"includes": [
+			"**",
+			"!!**/dist",
+			"!!**/.next",
+			"!!**/storybook-static",
+			"!!**/.turbo"
+		]
 	},
 
 	"formatter": {
