@@ -16,7 +16,7 @@
 		"changeset": "changeset",
 		"changeset:version": "changeset version",
 		"changeset:publish": "changeset publish",
-		"typecheck": "turbo run typecheck",
+		"typecheck": "pnpm --filter @gbgr/icons --filter @gbgr/react-headless run build && turbo run typecheck",
 		"release": "turbo run build --filter=@gbgr/* && changeset publish"
 	},
 	"devDependencies": {
