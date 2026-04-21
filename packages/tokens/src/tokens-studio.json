@@ -757,7 +757,7 @@
             }
           },
           "Sunken Strong": {
-            "value": "{Base.Grey.Grey Opacity.Grey Opacity 100}",
+            "value": "#24221f14",
             "type": "color",
             "$extensions": {
               "com.figma.scopes": [
@@ -779,7 +779,7 @@
             }
           },
           "Raised Strong": {
-            "value": "{Base.Grey.Grey Opacity.Grey Opacity 100}",
+            "value": "#24221f14",
             "type": "color",
             "$extensions": {
               "com.figma.scopes": [
@@ -1582,6 +1582,26 @@
               "OPACITY"
             ],
             "com.figma.hiddenFromPublishing": false
+          },
+          "Brand": {
+            "value": 36,
+            "type": "number",
+            "$extensions": {
+              "com.figma.scopes": [
+                "OPACITY"
+              ],
+              "com.figma.hiddenFromPublishing": false
+            }
+          },
+          "Neutral": {
+            "value": 46,
+            "type": "number",
+            "$extensions": {
+              "com.figma.scopes": [
+                "OPACITY"
+              ],
+              "com.figma.hiddenFromPublishing": false
+            }
           }
         }
       },
@@ -3693,6 +3713,26 @@
               "OPACITY"
             ],
             "com.figma.hiddenFromPublishing": false
+          },
+          "Brand": {
+            "value": 24,
+            "type": "number",
+            "$extensions": {
+              "com.figma.scopes": [
+                "OPACITY"
+              ],
+              "com.figma.hiddenFromPublishing": false
+            }
+          },
+          "Neutral": {
+            "value": 40,
+            "type": "number",
+            "$extensions": {
+              "com.figma.scopes": [
+                "OPACITY"
+              ],
+              "com.figma.hiddenFromPublishing": false
+            }
           }
         }
       },
