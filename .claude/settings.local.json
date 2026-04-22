@@ -22,7 +22,9 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(git push *)",
-      "Bash(git fetch *)"
+      "Bash(git fetch *)",
+      "Bash(gh pr create --title 'feat\\(tokens\\): sync Figma tokens v1.3 with new build pipeline' --body ' *)",
+      "Bash(where gh *)"
     ]
   }
 }
