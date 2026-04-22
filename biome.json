@@ -11,7 +11,13 @@
 
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!!**/dist", "!!**/.next", "!!**/storybook-static"]
+		"includes": [
+			"**",
+			"!!**/dist",
+			"!!**/.next",
+			"!!**/storybook-static",
+			"!!**/.turbo"
+		]
 	},
 
 	"formatter": {
@@ -35,5 +41,65 @@
 		"formatter": {
 			"semicolons": "asNeeded"
 		}
-	}
+	},
+
+	"overrides": [
+		{
+			"includes": ["apps/docs/.docusaurus/**"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			},
+			"assist": {
+				"actions": {
+					"source": {
+						"organizeImports": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": ["apps/docs/src/generated/**"],
+			"linter": {
+				"enabled": false
+			},
+			"formatter": {
+				"enabled": false
+			},
+			"assist": {
+				"actions": {
+					"source": {
+						"organizeImports": "off"
+					}
+				}
+			}
+		},
+		{
+			"includes": [
+				"packages/icons/src/components/**",
+				"packages/icons/src/types.ts"
+			],
+			"linter": {
+				"rules": {
+					"a11y": {
+						"noSvgWithoutTitle": {
+							"level": "off"
+						}
+					}
+				}
+			},
+			"formatter": {
+				"enabled": false
+			},
+			"assist": {
+				"actions": {
+					"source": {
+						"organizeImports": "off"
+					}
+				}
+			}
+		}
+	]
 }

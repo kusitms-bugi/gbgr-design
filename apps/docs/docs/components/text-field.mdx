@@ -1,0 +1,37 @@
+---
+title: Text Field
+---
+
+import React from "react"
+import { TextField } from "@gbgr/react"
+import "@gbgr/react/styles.css"
+
+## Demo
+
+export function TextFieldDemo() {
+  const [value, setValue] = React.useState("")
+
+  return (
+    <div style={{ display: "grid", gap: 16, maxWidth: 520 }}>
+      <TextField placeholder="text" value={value} onChange={(e) => setValue(e.target.value)} />
+      <TextField placeholder="text" />
+      <TextField state="success" placeholder="text" subText="sub text" />
+      <TextField state="error" placeholder="text" subText="sub text" />
+      <TextField type="password" defaultValue="password" />
+    </div>
+  )
+}
+
+<TextFieldDemo />
+
+## Usage (React)
+
+```tsx
+import { TextField } from "@gbgr/react"
+import "@gbgr/react/styles.css"
+
+export function Example() {
+  return <TextField placeholder="text" />
+}
+```
+

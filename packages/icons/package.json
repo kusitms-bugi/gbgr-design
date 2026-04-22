@@ -1,6 +1,6 @@
 {
 	"name": "@gbgr/icons",
-	"version": "0.0.0",
+	"version": "0.1.1",
 	"main": "./dist/index.js",
 	"types": "./dist/index.d.ts",
 	"files": [
@@ -8,8 +8,9 @@
 	],
 	"exports": {
 		".": {
+			"types": "./dist/index.d.ts",
 			"import": "./dist/index.js",
-			"types": "./dist/index.d.ts"
+			"require": "./dist/index.js"
 		},
 		"./*": "./dist/*"
 	},
@@ -17,7 +18,9 @@
 		"access": "public"
 	},
 	"scripts": {
-		"build": "node build/build.mjs"
+		"build": "rm -rf dist tsconfig.tsbuildinfo && node build/build.mjs && tsc -b tsconfig.json --force",
+		"typecheck": "tsc -p tsconfig.json --noEmit",
+		"clean": "rm -rf dist tsconfig.tsbuildinfo && find src -type f \\( -name '*.js' -o -name '*.js.map' -o -name '*.d.ts' -o -name '*.d.ts.map' \\) -delete"
 	},
 	"devDependencies": {
 		"@svgr/cli": "latest",

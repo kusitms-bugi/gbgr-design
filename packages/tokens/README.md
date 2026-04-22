@@ -1,53 +1,71 @@
 # @gbgr/tokens
 
-This package provides design tokens for the GBGR Design System, available as JSON, CSS variables, and TypeScript types.
+GBGR Design System의 디자인 토큰을 제공하는 패키지입니다. JSON, CSS 변수, TypeScript 타입 형식으로 사용할 수 있습니다.
 
-## Installation
+## 설치
 
 ```bash
 pnpm add @gbgr/tokens
-# or
+# 또는
 npm install @gbgr/tokens
-# or
+# 또는
 yarn add @gbgr/tokens
 ```
 
-## Usage
+## 사용법
 
-### CSS Variables
+### 권장 import 경로
 
-You can import the generated `theme.css` to use design tokens as CSS variables in your project:
+토큰 소비는 아래 3개 경로를 기준으로 사용하세요.
 
-```javascript
-// In your application's entry file or a global CSS file
-import '@gbgr/tokens/theme.css';
+- CSS 변수: `@gbgr/tokens/index.css`
+- 런타임 토큰(JSON): `@gbgr/tokens/tokens.json`
+- 타입 선언: `@gbgr/tokens/tokens.d.ts`
+
+### CSS 변수
+
+생성된 `index.css`를 import하여 디자인 토큰을 CSS 변수로 사용할 수 있습니다:
+
+```ts
+// 애플리케이션의 진입점 파일 또는 전역 CSS 파일에서
+import "@gbgr/tokens/index.css";
 ```
 
-Then you can use them in your CSS:
+그리고 CSS에서 다음과 같이 사용할 수 있습니다:
 
 ```css
 .my-component {
-  color: var(--gbgr-color-primary);
-  margin-top: var(--gbgr-space-medium);
+  color: var(--color-semantic-brand-primary);
+  margin-top: var(--spacing-4);
 }
 ```
 
 ### JSON
 
-The raw design tokens are available as a JSON file:
+원시 디자인 토큰은 JSON 파일로 제공됩니다:
 
-```javascript
-import tokens from '@gbgr/tokens/tokens.json';
-// tokens will be an object containing all design tokens
+```ts
+import tokens from "@gbgr/tokens/tokens.json";
+// tokens는 모든 디자인 토큰을 포함하는 객체입니다
 console.log(tokens.color.semantic.brand.primary);
 ```
 
-### TypeScript Types
+### TypeScript 타입
 
-TypeScript declaration file for tokens can be imported for type safety:
+타입 안전성이 필요하면 `tokens.json`에서 타입을 추론하거나,
+필요 시 선언 경로(`@gbgr/tokens/tokens.d.ts`)를 참조하세요:
 
 ```typescript
-import type { Tokens } from '@gbgr/tokens';
-// Use the Tokens type for type checking your design token usage
-const myColor: Tokens['color']['semantic']['brand']['primary']['value'] = '#ffbf00';
+import tokens from "@gbgr/tokens/tokens.json";
+
+type Tokens = typeof tokens;
+const myColor: Tokens["color"]["semantic"]["brand"]["primary"]["value"] =
+	"#ffbf00";
 ```
+
+## 언제 사용하나요?
+
+- **JSON/TypeScript 타입이 필요한 경우**: 런타임에 토큰 값을 사용하거나 타입 체크가 필요할 때
+- **CSS 변수만 필요한 경우**: 기존 프로젝트에 토큰만 추가하거나 자체 전역 스타일 체계를 사용하는 경우
+- **특정 산출물만 필요한 경우**: `index.css`, `tokens.json`, `tokens.d.ts` 중 필요한 파일만 import할 때
+- **다른 패키지에서 내부적으로 사용**: 컴포넌트 라이브러리 개발 시 내부적으로 토큰 값을 참조해야 할 때

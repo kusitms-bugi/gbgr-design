@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_figma_figma__get_design_context",
+      "mcp__plugin_figma_figma__get_screenshot",
+      "Bash(npm run *)",
+      "Bash(npm install *)",
+      "Bash(pnpm *)",
+      "mcp__plugin_figma_figma__get_metadata",
+      "mcp__plugin_figma_figma__use_figma",
+      "Bash(git checkout *)",
+      "Bash(git stash *)",
+      "Bash(git pull *)",
+      "Bash(python3 -c \" import json, sys data = json.load\\(sys.stdin\\) def show_structure\\(d, indent=0\\): for k, v in d.items\\(\\): if isinstance\\(v, dict\\) and 'value' not in v: print\\(' ' * indent + k + '/'\\) show_structure\\(v, indent + 2\\) elif isinstance\\(v, dict\\) and 'value' in v: print\\(' ' * indent + k + f' = {v[\\\\\"value\\\\\"]}'\\) show_structure\\(data\\) \")",
+      "Bash(node -e \" const data = require\\('./packages/tokens/src/tokens-studio.json'\\); function show\\(d, indent=0\\) { for \\(const [k, v] of Object.entries\\(d\\)\\) { if \\(v && typeof v === 'object' && !Array.isArray\\(v\\)\\) { if \\('value' in v\\) { console.log\\(' '.repeat\\(indent\\) + k + ' = ' + v.value\\); } else { console.log\\(' '.repeat\\(indent\\) + k + '/'\\); show\\(v, indent + 2\\); } } } } show\\(data\\); \")",
+      "Bash(node build/build.mjs)",
+      "Bash(node -e ' *)",
+      "Bash(node -e \"var key='Grey Opacity 800'; var parent='Grey Opacity'; var escaped=parent.replace\\(/[.*+?^\\\\${}\\(\\)|[\\\\]\\\\\\\\\\\\\\\\]/g,'\\\\\\\\\\\\\\\\$&'\\); var stripped=key.replace\\(new RegExp\\('^'+escaped+'\\\\\\\\\\\\\\\\s+'\\),''\\); console.log\\(stripped\\);\")",
+      "Bash(cat)",
+      "Bash(node /tmp/test-dedup.mjs)",
+      "Bash(node test-dedup.mjs)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git fetch *)"
+    ]
+  }
+}

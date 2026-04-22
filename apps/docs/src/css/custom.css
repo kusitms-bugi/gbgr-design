@@ -1,0 +1,38 @@
+@import "@gbgr/css";
+@import "@gbgr/react/styles.css";
+
+:root {
+	/* Infima theme colors (Docusaurus) mapped to GBGR tokens */
+	--ifm-color-primary: var(--color-semantic-brand-primary);
+	--ifm-color-primary-dark: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 85%,
+		#000
+	);
+	--ifm-color-primary-darker: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 75%,
+		#000
+	);
+	--ifm-color-primary-darkest: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 60%,
+		#000
+	);
+	--ifm-color-primary-light: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 85%,
+		#fff
+	);
+	--ifm-color-primary-lighter: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 75%,
+		#fff
+	);
+	--ifm-color-primary-lightest: color-mix(
+		in srgb,
+		var(--ifm-color-primary) 60%,
+		#fff
+	);
+	--ifm-code-font-size: 95%;
+}

@@ -1,0 +1,34 @@
+---
+title: Mode Toggle
+---
+
+import React from "react";
+import { ModeToggle } from "@gbgr/react";
+
+## Usage (React)
+
+```tsx
+import { ModeToggle } from "@gbgr/react"
+import "@gbgr/react/styles.css"
+
+export function Example() {
+  const [value, setValue] = React.useState<"light" | "dark">("light")
+
+  return <ModeToggle value={value} onValueChange={setValue} aria-label="Color mode" />
+}
+```
+
+## Demo
+
+export function ModeToggleDemo() {
+  const [value, setValue] = React.useState("light")
+
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+      <ModeToggle value={value} onValueChange={setValue} aria-label="Color mode" />
+      <span style={{ fontSize: 12, opacity: 0.7 }}>value: {value}</span>
+    </div>
+  )
+}
+
+<ModeToggleDemo />
