@@ -2,361 +2,248 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
-import StyleDictionary from "style-dictionary"
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const pkgRoot = join(__dirname, "..")
 const distDir = join(pkgRoot, "dist")
 
-// --- Helper Functions ---
-
 function ensureDir(dir) {
 	if (!existsSync(dir)) mkdirSync(dir, { recursive: true })
 }
 
-function isTokenLeaf(v) {
-	return (
-		v &&
-		typeof v === "object" &&
-		!Array.isArray(v) &&
-		"value" in v &&
-		"type" in v
-	)
+function stripExtensions(obj) {
+	if (!obj || typeof obj !== "object" || Array.isArray(obj)) return obj
+	const result = Array.isArray(obj) ? [] : {}
+	for (const [k, v] of Object.entries(obj)) {
+		if (k === "$extensions") continue
+		result[k] = stripExtensions(v)
+	}
+	return result
 }
 
-function deepMerge(target, source) {
-	for (const [k, v] of Object.entries(source ?? {})) {
+function buildLookup(obj, prefix = "") {
+	const map = new Map()
+	for (const [k, v] of Object.entries(obj)) {
+		const path = prefix ? `${prefix}.${k}` : k
 		if (v && typeof v === "object" && !Array.isArray(v)) {
-			if (!target[k] || typeof target[k] !== "object") target[k] = {}
-			deepMerge(target[k], v)
-		} else {
-			target[k] = v
-		}
-	}
-	return target
-}
-
-function isValidIdentifier(key) {
-	return /^[A-Za-z_$][A-Za-z0-9_$]*$/.test(key)
-}
-
-function tokenLeafTsType(leaf) {
-	const valueType = typeof leaf?.value === "number" ? "number" : "string"
-	const tokenType =
-		typeof leaf?.type === "string" ? JSON.stringify(leaf.type) : "string"
-	return `TokenLeaf<${valueType}, ${tokenType}>`
-}
-
-function toTsType(node, indentLevel = 0) {
-	if (isTokenLeaf(node)) return tokenLeafTsType(node)
-	if (!node || typeof node !== "object" || Array.isArray(node)) return "unknown"
-
-	const indent = "\t".repeat(indentLevel)
-	const nextIndent = "\t".repeat(indentLevel + 1)
-
-	const entries = Object.entries(node)
-	if (entries.length === 0) return "Record<string, unknown>"
-
-	const lines = entries.map(([key, value]) => {
-		const prop = isValidIdentifier(key) ? key : JSON.stringify(key)
-		return `${nextIndent}${prop}: ${toTsType(value, indentLevel + 1)};`
-	})
-
-	return `{\n${lines.join("\n")}\n${indent}}`
-}
-
-// --- Custom Transforms ---
-
-// Transform font weight strings to numbers
-StyleDictionary.registerTransform({
-	name: "gbgr/fontWeight",
-	type: "value",
-	matcher: (token) => token.type === "text" && token.path[0] === "fontWeights",
-	transformer: (token) => {
-		const weights = {
-			Bold: 700,
-			SemiBold: 600,
-			Medium: 500,
-			Regular: 400,
-		}
-		return weights[token.value] ?? token.value
-	},
-})
-
-// Transform number tokens to px values
-StyleDictionary.registerTransform({
-	name: "gbgr/px",
-	type: "value",
-	matcher: (token) =>
-		typeof token.value === "number" &&
-		token.type === "number" && // Explicitly check for type number
-		["radius", "spacing", "device mode", "fontSize"].includes(token.path[0]), // Check top-level category
-	transformer: (token) => `${token.value}px`,
-})
-
-// --- Custom Formats ---
-
-StyleDictionary.registerFileHeader({
-	name: "gbgr/fileHeader",
-	fileHeader: () => [
-		"Do not edit directly",
-		`Generated on ${new Date().toUTCString()}`,
-	],
-})
-
-// Format for dark theme overrides
-StyleDictionary.registerFormat({
-	name: "css/dark-theme-override",
-	formatter: ({ dictionary, file }) => {
-		let output = StyleDictionary.formatHelpers.fileHeader({ file })
-		const vars = StyleDictionary.formatHelpers.formattedVariables({
-			format: "css",
-			dictionary,
-		})
-
-		// 1) Explicit app theme toggle (`data-theme="dark"`) on either <html> (:root) or <body> (or any container).
-		output += ':root[data-theme="dark"], [data-theme="dark"] {\n'
-		output += vars
-		output += "\n}\n\n"
-
-		// 2) Automatic dark mode when the app doesn't set `data-theme` at all.
-		//    Keeps explicit `data-theme="light"` (or any custom value) from being overridden.
-		output += "@media (prefers-color-scheme: dark) {\n"
-		output += "\t:root:not([data-theme]) {\n"
-		output += vars
-		output += "\n\t}\n"
-		output += "}\n"
-		return output
-	},
-})
-
-// --- Main Build Logic ---
-
-function normalizePathSegmentForTokenName(segment) {
-	return String(segment)
-		.trim()
-		.replace(/\s+/g, "-")
-		.replace(/_/g, "-")
-		.replace(/[^\w-]+/g, "-")
-		.replace(/-+/g, "-")
-		.replace(/^-|-$/g, "")
-		.toLowerCase()
-}
-
-function pathToTokenName(pathSegments) {
-	return pathSegments.map(normalizePathSegmentForTokenName).join("-")
-}
-
-async function main() {
-	console.log("🚀 Starting token build process...")
-	ensureDir(distDir)
-
-	// 1. Load and prepare token data
-	console.log("🔄 Loading and parsing tokens-studio.json...")
-	const tokensPath = join(pkgRoot, "src", "tokens-studio.json")
-	const tokens = JSON.parse(readFileSync(tokensPath, "utf-8"))
-
-	const tokenSets = {
-		global: tokens["global/global"] || {},
-		light: tokens["Primitives/light"] || {},
-		dark: tokens["Primitives/dark"] || {},
-	}
-
-	// Create a unified source for Style Dictionary by merging themes.
-	// Style-dictionary needs a single object. We will select the active set later.
-	const source = deepMerge(deepMerge({}, tokenSets.light), tokenSets.global)
-
-	// 1.1 Emit JSON + TypeScript outputs for consumers/validation
-	writeFileSync(
-		join(distDir, "sd.input.json"),
-		JSON.stringify(source, null, 2),
-		"utf-8",
-	)
-
-	writeFileSync(
-		join(distDir, "tokens.json"),
-		JSON.stringify(source, null, 2),
-		"utf-8",
-	)
-
-	const tokensDts = `export type TokenLeaf<TValue = string | number, TType extends string = string> = {
-\tvalue: TValue;
-\ttype: TType;
-\t[key: string]: unknown;
-};
-
-export type Tokens = ${toTsType(source, 0)};
-
-declare const tokens: Tokens;
-export default tokens;
-`
-
-	writeFileSync(join(distDir, "tokens.d.ts"), tokensDts, "utf-8")
-
-	// 2. Find differences between light and dark themes
-	console.log("🌗 Comparing light and dark themes...")
-	const createExportableSd = (tokens) =>
-		StyleDictionary.extend({
-			tokens,
-			platforms: {
-				"json-export": {
-					transformGroup: "js",
-					buildPath: "dist/", // This path is not actually used, but is required
-					files: [{ destination: "dummy.json", format: "json/nested" }],
-				},
-			},
-		})
-
-	const lightSd = createExportableSd(tokenSets.light)
-	const darkSd = createExportableSd(tokenSets.dark)
-
-	const lightProps = lightSd.exportPlatform("json-export")
-	const darkProps = darkSd.exportPlatform("json-export")
-
-	const changedTokenNames = new Set()
-	function findDiffs(light, dark, path = []) {
-		for (const key in light) {
-			const currentPath = [...path, key]
-			if (dark[key] === undefined) continue
-
-			if (typeof light[key] === "object" && light[key] !== null) {
-				if ("value" in light[key] && "value" in dark[key]) {
-					if (light[key].value !== dark[key].value) {
-						changedTokenNames.add(pathToTokenName(currentPath))
-					}
-				} else {
-					findDiffs(light[key], dark[key], currentPath)
+			if ("value" in v && "type" in v) {
+				map.set(path, v)
+			} else {
+				for (const [pk, pv] of buildLookup(v, path)) {
+					map.set(pk, pv)
 				}
 			}
 		}
 	}
+	return map
+}
 
-	findDiffs(lightProps, darkProps)
-	console.log(`Found ${changedTokenNames.size} differences for dark theme.`)
+function resolveAllRefs(obj, lookup, maxPasses = 20) {
+	for (let pass = 0; pass < maxPasses; pass++) {
+		let changed = false
+		obj = resolveRefs(obj, lookup, () => { changed = true })
+		if (!changed) break
+	}
+	return obj
+}
 
-	// 3. Configure and run Style Dictionary
-	const sd = StyleDictionary.extend({
-		// We pass 'source' here, which is the merged light+global tokens
-		tokens: source,
+function resolveRefs(obj, lookup, onResolve) {
+	if (typeof obj === "string") {
+		const m = obj.match(/^\{(.+)\}$/)
+		if (m) {
+			const entry = lookup.get(m[1])
+			if (entry && typeof entry.value !== "object") {
+				onResolve()
+				return entry.value
+			}
+		}
+		return obj
+	}
+	if (!obj || typeof obj !== "object" || Array.isArray(obj)) return obj
+	const result = Array.isArray(obj) ? [] : {}
+	for (const [k, v] of Object.entries(obj)) {
+		result[k] = resolveRefs(v, lookup, onResolve)
+	}
+	return result
+}
 
-		platforms: {
-			// --- Platform: tokens.base.css ---
-			base: {
-				transformGroup: "css",
-				transforms: [
-					"attribute/cti",
-					"name/cti/kebab",
-					"gbgr/fontWeight",
-					"gbgr/px",
-					"color/css",
-				],
-				buildPath: `${distDir}/`,
-				files: [
-					{
-						destination: "tokens.base.css",
-						format: "css/variables",
-						filter: (token) => {
-							const path = token.path.join(".")
-							return (
-								path.startsWith("color.global") ||
-								path.startsWith("font") || // fontFamilies, fontWeights, fontSize
-								path.startsWith("radius") ||
-								path.startsWith("spacing") ||
-								path.startsWith("device mode")
-							)
-						},
-						options: {
-							fileHeader: "gbgr/fileHeader",
-						},
-					},
-				],
-			},
+function resolveCompositeValues(obj, lookup) {
+	if (!obj || typeof obj !== "object" || Array.isArray(obj)) return obj
+	for (const [k, v] of Object.entries(obj)) {
+		if (v && typeof v === "object" && !Array.isArray(v)) {
+			if ("value" in v && "type" in v && typeof v.value === "object" && !Array.isArray(v.value)) {
+				const resolved = {}
+				for (const [vk, vv] of Object.entries(v.value)) {
+					if (typeof vv === "string") {
+						const m = vv.match(/^\{(.+)\}$/)
+						resolved[vk] = (m && lookup.has(m[1])) ? lookup.get(m[1]).value : vv
+					} else {
+						resolved[vk] = vv
+					}
+				}
+				v.value = resolved
+			} else {
+				resolveCompositeValues(v, lookup)
+			}
+		}
+	}
+	return obj
+}
 
-			// --- Platform: theme.light.css ---
-			light: {
-				transformGroup: "css",
-				buildPath: `${distDir}/`,
-				files: [
-					{
-						destination: "theme.light.css",
-						format: "css/variables",
-						filter: (token) => {
-							const path = token.path.join(".")
-							return (
-								!path.startsWith("color.global") &&
-								!path.startsWith("font") &&
-								!path.startsWith("radius") &&
-								!path.startsWith("spacing") &&
-								!path.startsWith("device mode")
-							)
-						},
-						options: {
-							fileHeader: "gbgr/fileHeader",
-						},
-					},
-				],
-			},
-		},
+// --- CSS Variable Naming ---
+// Base.Grey.50 → --color-global-grey-50
+// Base.Grey Opacity.300 → --color-global-grey-opacity-300
+// Semantic.Border.Neutral.Strong → --color-semantic-border-neutral-strong
+// fontSize.0 → --font-size-0
+
+function cleanSegment(s) {
+	return s.replace(/\s+/g, "-").replace(/[()]/g, "").replace(/--+/g, "-").toLowerCase()
+}
+
+function buildCssName(pathParts) {
+	const [section, ...rest] = pathParts
+
+	if (section === "Base") {
+		// Base.Grey.50 → color-global-grey-50
+		// Base.Yellow Opacity.200 → color-global-yellow-opacity-200
+		// Base.Green.500 → color-global-green-500
+		return "color-global-" + rest.map(cleanSegment).join("-")
+	}
+	if (section === "Semantic") {
+		return "color-semantic-" + rest.map(cleanSegment).join("-")
+	}
+	if (section === "Elevation") {
+		return "elevation-" + rest.map(cleanSegment).join("-")
+	}
+	// fontSize, letterSpacing, etc
+	return rest.length > 0
+		? cleanSegment(section) + "-" + rest.map(cleanSegment).join("-")
+		: cleanSegment(section)
+}
+
+// Deduplicate: "Grey" parent + "Grey 50" child → "50"
+function dedupKey(key, parentKey) {
+	if (!parentKey) return key
+	// "Grey 50" under "Grey" → "50"
+	// "Grey Opacity 800" under "Grey Opacity" → "800"
+	// "Grey Opacity" under "Grey" → "Opacity"
+	const escaped = parentKey.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+	const stripped = key.replace(new RegExp(`^${escaped}\\s+`), "")
+	if (/^\d+$/.test(stripped)) return stripped
+	if (stripped !== key) return stripped
+	return key
+}
+
+function flattenTokens(obj, pathParts = [], parentKey = "") {
+	const vars = []
+	for (const [k, v] of Object.entries(obj)) {
+		const cleanKey = dedupKey(k, parentKey)
+		const currentPath = [...pathParts, cleanKey]
+		const cssName = buildCssName(currentPath)
+
+		if (v && typeof v === "object" && !Array.isArray(v)) {
+			if ("value" in v && "type" in v) {
+				let val = v.value
+				if (typeof val === "object" && !Array.isArray(val)) {
+					if (v.type === "boxShadow") {
+						const s = Array.isArray(val) ? val : [val]
+						val = s.map(x =>
+							`${x.x || 0}px ${x.y || 0}px ${x.blur || 0}px ${x.spread || 0}px ${x.color || "transparent"}`
+						).join(", ")
+					} else {
+						continue
+					}
+				}
+				// Add px to numeric sizing/spacing/radius/typography tokens
+				if (typeof val === "number") {
+					const name = cssName
+					if (name.includes("fontsize") || name.includes("spacing") || name.includes("radius") ||
+						name.includes("paragraph") || name.includes("letter") || name.includes("size")) {
+						val = `${val}px`
+					}
+				}
+				vars.push({ name: cssName, value: val, type: v.type })
+			} else {
+				vars.push(...flattenTokens(v, currentPath, k))
+			}
+		}
+	}
+	return vars
+}
+
+function generateCss(vars, header) {
+	let css = "/**\n"
+	for (const line of header) css += ` * ${line}\n`
+	css += " */\n\n:root {\n"
+	for (const v of vars) css += `  --${v.name}: ${v.value};\n`
+	css += "}\n"
+	return css
+}
+
+function generateDarkCss(vars, header) {
+	let css = "/**\n"
+	for (const line of header) css += ` * ${line}\n`
+	css += ` */\n\n`
+	css += ':root[data-theme="dark"], [data-theme="dark"] {\n'
+	for (const v of vars) css += `  --${v.name}: ${v.value};\n`
+	css += "}\n\n"
+	css += "@media (prefers-color-scheme: dark) {\n"
+	css += "\t:root:not([data-theme]) {\n"
+	for (const v of vars) css += `\t\t--${v.name}: ${v.value};\n`
+	css += "\n\t}\n}\n"
+	return css
+}
+
+// --- Main ---
+
+function main() {
+	console.log("🚀 Starting token build...")
+	ensureDir(distDir)
+
+	const raw = JSON.parse(readFileSync(join(pkgRoot, "src", "tokens-studio.json"), "utf-8"))
+
+	const rawLight = stripExtensions(raw["Color/Light"] || {})
+	const rawDark = stripExtensions(raw["Color/Dark"] || {})
+
+	const lightLookup = buildLookup(rawLight)
+	const darkLookup = buildLookup(rawDark)
+
+	let light = resolveAllRefs(rawLight, lightLookup)
+	light = resolveCompositeValues(light, lightLookup)
+
+	let dark = resolveAllRefs(rawDark, darkLookup)
+	dark = resolveCompositeValues(dark, darkLookup)
+
+	console.log("📐 Light:", Object.keys(light).join(", "))
+	console.log("📐 Dark:", Object.keys(dark).join(", "))
+
+	const lightVars = flattenTokens(light)
+	const darkVars = flattenTokens(dark)
+
+	const lightMap = new Map(lightVars.map(v => [v.name, v.value]))
+	const darkDiffVars = darkVars.filter(v => {
+		const lv = lightMap.get(v.name)
+		return lv !== undefined && lv !== v.value
 	})
 
-	console.log("🏗️ Building tokens with Style Dictionary...")
-	sd.buildAllPlatforms()
-	console.log("✅ Style Dictionary build complete.")
+	console.log(`🌗 ${darkDiffVars.length} tokens differ in dark mode.`)
 
-	// 3.1 Build dark overrides with a dedicated Style Dictionary instance.
-	//     Style Dictionary config isn't reliably "per-platform" for tokens, so we run a second build with dark tokens.
-	const darkSource = deepMerge(deepMerge({}, tokenSets.dark), tokenSets.global)
+	const header = ["Do not edit directly", `Generated on ${new Date().toUTCString()}`]
 
-	const sdDarkCss = StyleDictionary.extend({
-		tokens: darkSource,
-		platforms: {
-			dark: {
-				transformGroup: "css",
-				transforms: [
-					"attribute/cti",
-					"name/cti/kebab",
-					"gbgr/fontWeight",
-					"gbgr/px",
-					"color/css",
-				],
-				buildPath: `${distDir}/`,
-				files: [
-					{
-						destination: "theme.dark.css",
-						format: "css/dark-theme-override",
-						filter: (token) => changedTokenNames.has(token.name),
-						options: {
-							fileHeader: "gbgr/fileHeader",
-						},
-					},
-				],
-			},
-		},
-	})
+	const baseVars = lightVars.filter(v => v.name.startsWith("color-global-"))
+	writeFileSync(join(distDir, "tokens.base.css"), generateCss(baseVars, header), "utf-8")
 
-	sdDarkCss.buildAllPlatforms()
+	const themeVars = lightVars.filter(v => !v.name.startsWith("color-global-"))
+	writeFileSync(join(distDir, "theme.light.css"), generateCss(themeVars, header), "utf-8")
 
-	// 4. Create entrypoint CSS files
-	console.log("✍️ Creating entrypoint CSS files...")
+	writeFileSync(join(distDir, "theme.dark.css"), generateDarkCss(darkDiffVars, header), "utf-8")
 
-	const themeCssContent = `/* This file is auto-generated. */
-@import "./theme.light.css";
-@import "./theme.dark.css";
-`
-	writeFileSync(join(distDir, "theme.css"), themeCssContent)
+	writeFileSync(join(distDir, "theme.css"), `/* auto-generated */\n@import "./theme.light.css";\n@import "./theme.dark.css";\n`)
+	writeFileSync(join(distDir, "index.css"), `/* auto-generated */\n@import "./tokens.base.css";\n@import "./theme.css";\n`)
+	writeFileSync(join(distDir, "tokens.json"), JSON.stringify(light, null, 2), "utf-8")
+	writeFileSync(join(distDir, "tokens.d.ts"), `declare const tokens: Record<string, unknown>;\nexport default tokens;\n`)
 
-	const indexCssContent = `/* This file is auto-generated. */
-/* Consider adding a CSS reset here if needed */
-@import "./tokens.base.css";
-@import "./theme.css";
-`
-	writeFileSync(join(distDir, "index.css"), indexCssContent)
-
-	console.log("✅ Entrypoint files created: theme.css, index.css")
 	console.log("🎉 Build completed successfully!")
 }
 
-main().catch((e) => {
-	console.error("❌ Build failed:", e)
-	process.exit(1)
-})
+main()
