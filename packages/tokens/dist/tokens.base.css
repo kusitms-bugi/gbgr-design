@@ -1,0 +1,85 @@
+/**
+ * Do not edit directly
+ * Generated on Tue, 21 Apr 2026 08:25:53 GMT
+ */
+
+:root {
+  --color-global-grey-50: #fafafa;
+  --color-global-grey-100: #f4f4f4;
+  --color-global-grey-200: #e9e9e9;
+  --color-global-grey-300: #d6d5d5;
+  --color-global-grey-900: #22201a;
+  --color-global-grey-800: #3f3d39;
+  --color-global-grey-700: #5a5854;
+  --color-global-grey-600: #767470;
+  --color-global-grey-500: #949391;
+  --color-global-grey-400: #b8b7b7;
+  --color-global-grey-opacity-800: #120f0acf;
+  --color-global-grey-opacity-900: #0d0b06eb;
+  --color-global-grey-opacity-600: #17140d96;
+  --color-global-grey-opacity-400: #12110e4d;
+  --color-global-grey-opacity-200: #24221f1a;
+  --color-global-grey-opacity-700: #0f0d08b0;
+  --color-global-grey-opacity-500: #17151075;
+  --color-global-grey-opacity-300: #1a18162e;
+  --color-global-grey-opacity-100: #272a2b0d;
+  --color-global-grey-opacity-50: #15161705;
+  --color-global-yellow-50: #fff9e6;
+  --color-global-yellow-800: #a87900;
+  --color-global-yellow-700: #cc9800;
+  --color-global-yellow-600: #e6ae00;
+  --color-global-yellow-500: #ffc61a;
+  --color-global-yellow-400: #fdd157;
+  --color-global-yellow-300: #ffdd78;
+  --color-global-yellow-200: #fde6a1;
+  --color-global-yellow-100: #fcefc7;
+  --color-global-yellow-900: #7a5900;
+  --color-global-yellow-opacity-50: #ffbf0024;
+  --color-global-yellow-opacity-100: #f2b60038;
+  --color-global-yellow-opacity-500: #ffbf00e6;
+  --color-global-yellow-opacity-400: #fcb900a8;
+  --color-global-yellow-opacity-200: #fabb005e;
+  --color-global-yellow-opacity-300: #ffbf0087;
+  --color-global-static-white-opacity-900: #ffffff;
+  --color-global-static-white-opacity-800: #fefefde3;
+  --color-global-static-white-opacity-700: #fffffdbf;
+  --color-global-static-white-opacity-600: #fffefc99;
+  --color-global-static-white-opacity-500: #fffefa78;
+  --color-global-static-white-opacity-400: #fdfff85c;
+  --color-global-static-white-opacity-200: #fffff730;
+  --color-global-static-white-opacity-100: #edede81a;
+  --color-global-static-white-opacity-300: #fffef745;
+  --color-global-static-white-opacity-50: #f2f2f00d;
+  --color-global-red-700: #d22030;
+  --color-global-red-900: #a51926;
+  --color-global-red-600: #e42939;
+  --color-global-red-800: #bc1b2a;
+  --color-global-red-opacity-400: #ed28316e;
+  --color-global-red-opacity-500: #ef222fb0;
+  --color-global-red-opacity-300: #ed28313d;
+  --color-global-red-opacity-200: #ed283121;
+  --color-global-red-opacity-100: #ed283114;
+  --color-global-red-opacity-50: #ef222f0d;
+  --color-global-red-400: #f66570;
+  --color-global-red-300: #fb8890;
+  --color-global-red-200: #feafb4;
+  --color-global-red-50: #ffeeee;
+  --color-global-red-500: #f04452;
+  --color-global-red-100: #ffd4d6;
+  --color-global-green-800: #028450;
+  --color-global-green-300: #3fd599;
+  --color-global-green-400: #15c47e;
+  --color-global-green-500: #03b26c;
+  --color-global-green-opacity-500: #009f6ae0;
+  --color-global-green-opacity-400: #12b26c96;
+  --color-global-green-opacity-50: #00b75c0d;
+  --color-global-green-opacity-200: #00b75c2e;
+  --color-global-green-opacity-100: #00b75c1a;
+  --color-global-green-opacity-300: #00b75c59;
+  --color-global-green-200: #76e4b8;
+  --color-global-green-700: #029359;
+  --color-global-green-50: #f0faf6;
+  --color-global-green-900: #027648;
+  --color-global-green-600: #02a262;
+  --color-global-green-100: #aeefd5;
+}
