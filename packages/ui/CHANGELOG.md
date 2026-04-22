@@ -1,5 +1,16 @@
 # @gbgr/ui
 
+## 0.1.0
+
+### Minor Changes
+
+- 3ede60f: Add a new token-driven `Checkbox` component with checked and indeterminate support, and export the related CSS entrypoints.
+
+### Patch Changes
+
+- Updated dependencies [3ede60f]
+  - @gbgr/react@0.2.0
+
 ## 0.0.3
 
 ### Patch Changes
