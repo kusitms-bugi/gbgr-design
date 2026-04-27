@@ -194,6 +194,149 @@ function generateDarkCss(vars, header) {
 	return css
 }
 
+// --- Primitives Processing ---
+
+function processPrimitives(primitives) {
+	const vars = []
+
+	// Spacing: Figma pixel-based (Spacing-4 → --spacing-4: 4px)
+	// + index-based for component compat (--spacing-1=4px through --spacing-6=32px)
+	const spacing = primitives.Spacing || {}
+	for (const [k, v] of Object.entries(spacing)) {
+		if (v && typeof v === "object" && "value" in v) {
+			const size = k.replace("Spacing-", "")
+			vars.push({ name: `spacing-${size}`, value: `${v.value}px`, type: v.type })
+		}
+	}
+	// Index-based spacing for component compat
+	const indexSpacing = [
+		["1", 4], ["2", 8], ["3", 12], ["4", 16], ["5", 24], ["6", 32],
+	]
+	for (const [idx, px] of indexSpacing) {
+		vars.push({ name: `spacing-${idx}`, value: `${px}px`, type: "number" })
+	}
+
+	// Border depth (from Figma Variables, not in tokens-studio.json)
+	// TODO: add to Figma tokens-studio.json when needed
+	// vars.push({ name: "border-depth0", value: "#ffffff", type: "color" })
+
+	// Misc component tokens (from Figma Variables, not in tokens-studio.json)
+	// TODO: add to Figma tokens-studio.json when needed
+	// vars.push({ name: "text-default", value: "#22201a", type: "color" })
+
+	// Radius: Radius-4 → --radius-4: 4px, Radius-full → --radius-full: 9999px
+	const radius = primitives.Radius || {}
+	for (const [k, v] of Object.entries(radius)) {
+		if (v && typeof v === "object" && "value" in v) {
+			const size = k.replace("Radius-", "").toLowerCase()
+			vars.push({ name: `radius-${size}`, value: `${v.value}px`, type: v.type })
+		}
+	}
+
+	// Typography Font Family
+	const families = primitives.Typography?.Font?.Family || {}
+	for (const [k, v] of Object.entries(families)) {
+		if (v && typeof v === "object" && "value" in v) {
+			vars.push({ name: `font-families-${k.toLowerCase()}`, value: v.value, type: "fontFamily" })
+		}
+	}
+
+	// Typography Font Weights
+	const weights = primitives.Typography?.Font?.Weight || {}
+	let weightIdx = 0
+	for (const [k, v] of Object.entries(weights)) {
+		if (v && typeof v === "object" && "value" in v) {
+			const numVal = ({ Regular: 400, Medium: 500, SemiBold: 600, Bold: 700 })[v.value] || v.value
+			vars.push({ name: `font-weights-pretendard-${weightIdx}`, value: numVal, type: "fontWeight" })
+			weightIdx++
+		}
+	}
+
+	// Font sizes: 2XS→10, XS→12, SM→14, MD→16, LG→18, XL→20, 2XL→24, 3XL→28, 4XL→32, 5XL→40, 6XL→48, 7XL→56
+	const fontSizes = primitives.Typography?.Font?.Size || {}
+	const sizeOrder = ["2XS", "XS", "SM", "MD", "LG", "XL", "2XL", "3XL", "4XL", "5XL", "6XL", "7XL"]
+	let sizeIdx = 0
+	for (const label of sizeOrder) {
+		if (fontSizes[label] && "value" in fontSizes[label]) {
+			vars.push({ name: `font-size-${sizeIdx}`, value: `${fontSizes[label].value}px`, type: "fontSize" })
+			sizeIdx++
+		}
+	}
+
+	// Letter spacing
+	const letterSpacings = primitives.Typography?.["Letter Spacing"] || {}
+	const lsOrder = ["XS", "SM", "None"]
+	let lsIdx = 0
+	for (const label of lsOrder) {
+		if (letterSpacings[label] && "value" in letterSpacings[label]) {
+			vars.push({ name: `letterspacing-${lsIdx}`, value: `${letterSpacings[label].value}px`, type: "letterSpacing" })
+			lsIdx++
+		}
+	}
+
+	// Line height
+	const lineHeights = primitives.Typography?.["Line Height"] || {}
+	const lhOrder = ["XS", "SM", "MD", "LG", "XL", "2XL", "3XL", "4XL", "5XL", "6XL"]
+	let lhIdx = 0
+	for (const label of lhOrder) {
+		if (lineHeights[label] && "value" in lineHeights[label]) {
+			vars.push({ name: `lineheight-${lhIdx}`, value: `${lineHeights[label].value}px`, type: "lineHeight" })
+			lhIdx++
+		}
+	}
+
+	return vars
+}
+
+// --- Typography Shorthand Processing ---
+
+function processTypographyShorthand(device, primitives) {
+	const vars = []
+
+	// Build resolved lookup from ALL tokens (primitives + device)
+	const allRaw = { ...stripExtensions(primitives), ...stripExtensions(device) }
+	const allLookup = buildLookup(allRaw)
+	let resolved = resolveAllRefs(allRaw, allLookup)
+	resolved = resolveCompositeValues(resolved, allLookup)
+
+	// Weight name → numeric
+	const weightMap = { Regular: 400, Medium: 500, SemiBold: 600, Bold: 700 }
+
+	const categories = ["Display", "Headline", "Title", "Body", "Caption", "Label"]
+	for (const cat of categories) {
+		const group = resolved[cat]
+		if (!group) continue
+
+		for (const [styleName, styleData] of Object.entries(group)) {
+			// Collect sub-properties
+			let weight = null, size = null, lineHeight = null
+			let hasSubProps = false
+
+			for (const [propName, propData] of Object.entries(styleData)) {
+				if (propData && typeof propData === "object" && "value" in propData) {
+					hasSubProps = true
+					let val = propData.value
+					if (propName === "Weight") {
+						weight = weightMap[val] || val
+					}
+					if (propName === "Size") size = val
+					if (propName === "Line Height") lineHeight = val
+				}
+			}
+
+			if (hasSubProps && weight && size) {
+				const varName = `${cat}-${styleName}`.toLowerCase().replace(/\s+/g, "-")
+				const lh = lineHeight || size
+				const family = "Pretendard"
+				const shorthand = `${weight} ${size}px/${lh}px "${family}"`
+				vars.push({ name: varName, value: shorthand, type: "typography" })
+			}
+		}
+	}
+
+	return vars
+}
+
 // --- Main ---
 
 function main() {
@@ -204,6 +347,8 @@ function main() {
 
 	const rawLight = stripExtensions(raw["Color/Light"] || {})
 	const rawDark = stripExtensions(raw["Color/Dark"] || {})
+	const rawPrimitives = raw["Primitives/Mode 1"] || {}
+	const rawDevice = raw["Device/Laptop"] || {}
 
 	const lightLookup = buildLookup(rawLight)
 	const darkLookup = buildLookup(rawDark)
@@ -220,6 +365,14 @@ function main() {
 	const lightVars = flattenTokens(light)
 	const darkVars = flattenTokens(dark)
 
+	// Process primitives (spacing, radius, font basics)
+	const primitiveVars = processPrimitives(rawPrimitives)
+	console.log(`📐 Primitives: ${primitiveVars.length} tokens`)
+
+	// Process typography shorthand from Device/Laptop
+	const typoVars = processTypographyShorthand(rawDevice, rawPrimitives)
+	console.log(`📐 Typography shorthand: ${typoVars.length} tokens`)
+
 	const lightMap = new Map(lightVars.map(v => [v.name, v.value]))
 	const darkDiffVars = darkVars.filter(v => {
 		const lv = lightMap.get(v.name)
@@ -230,10 +383,14 @@ function main() {
 
 	const header = ["Do not edit directly", `Generated on ${new Date().toUTCString()}`]
 
-	const baseVars = lightVars.filter(v => v.name.startsWith("color-global-"))
+	// Base: global colors + primitives (spacing, radius, font)
+	const baseColorVars = lightVars.filter(v => v.name.startsWith("color-global-"))
+	const baseVars = [...baseColorVars, ...primitiveVars]
 	writeFileSync(join(distDir, "tokens.base.css"), generateCss(baseVars, header), "utf-8")
 
-	const themeVars = lightVars.filter(v => !v.name.startsWith("color-global-"))
+	// Theme light: semantic colors + typography shorthand
+	const themeColorVars = lightVars.filter(v => !v.name.startsWith("color-global-"))
+	const themeVars = [...themeColorVars, ...typoVars]
 	writeFileSync(join(distDir, "theme.light.css"), generateCss(themeVars, header), "utf-8")
 
 	writeFileSync(join(distDir, "theme.dark.css"), generateDarkCss(darkDiffVars, header), "utf-8")

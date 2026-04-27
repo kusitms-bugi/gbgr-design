@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 22 Apr 2026 00:35:27 GMT
+ * Generated on Mon, 27 Apr 2026 04:09:15 GMT
  */
 
 :root {
@@ -82,4 +82,60 @@
   --color-global-green-900: #027648;
   --color-global-green-600: #02a262;
   --color-global-green-100: #aeefd5;
+  --spacing-2: 2px;
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-48: 48px;
+  --spacing-64: 64px;
+  --spacing-80: 80px;
+  --spacing-96: 96px;
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --radius-24: 24px;
+  --radius-12: 12px;
+  --radius-40: 40px;
+  --radius-4: 4px;
+  --radius-8: 8px;
+  --radius-32: 32px;
+  --radius-16: 16px;
+  --radius-2: 2px;
+  --radius-full: 9999px;
+  --font-families-pretendard: Pretendard;
+  --font-weights-pretendard-0: 400;
+  --font-weights-pretendard-1: 500;
+  --font-weights-pretendard-2: 600;
+  --font-weights-pretendard-3: 700;
+  --font-size-0: 10px;
+  --font-size-1: 12px;
+  --font-size-2: 14px;
+  --font-size-3: 16px;
+  --font-size-4: 18px;
+  --font-size-5: 20px;
+  --font-size-6: 24px;
+  --font-size-7: 28px;
+  --font-size-8: 32px;
+  --font-size-9: 40px;
+  --font-size-10: 48px;
+  --font-size-11: 56px;
+  --letterspacing-0: -1px;
+  --letterspacing-1: -0.5px;
+  --letterspacing-2: 0px;
+  --lineheight-0: 14px;
+  --lineheight-1: 16px;
+  --lineheight-2: 20px;
+  --lineheight-3: 24px;
+  --lineheight-4: 28px;
+  --lineheight-5: 32px;
+  --lineheight-6: 40px;
+  --lineheight-7: 48px;
+  --lineheight-8: 56px;
+  --lineheight-9: 64px;
 }
