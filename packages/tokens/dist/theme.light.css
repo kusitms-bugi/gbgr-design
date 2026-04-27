@@ -1,6 +1,6 @@
 /**
  * Do not edit directly
- * Generated on Wed, 22 Apr 2026 00:35:27 GMT
+ * Generated on Mon, 27 Apr 2026 04:30:32 GMT
  */
 
 :root {
@@ -116,4 +116,29 @@
   --textcase-none: none;
   --textdecoration-none: none;
   --paragraphindent-0: 0px;
+  --display-xl-bold: 700 56px/64px "Pretendard";
+  --display-lg-bold: 700 48px/56px "Pretendard";
+  --headline-xl-bold: 700 40px/48px "Pretendard";
+  --headline-md-bold: 700 28px/32px "Pretendard";
+  --headline-lg-bold: 700 32px/40px "Pretendard";
+  --title-sm-medium: 500 18px/20px "Pretendard";
+  --title-lg-semibold: 600 24px/28px "Pretendard";
+  --title-md-semibold: 600 20px/24px "Pretendard";
+  --title-sm-semibold: 600 18px/20px "Pretendard";
+  --body-md-regular: 400 16px/24px "Pretendard";
+  --body-sm-regular: 400 14px/20px "Pretendard";
+  --body-md-semibold: 600 16px/24px "Pretendard";
+  --body-sm-semibold: 600 14px/20px "Pretendard";
+  --body-md-medium: 500 16px/24px "Pretendard";
+  --body-sm-medium: 500 14px/20px "Pretendard";
+  --caption-md-medium: 500 12px/16px "Pretendard";
+  --caption-sm-regular: 400 10px/14px "Pretendard";
+  --caption-sm-medium: 500 10px/14px "Pretendard";
+  --label-lg-medium: 500 14px/20px "Pretendard";
+  --label-md-medium: 500 12px/16px "Pretendard";
+  --label-sm-medium: 600 10px/14px "Pretendard";
+  --label-lg-semibold: 600 14px/20px "Pretendard";
+  --label-md-regular: 400 12px/16px "Pretendard";
+  --label-xl-semibold: 600 16px/20px "Pretendard";
+  --label-xl-medium: 500 16px/20px "Pretendard";
 }
