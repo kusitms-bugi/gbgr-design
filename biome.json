@@ -1,6 +1,5 @@
 {
 	"$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
-
 	"assist": {
 		"actions": {
 			"source": {
@@ -8,7 +7,6 @@
 			}
 		}
 	},
-
 	"files": {
 		"ignoreUnknown": false,
 		"includes": [
@@ -16,15 +14,15 @@
 			"!!**/dist",
 			"!!**/.next",
 			"!!**/storybook-static",
-			"!!**/.turbo"
+			"!!**/.turbo",
+			"!!.claude",
+			"!!packages/tokens/src/tokens-studio.json"
 		]
 	},
-
 	"formatter": {
 		"enabled": true,
 		"includes": ["**"]
 	},
-
 	"linter": {
 		"enabled": true,
 		"rules": {
@@ -36,19 +34,16 @@
 			}
 		}
 	},
-
 	"css": {
 		"parser": {
 			"tailwindDirectives": true
 		}
 	},
-
 	"javascript": {
 		"formatter": {
 			"semicolons": "asNeeded"
 		}
 	},
-
 	"overrides": [
 		{
 			"includes": ["apps/docs/.docusaurus/**"],
