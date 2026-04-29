@@ -26,6 +26,6 @@
 		"@svgr/cli": "latest",
 		"@svgr/core": "^8.0.7",
 		"@svgr/plugin-jsx": "^8.0.7",
-		"react": "latest"
+		"react": "^19.2.5"
 	}
 }

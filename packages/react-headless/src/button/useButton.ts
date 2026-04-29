@@ -72,33 +72,33 @@ export function useButton(props: UseButtonProps) {
 		(event: MachineEvent) => {
 			if (isDisabled) return
 
-			setInternalState((prev) => {
-				switch (event.type) {
-					case "POINTER_ENTER": {
-						if (isPressedRef.current) return prev
-						return "hovered"
+				setInternalState((prev) => {
+					switch (event.type) {
+						case "POINTER_ENTER": {
+							if (isPressedRef.current) return prev
+							return "hovered"
+						}
+						case "POINTER_LEAVE": {
+							if (isPressedRef.current) return prev
+							return "idle"
+						}
+						case "POINTER_DOWN": {
+							isPressedRef.current = true
+							return "pressed"
+						}
+						case "POINTER_UP": {
+							isPressedRef.current = false
+							return event.isInside ? "hovered" : "idle"
+						}
+						case "POINTER_CANCEL": {
+							isPressedRef.current = false
+							return "idle"
+						}
+						default: {
+							return prev
+						}
 					}
-					case "POINTER_LEAVE": {
-						if (isPressedRef.current) return prev
-						return "idle"
-					}
-					case "POINTER_DOWN": {
-						isPressedRef.current = true
-						return "pressed"
-					}
-					case "POINTER_UP": {
-						isPressedRef.current = false
-						return event.isInside ? "hovered" : "idle"
-					}
-					case "POINTER_CANCEL": {
-						isPressedRef.current = false
-						return "idle"
-					}
-					default: {
-						return prev
-					}
-				}
-			})
+				})
 		},
 		[isDisabled],
 	)
@@ -183,9 +183,10 @@ export function useButton(props: UseButtonProps) {
 			type,
 			disabled: isDisabled,
 			"aria-disabled": isDisabled ? true : undefined,
+			"aria-busy": loading ? true : undefined,
 			"data-state": interactionState === "idle" ? undefined : interactionState,
 			"data-disabled": disabled ? "" : undefined,
-			"data-loading": loading ? "" : undefined,
+			"data-loading": loading ? "true" : undefined,
 			onClick: composeEventHandlers(onClick, handleClick),
 			onPointerEnter: composeEventHandlers(
 				onPointerEnter,

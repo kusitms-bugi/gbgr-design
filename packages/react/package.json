@@ -23,6 +23,7 @@
 		"./styles.css": "./src/styles.css"
 	},
 	"dependencies": {
+		"@gbgr/css": "workspace:*",
 		"@gbgr/icons": "workspace:*",
 		"@gbgr/react-headless": "workspace:*",
 		"clsx": "^2.1.1"
@@ -41,8 +42,8 @@
 	"devDependencies": {
 		"@types/react": "latest",
 		"@types/react-dom": "latest",
-		"react": "latest",
-		"react-dom": "latest",
+		"react": "^19.2.5",
+		"react-dom": "^19.2.5",
 		"typescript": "latest"
 	}
 }

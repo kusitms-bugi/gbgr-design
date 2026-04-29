@@ -232,17 +232,21 @@ function processPrimitives(primitives) {
 			})
 		}
 	}
-	// Index-based spacing for component compat
+	// Index-based spacing for component compat (only add if not already defined by Figma)
+	const existingSpacing = new Set(
+		vars.filter((v) => v.name.startsWith("spacing-")).map((v) => v.name),
+	)
 	const indexSpacing = [
 		["1", 4],
-		["2", 8],
 		["3", 12],
-		["4", 16],
 		["5", 24],
 		["6", 32],
 	]
 	for (const [idx, px] of indexSpacing) {
-		vars.push({ name: `spacing-${idx}`, value: `${px}px`, type: "number" })
+		const name = `spacing-${idx}`
+		if (!existingSpacing.has(name)) {
+			vars.push({ name, value: `${px}px`, type: "number" })
+		}
 	}
 
 	// Border depth (from Figma Variables, not in tokens-studio.json)
@@ -289,6 +293,11 @@ function processPrimitives(primitives) {
 			})
 			weightIdx++
 		}
+	}
+	// Semantic font-weight aliases
+	const weightMap = { regular: 400, medium: 500, semibold: 600, bold: 700 }
+	for (const [name, num] of Object.entries(weightMap)) {
+		vars.push({ name: `font-weight-${name}`, value: num, type: "fontWeight" })
 	}
 
 	// Font sizes: 2XS→10, XS→12, SM→14, MD→16, LG→18, XL→20, 2XL→24, 3XL→28, 4XL→32, 5XL→40, 6XL→48, 7XL→56
@@ -379,8 +388,9 @@ function processTypographyShorthand(device, primitives) {
 
 	const categories = [
 		"Display",
-		"Headline",
 		"Title",
+		"Headline",
+		"Subtitle",
 		"Body",
 		"Caption",
 		"Label",

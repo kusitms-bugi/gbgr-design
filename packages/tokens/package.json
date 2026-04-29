@@ -16,6 +16,7 @@
 	},
 	"scripts": {
 		"build": "npm run clean && node build/build.mjs",
+		"convert": "node ../../scripts/convert-figma-export.mjs",
 		"dev": "node build/build.mjs && node build/watch.mjs",
 		"watch": "node build/watch.mjs",
 		"clean": "rm -rf dist",
