@@ -5,8 +5,8 @@ import {
 import clsx from "clsx"
 import * as React from "react"
 
-export type ButtonTone = "primary" | "sub" | "grey"
-export type ButtonSize = "xs" | "sm" | "md" | "lg" | "xl"
+export type ButtonStyle = "primary" | "secondary" | "neutral" | "outline" | "ghost"
+export type ButtonSize = "sm" | "md" | "lg"
 
 export type ButtonPressEvent = HeadlessButtonPressEvent
 
@@ -14,7 +14,7 @@ export type ButtonProps = Omit<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,
 	"type"
 > & {
-	tone?: ButtonTone
+	style?: ButtonStyle
 	size?: ButtonSize
 	loading?: boolean
 	type?: "button" | "submit" | "reset"
@@ -26,14 +26,16 @@ export type ButtonProps = Omit<
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 	(props, ref) => {
 		const {
-			tone = "primary",
+			style = "primary",
 			size = "md",
+			loading = false,
 			className,
 			type = "button",
 			onPress,
 			startIcon,
 			endIcon,
 			children,
+			disabled,
 			...rest
 		} = props
 
@@ -41,6 +43,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 			...rest,
 			type,
 			onPress,
+			disabled: disabled || loading,
+			loading,
 		})
 
 		return (
@@ -49,28 +53,25 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 				ref={ref}
 				className={clsx(
 					"gbgr-button",
-					size === "xs"
-						? "gbgr-button--size-xs"
-						: size === "sm"
-							? "gbgr-button--size-sm"
-							: size === "md"
-								? "gbgr-button--size-md"
-								: size === "lg"
-									? "gbgr-button--size-lg"
-									: "gbgr-button--size-xl",
-					tone === "primary"
-						? "gbgr-button--tone-primary"
-						: tone === "sub"
-							? "gbgr-button--tone-sub"
-							: "gbgr-button--tone-grey",
+					`gbgr-button--size-${size}`,
+					`gbgr-button--style-${style}`,
 					className,
 				)}
 			>
 				{startIcon ? (
 					<span className="gbgr-button__icon">{startIcon}</span>
 				) : null}
-				{children}
-				{endIcon ? <span className="gbgr-button__icon">{endIcon}</span> : null}
+				<span className="gbgr-button__label">{children}</span>
+				{endIcon ? (
+					<span className="gbgr-button__icon">{endIcon}</span>
+				) : null}
+				{loading && (
+					<span className="gbgr-button__loader" aria-hidden="true">
+						<span className="gbgr-button__loader-dot" />
+						<span className="gbgr-button__loader-dot" />
+						<span className="gbgr-button__loader-dot" />
+					</span>
+				)}
 			</button>
 		)
 	},

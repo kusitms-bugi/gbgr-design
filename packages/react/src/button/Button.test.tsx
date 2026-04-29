@@ -58,7 +58,8 @@ describe("Button", () => {
 		const button = screen.getByRole("button", { name: "loading" })
 
 		expect((button as HTMLButtonElement).disabled).toBe(true)
-		expect(button.getAttribute("data-loading")).toBe("")
+		expect(button.getAttribute("data-loading")).toBe("true")
+		expect(button.getAttribute("aria-busy")).toBe("true")
 	})
 
 	it("포인터 이벤트에 따라 data-state를 반영한다", () => {

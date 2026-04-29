@@ -1,140 +1,296 @@
+/* ==============================================
+   Button — GBGR Design System
+   5 styles × 3 sizes × 6 states
+
+   Tailwind utilities require @import "tailwindcss" + @theme
+   to be loaded before this file (e.g. via @gbgr/css).
+   ============================================== */
+@reference "@gbgr/css";
+
+/* --- Base --- */
 .gbgr-button {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	gap: var(--spacing-2);
-	border: 0;
-	border-radius: var(--radius-full);
-	font-weight: var(--font-weights-pretendard-2);
-	cursor: pointer;
-	user-select: none;
+	@apply relative inline-flex items-center justify-center gap-1 border-0 cursor-pointer select-none whitespace-nowrap overflow-hidden;
 	-webkit-tap-highlight-color: transparent;
 	transition:
 		background-color 120ms ease,
 		color 120ms ease,
-		transform 60ms ease;
+		transform 60ms ease,
+		opacity 120ms ease;
 }
 
+/* --- State layer (::before) --- */
+.gbgr-button::before {
+	content: "";
+	@apply absolute inset-0 bg-transparent pointer-events-none;
+	border-radius: inherit;
+	transition: background-color 120ms ease;
+}
+
+/* --- Focus ring (::after) --- */
+.gbgr-button::after {
+	content: "";
+	@apply absolute pointer-events-none;
+	inset: -2px;
+	border: 2px solid transparent;
+	border-radius: var(--radius-full);
+	transition: border-color 120ms ease;
+}
+
+/* --- Icon --- */
 .gbgr-button__icon {
-	display: inline-flex;
-	align-items: center;
-	justify-content: center;
-	width: 16px;
-	height: 16px;
-	flex: 0 0 auto;
+	@apply inline-flex items-center justify-center shrink-0;
 	color: currentColor;
 }
 
 .gbgr-button__icon > svg {
-	width: 16px;
-	height: 16px;
-	display: block;
+	@apply block;
 }
 
-/* Docs/demo only: simple circle placeholder inside the icon slot */
-.gbgr-button__icon-placeholder {
-	width: 14px;
-	height: 14px;
-	border-radius: var(--radius-full);
-	border: 2px solid currentColor;
+/* --- Label --- */
+.gbgr-button__label {
+	@apply inline-flex items-center;
 }
 
-.gbgr-button:focus-visible {
-	outline: 2px solid var(--border-active);
-	outline-offset: 2px;
+/* --- Loader (3-dot pulse) --- */
+.gbgr-button__loader {
+	@apply absolute inset-0 inline-flex items-center justify-center;
+	gap: 4px;
 }
 
-.gbgr-button:disabled {
-	cursor: not-allowed;
+.gbgr-button__loader-dot {
+	@apply rounded-full;
+	width: 6px;
+	height: 6px;
+	background: currentColor;
+	animation: gbgr-button-dot-pulse 1.2s ease-in-out infinite;
 }
 
-.gbgr-button--size-xs {
-	min-height: 32px;
-	padding: var(--spacing-2) var(--spacing-3);
-	font-size: var(--font-size-2);
+.gbgr-button__loader-dot:nth-child(2) {
+	animation-delay: 0.2s;
 }
 
-.gbgr-button--size-sm {
-	min-height: 36px;
-	padding: var(--spacing-2) var(--spacing-4);
-	font-size: var(--font-size-3);
+.gbgr-button__loader-dot:nth-child(3) {
+	animation-delay: 0.4s;
+}
+
+@keyframes gbgr-button-dot-pulse {
+	0%,
+	80%,
+	100% {
+		opacity: 0.25;
+		transform: scale(0.8);
+	}
+	40% {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+/* ==============================================
+   Size variants
+   ============================================== */
+
+.gbgr-button--size-lg {
+	@apply rounded-full;
+	min-height: 46px;
+	padding: 10px 20px;
+	font: var(--body-lg-semibold);
+	letter-spacing: 0px;
+}
+
+.gbgr-button--size-lg .gbgr-button__icon {
+	@apply size-6;
+}
+
+.gbgr-button--size-lg .gbgr-button__icon > svg {
+	@apply size-6;
 }
 
 .gbgr-button--size-md {
+	@apply rounded-full;
 	min-height: 40px;
-	padding: var(--spacing-3) var(--spacing-4);
-	font-size: var(--font-size-3);
+	padding: 8px 16px;
+	font: var(--body-md-semibold);
+	letter-spacing: 0px;
 }
 
-.gbgr-button--size-lg {
-	min-height: 44px;
-	padding: var(--spacing-3) var(--spacing-5);
-	font-size: var(--font-size-4);
+.gbgr-button--size-md .gbgr-button__icon {
+	@apply size-6;
 }
 
-.gbgr-button--size-xl {
-	min-height: 54px;
-	padding: var(--spacing-4) var(--spacing-6);
-	font-size: var(--font-size-5);
+.gbgr-button--size-md .gbgr-button__icon > svg {
+	@apply size-6;
 }
 
-.gbgr-button--tone-primary {
-	background: var(--color-component-button-base-bg-primary-default);
-	color: var(--color-component-button-base-text-primary-default);
+.gbgr-button--size-sm {
+	@apply rounded-full;
+	min-height: 32px;
+	padding: 4px 12px;
+	font: var(--caption-md-semibold);
+	letter-spacing: 0px;
 }
 
-.gbgr-button--tone-primary:hover:not(:disabled),
-.gbgr-button--tone-primary[data-state="hover"]:not(:disabled) {
-	background: var(--color-component-button-base-bg-primary-hover);
+.gbgr-button--size-sm .gbgr-button__icon {
+	@apply size-4;
 }
 
-.gbgr-button--tone-primary:active:not(:disabled),
-.gbgr-button--tone-primary[data-state="pressed"]:not(:disabled) {
-	background: var(--color-component-button-base-bg-primary-pressed);
+.gbgr-button--size-sm .gbgr-button__icon > svg {
+	@apply size-4;
 }
 
-.gbgr-button--tone-primary:disabled {
-	background: var(--color-component-button-base-bg-primary-disabled);
-	color: var(--color-component-button-base-text-primary-disabled);
+/* ==============================================
+   Style variants
+   ============================================== */
+
+/* --- Primary --- */
+.gbgr-button--style-primary {
+	@apply rounded-full;
+	background: var(--color-semantic-accent-brand-default);
+	color: var(--color-semantic-static-black);
 }
 
-.gbgr-button--tone-sub {
-	background: var(--color-component-button-base-bg-sub-default);
-	color: var(--color-component-button-base-text-sub-default);
+.gbgr-button--style-primary:hover:not(:disabled)::before {
+	background: var(--color-semantic-interaction-state-layer-primary-hover);
 }
 
-.gbgr-button--tone-sub:hover:not(:disabled),
-.gbgr-button--tone-sub[data-state="hover"]:not(:disabled) {
-	background: var(--color-component-button-base-bg-sub-hover);
+.gbgr-button--style-primary:active:not(:disabled)::before {
+	background: var(--color-semantic-interaction-state-layer-primary-pressed);
 }
 
-.gbgr-button--tone-sub:active:not(:disabled),
-.gbgr-button--tone-sub[data-state="pressed"]:not(:disabled) {
-	background: var(--color-component-button-base-bg-sub-pressed);
-	color: var(--color-component-button-base-text-sub-pressed);
+.gbgr-button--style-primary:focus-visible::after {
+	border-color: var(--color-semantic-accent-brand-default);
 }
 
-.gbgr-button--tone-sub:disabled {
-	background: var(--color-component-button-base-bg-sub-default);
-	color: var(--color-component-button-base-text-sub-disabled);
+.gbgr-button--style-primary:disabled {
+	@apply cursor-not-allowed;
 }
 
-.gbgr-button--tone-grey {
-	background: var(--color-component-button-base-bg-grey-default);
-	color: var(--color-component-button-base-text-grey-default);
+/* --- Secondary --- */
+.gbgr-button--style-secondary {
+	@apply rounded-full;
+	background: var(--color-semantic-accent-brand-weak);
+	color: var(--color-semantic-accent-brand-strong);
 }
 
-.gbgr-button--tone-grey:hover:not(:disabled),
-.gbgr-button--tone-grey[data-state="hover"]:not(:disabled) {
-	background: var(--color-component-button-base-bg-grey-hover);
+.gbgr-button--style-secondary:hover:not(:disabled)::before {
+	background: var(--color-semantic-interaction-state-layer-secondary-hover);
 }
 
-.gbgr-button--tone-grey:active:not(:disabled),
-.gbgr-button--tone-grey[data-state="pressed"]:not(:disabled) {
-	background: var(--color-component-button-base-bg-grey-pressed);
+.gbgr-button--style-secondary:active:not(:disabled)::before {
+	background: var(--color-semantic-interaction-state-layer-secondary-pressed);
 }
 
-.gbgr-button--tone-grey:disabled {
-	background: var(--color-component-button-base-bg-grey-disabled);
-	color: var(--color-component-button-base-text-grey-disabled);
+.gbgr-button--style-secondary:focus-visible::after {
+	border-color: var(--color-semantic-accent-brand-default);
 }
+
+.gbgr-button--style-secondary:disabled {
+	@apply cursor-not-allowed;
+}
+
+/* --- Neutral --- */
+.gbgr-button--style-neutral {
+	@apply rounded-full;
+	background: var(--color-semantic-surface-overlay-raised);
+	color: var(--color-semantic-text-tertiary);
+}
+
+.gbgr-button--style-neutral:hover:not(:disabled)::before {
+	background: var(--color-semantic-interaction-state-layer-neutral-hover);
+}
+
+.gbgr-button--style-neutral:active:not(:disabled)::before {
+	background: var(--color-semantic-interaction-state-layer-neutral-pressed);
+}
+
+.gbgr-button--style-neutral:focus-visible::after {
+	border-color: var(--color-semantic-accent-brand-default);
+}
+
+.gbgr-button--style-neutral:disabled {
+	@apply cursor-not-allowed;
+}
+
+/* --- Outline --- */
+.gbgr-button--style-outline {
+	@apply bg-transparent rounded-full;
+	color: var(--color-semantic-text-tertiary);
+	border: 1px solid var(--color-semantic-border-strong);
+}
+
+.gbgr-button--style-outline:hover:not(:disabled)::before {
+	inset: -1px;
+	background: var(--color-semantic-interaction-state-layer-neutral-hover);
+}
+
+.gbgr-button--style-outline:active:not(:disabled)::before {
+	inset: -1px;
+	background: var(--color-semantic-interaction-state-layer-neutral-pressed);
+}
+
+.gbgr-button--style-outline:focus-visible::after {
+	border-color: var(--color-semantic-accent-brand-default);
+}
+
+.gbgr-button--style-outline:disabled {
+	@apply cursor-not-allowed;
+}
+
+/* --- Ghost --- */
+.gbgr-button--style-ghost {
+	@apply bg-transparent border-0;
+	border-radius: var(--radius-12);
+	color: var(--color-semantic-text-tertiary);
+}
+
+.gbgr-button--style-ghost:hover:not(:disabled)::before {
+	background: var(--color-semantic-interaction-state-layer-neutral-hover);
+	border-radius: var(--radius-12);
+}
+
+.gbgr-button--style-ghost:active:not(:disabled)::before {
+	background: var(--color-semantic-interaction-state-layer-neutral-pressed);
+	border-radius: var(--radius-12);
+}
+
+.gbgr-button--style-ghost:focus-visible::after {
+	border-color: var(--color-semantic-accent-brand-default);
+	border-radius: var(--radius-12);
+}
+
+.gbgr-button--style-ghost:disabled {
+	@apply cursor-not-allowed;
+}
+
+/* ==============================================
+   State: Pressed (scale)
+   ============================================== */
+.gbgr-button:active:not(:disabled) {
+	transform: scale(0.95);
+}
+
+/* ==============================================
+   State: Disabled (opacity)
+   ============================================== */
+.gbgr-button--style-primary:disabled,
+.gbgr-button--style-secondary:disabled {
+	opacity: 0.36;
+}
+
+.gbgr-button--style-neutral:disabled,
+.gbgr-button--style-outline:disabled,
+.gbgr-button--style-ghost:disabled {
+	opacity: 0.3;
+}
+
+/* ==============================================
+   State: Loading
+   ============================================== */
+.gbgr-button[data-loading="true"] {
+	@apply cursor-wait pointer-events-none;
+}
+
+.gbgr-button[data-loading="true"] > :not(.gbgr-button__loader) {
+	@apply invisible;
+}
+

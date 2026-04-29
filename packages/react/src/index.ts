@@ -16,7 +16,7 @@ export type {
 	ButtonPressEvent,
 	ButtonProps,
 	ButtonSize,
-	ButtonTone,
+	ButtonStyle,
 } from "./button/Button"
 export { Button } from "./button/Button"
 export type { CheckboxProps } from "./checkbox/Checkbox"
