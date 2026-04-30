@@ -1,0 +1,180 @@
+/* ==============================================
+   Segmented Control — GBGR Design System
+   2 styles (brand/default) × 2 sizes (lg/sm)
+
+   Tailwind utilities require @import "tailwindcss" + @theme
+   to be loaded before this file (e.g. via @gbgr/css).
+   ============================================== */
+@reference "@gbgr/tokens";
+
+/* --- Container --- */
+.gbgr-segmented-control {
+	@apply relative inline-flex items-center overflow-hidden;
+	transition: background-color 150ms ease;
+}
+
+/* --- Style: Brand (round) --- */
+.gbgr-segmented-control--style-brand {
+	background: var(--color-semantic-surface-overlay-sunken-strong);
+}
+
+.gbgr-segmented-control--style-brand.gbgr-segmented-control--size-lg {
+	padding: 3px;
+	border-radius: var(--radius-full);
+}
+
+.gbgr-segmented-control--style-brand.gbgr-segmented-control--size-sm {
+	padding: 2px;
+	border-radius: var(--radius-full);
+}
+
+/* --- Style: Default (curve) --- */
+.gbgr-segmented-control--style-default {
+	background: var(--color-semantic-surface-overlay-raised-strong);
+}
+
+.gbgr-segmented-control--style-default.gbgr-segmented-control--size-lg {
+	padding: 3px;
+	border-radius: 10px;
+}
+
+.gbgr-segmented-control--style-default.gbgr-segmented-control--size-sm {
+	padding: 2px;
+	border-radius: var(--radius-8);
+}
+
+/* --- Segment (base) --- */
+.gbgr-segmented-control__segment {
+	@apply relative flex items-center justify-center cursor-pointer select-none border-0 bg-transparent;
+	min-height: 0;
+	white-space: nowrap;
+	text-align: center;
+	transition:
+		background-color 150ms ease,
+		box-shadow 150ms ease,
+		color 150ms ease;
+}
+
+.gbgr-segmented-control__segment:focus-visible {
+	outline: 2px solid var(--color-semantic-surface-brand-default);
+	outline-offset: -2px;
+	border-radius: inherit;
+}
+
+/* --- Size lg: segment 100px wide --- */
+.gbgr-segmented-control--size-lg .gbgr-segmented-control__segment {
+	width: 100px;
+	padding: 5px 0;
+}
+
+/* --- Size sm: segment 52px wide --- */
+.gbgr-segmented-control--size-sm .gbgr-segmented-control__segment {
+	width: 52px;
+	padding: 4px 0;
+}
+
+/* --- Active indicator: Brand --- */
+.gbgr-segmented-control--style-brand
+.gbgr-segmented-control__segment[data-active] {
+	background: var(--color-semantic-surface-emphasis-low);
+	box-shadow: 0 1px 1.5px var(--color-semantic-shadow-weak);
+	border-radius: var(--radius-full);
+}
+
+/* --- Active indicator: Default --- */
+.gbgr-segmented-control--style-default
+.gbgr-segmented-control__segment[data-active] {
+	background: var(--color-semantic-surface-emphasis-high);
+	box-shadow: 0 1px 1.5px var(--color-semantic-shadow-weak);
+}
+
+.gbgr-segmented-control--style-default.gbgr-segmented-control--size-lg
+	.gbgr-segmented-control__segment[data-active] {
+	border-radius: var(--radius-8);
+}
+
+.gbgr-segmented-control--style-default.gbgr-segmented-control--size-sm
+	.gbgr-segmented-control__segment[data-active] {
+	border-radius: 6px;
+}
+
+/* --- Inactive segment --- */
+.gbgr-segmented-control__segment:not([data-active]) {
+	border-radius: inherit;
+}
+
+/* --- Typography: Brand lg (14px) --- */
+.gbgr-segmented-control--style-brand.gbgr-segmented-control--size-lg
+.gbgr-segmented-control__segment[data-active] {
+	font: var(--label-lg-semibold);
+	color: var(--color-semantic-surface-brand-default);
+}
+
+.gbgr-segmented-control--style-brand.gbgr-segmented-control--size-lg
+	.gbgr-segmented-control__segment:not([data-active]) {
+	font: var(--label-lg-medium);
+	color: var(--color-semantic-text-neutral-quinary);
+}
+
+/* --- Typography: Brand sm (12px) --- */
+.gbgr-segmented-control--style-brand.gbgr-segmented-control--size-sm
+.gbgr-segmented-control__segment[data-active] {
+	font: var(--label-md-medium);
+	color: var(--color-semantic-surface-brand-default);
+}
+
+.gbgr-segmented-control--style-brand.gbgr-segmented-control--size-sm
+	.gbgr-segmented-control__segment:not([data-active]) {
+	font: var(--label-md-medium);
+	color: var(--color-semantic-text-neutral-quinary);
+}
+
+/* --- Typography: Default lg (14px) --- */
+.gbgr-segmented-control--style-default.gbgr-segmented-control--size-lg
+.gbgr-segmented-control__segment[data-active] {
+	font: var(--label-lg-semibold);
+	color: var(--color-semantic-text-neutral-secondary);
+}
+
+.gbgr-segmented-control--style-default.gbgr-segmented-control--size-lg
+	.gbgr-segmented-control__segment:not([data-active]) {
+	font: var(--label-lg-medium);
+	color: var(--color-semantic-text-neutral-quinary);
+}
+
+/* --- Typography: Default sm (12px) --- */
+.gbgr-segmented-control--style-default.gbgr-segmented-control--size-sm
+.gbgr-segmented-control__segment[data-active] {
+	font: var(--label-md-medium);
+	color: var(--color-semantic-text-neutral-secondary);
+}
+
+.gbgr-segmented-control--style-default.gbgr-segmented-control--size-sm
+	.gbgr-segmented-control__segment:not([data-active]) {
+	font: var(--label-md-medium);
+	color: var(--color-semantic-text-neutral-quinary);
+}
+
+/* --- Divider (Default style only) --- */
+.gbgr-segmented-control__divider {
+	@apply shrink-0;
+	width: 1px;
+	background: var(--color-semantic-border-neutral-strong);
+}
+
+.gbgr-segmented-control--style-brand .gbgr-segmented-control__divider {
+	display: none;
+}
+
+.gbgr-segmented-control--size-lg .gbgr-segmented-control__divider {
+	height: 24px;
+}
+
+.gbgr-segmented-control--size-sm .gbgr-segmented-control__divider {
+	height: 16px;
+}
+
+/* --- Disabled --- */
+.gbgr-segmented-control[aria-disabled="true"] {
+	@apply pointer-events-none opacity-40;
+}

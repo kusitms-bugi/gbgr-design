@@ -46,6 +46,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Configure npm authentication
+        run: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
       - name: Create Release
         uses: changesets/action@v1
         with:

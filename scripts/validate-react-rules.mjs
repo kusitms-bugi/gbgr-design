@@ -35,7 +35,9 @@ async function validateFile(filePath) {
 	}
 
 	if (fileExtension === ".css") {
-		const matches = content.match(COLOR_REGEX) || []
+		// Strip var(...) blocks so fallback values inside CSS variables are not flagged
+		const contentWithoutVarFallbacks = content.replace(/var\([^)]+\)/g, "")
+		const matches = contentWithoutVarFallbacks.match(COLOR_REGEX) || []
 		const violations = matches.filter(
 			(match) => !ALLOWED_COLORS.includes(match.toLowerCase()),
 		)

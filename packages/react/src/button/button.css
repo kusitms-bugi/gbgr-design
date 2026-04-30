@@ -5,11 +5,11 @@
    Tailwind utilities require @import "tailwindcss" + @theme
    to be loaded before this file (e.g. via @gbgr/css).
    ============================================== */
-@reference "@gbgr/css";
+@reference "@gbgr/tokens";
 
 /* --- Base --- */
 .gbgr-button {
-	@apply relative inline-flex items-center justify-center gap-1 border-0 cursor-pointer select-none whitespace-nowrap overflow-hidden;
+	@apply relative inline-flex items-center justify-center gap-2 border-0 cursor-pointer select-none whitespace-nowrap overflow-visible outline-none;
 	-webkit-tap-highlight-color: transparent;
 	transition:
 		background-color 120ms ease,
@@ -30,7 +30,7 @@
 .gbgr-button::after {
 	content: "";
 	@apply absolute pointer-events-none;
-	inset: -2px;
+	inset: -4px;
 	border: 2px solid transparent;
 	border-radius: var(--radius-full);
 	transition: border-color 120ms ease;
@@ -94,7 +94,7 @@
 	@apply rounded-full;
 	min-height: 46px;
 	padding: 10px 20px;
-	font: var(--body-lg-semibold);
+	font: var(--body-md-semibold);
 	letter-spacing: 0px;
 }
 
@@ -115,18 +115,18 @@
 }
 
 .gbgr-button--size-md .gbgr-button__icon {
-	@apply size-6;
+	@apply size-5;
 }
 
 .gbgr-button--size-md .gbgr-button__icon > svg {
-	@apply size-6;
+	@apply size-5;
 }
 
 .gbgr-button--size-sm {
 	@apply rounded-full;
 	min-height: 32px;
 	padding: 4px 12px;
-	font: var(--caption-md-semibold);
+	font: var(--caption-md-medium);
 	letter-spacing: 0px;
 }
 
@@ -145,7 +145,7 @@
 /* --- Primary --- */
 .gbgr-button--style-primary {
 	@apply rounded-full;
-	background: var(--color-semantic-accent-brand-default);
+	background: var(--color-semantic-surface-brand-default);
 	color: var(--color-semantic-static-black);
 }
 
@@ -158,7 +158,7 @@
 }
 
 .gbgr-button--style-primary:focus-visible::after {
-	border-color: var(--color-semantic-accent-brand-default);
+	border-color: var(--color-semantic-surface-brand-default);
 }
 
 .gbgr-button--style-primary:disabled {
@@ -168,8 +168,8 @@
 /* --- Secondary --- */
 .gbgr-button--style-secondary {
 	@apply rounded-full;
-	background: var(--color-semantic-accent-brand-weak);
-	color: var(--color-semantic-accent-brand-strong);
+	background: var(--color-semantic-surface-brand-weak);
+	color: var(--color-semantic-text-brand-strong);
 }
 
 .gbgr-button--style-secondary:hover:not(:disabled)::before {
@@ -181,7 +181,7 @@
 }
 
 .gbgr-button--style-secondary:focus-visible::after {
-	border-color: var(--color-semantic-accent-brand-default);
+	border-color: var(--color-semantic-surface-brand-default);
 }
 
 .gbgr-button--style-secondary:disabled {
@@ -192,7 +192,7 @@
 .gbgr-button--style-neutral {
 	@apply rounded-full;
 	background: var(--color-semantic-surface-overlay-raised);
-	color: var(--color-semantic-text-tertiary);
+	color: var(--color-semantic-text-neutral-tertiary);
 }
 
 .gbgr-button--style-neutral:hover:not(:disabled)::before {
@@ -204,7 +204,7 @@
 }
 
 .gbgr-button--style-neutral:focus-visible::after {
-	border-color: var(--color-semantic-accent-brand-default);
+	border-color: var(--color-semantic-surface-brand-default);
 }
 
 .gbgr-button--style-neutral:disabled {
@@ -214,8 +214,8 @@
 /* --- Outline --- */
 .gbgr-button--style-outline {
 	@apply bg-transparent rounded-full;
-	color: var(--color-semantic-text-tertiary);
-	border: 1px solid var(--color-semantic-border-strong);
+	color: var(--color-semantic-text-neutral-tertiary);
+	border: 1px solid var(--color-semantic-border-neutral-strong);
 }
 
 .gbgr-button--style-outline:hover:not(:disabled)::before {
@@ -229,7 +229,7 @@
 }
 
 .gbgr-button--style-outline:focus-visible::after {
-	border-color: var(--color-semantic-accent-brand-default);
+	border-color: var(--color-semantic-surface-brand-default);
 }
 
 .gbgr-button--style-outline:disabled {
@@ -239,23 +239,37 @@
 /* --- Ghost --- */
 .gbgr-button--style-ghost {
 	@apply bg-transparent border-0;
+	color: var(--color-semantic-text-neutral-tertiary);
+}
+
+.gbgr-button--style-ghost.gbgr-button--size-lg {
 	border-radius: var(--radius-12);
-	color: var(--color-semantic-text-tertiary);
+	padding: 8px 16px;
+}
+
+.gbgr-button--style-ghost.gbgr-button--size-md {
+	border-radius: 10px;
+	padding: 6px 12px;
+}
+
+.gbgr-button--style-ghost.gbgr-button--size-sm {
+	border-radius: var(--radius-8);
+	padding: 4px 8px;
 }
 
 .gbgr-button--style-ghost:hover:not(:disabled)::before {
 	background: var(--color-semantic-interaction-state-layer-neutral-hover);
-	border-radius: var(--radius-12);
+	border-radius: inherit;
 }
 
 .gbgr-button--style-ghost:active:not(:disabled)::before {
 	background: var(--color-semantic-interaction-state-layer-neutral-pressed);
-	border-radius: var(--radius-12);
+	border-radius: inherit;
 }
 
 .gbgr-button--style-ghost:focus-visible::after {
-	border-color: var(--color-semantic-accent-brand-default);
-	border-radius: var(--radius-12);
+	border-color: var(--color-semantic-surface-brand-default);
+	border-radius: inherit;
 }
 
 .gbgr-button--style-ghost:disabled {
@@ -280,17 +294,16 @@
 .gbgr-button--style-neutral:disabled,
 .gbgr-button--style-outline:disabled,
 .gbgr-button--style-ghost:disabled {
-	opacity: 0.3;
+	opacity: 0.46;
 }
 
 /* ==============================================
    State: Loading
    ============================================== */
 .gbgr-button[data-loading="true"] {
-	@apply cursor-wait pointer-events-none;
+	@apply cursor-wait pointer-events-none overflow-hidden;
 }
 
 .gbgr-button[data-loading="true"] > :not(.gbgr-button__loader) {
 	@apply invisible;
 }
-

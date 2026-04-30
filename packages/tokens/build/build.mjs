@@ -1,5 +1,11 @@
 #!/usr/bin/env node
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import {
+	copyFileSync,
+	existsSync,
+	mkdirSync,
+	readFileSync,
+	writeFileSync,
+} from "node:fs"
 import { dirname, join } from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -431,6 +437,78 @@ function processTypographyShorthand(device, primitives) {
 	return vars
 }
 
+// --- Tailwind v4 @theme Generation ---
+
+function generateTailwindTheme(baseColorVars, themeColorVars, primitiveVars) {
+	const entries = []
+
+	// Global colors: --color-global-grey-500 → --color-grey-500: var(--color-global-grey-500)
+	for (const v of baseColorVars) {
+		if (v.name.startsWith("color-global-")) {
+			const tailwindName = v.name.replace("color-global-", "")
+			entries.push({
+				sort: `color-${tailwindName}`,
+				line: `--color-${tailwindName}: var(--${v.name})`,
+			})
+		}
+	}
+
+	// Semantic colors: pass through as-is
+	for (const v of themeColorVars) {
+		if (v.name.startsWith("color-semantic-")) {
+			entries.push({ sort: v.name, line: `--${v.name}: var(--${v.name})` })
+		}
+	}
+
+	// Elevation → shadow aliases
+	for (const v of themeColorVars) {
+		if (v.name.startsWith("elevation-")) {
+			const shadowName = v.name.replace("elevation-", "")
+			entries.push({
+				sort: `shadow-${shadowName}`,
+				line: `--shadow-${shadowName}: var(--${v.name})`,
+			})
+		}
+	}
+
+	// Primitives: spacing, radius, font-size, font-family, font-weight
+	for (const v of primitiveVars) {
+		if (v.name.startsWith("spacing-")) {
+			entries.push({ sort: v.name, line: `--${v.name}: var(--${v.name})` })
+		} else if (v.name.startsWith("radius-")) {
+			entries.push({ sort: v.name, line: `--${v.name}: var(--${v.name})` })
+		} else if (v.name.startsWith("font-size-")) {
+			entries.push({ sort: v.name, line: `--${v.name}: var(--${v.name})` })
+		} else if (v.name.startsWith("font-families-")) {
+			const normalName = v.name.replace("font-families-", "font-family-")
+			entries.push({
+				sort: normalName,
+				line: `--${normalName}: var(--${v.name})`,
+			})
+		} else if (v.name.startsWith("font-weight-")) {
+			entries.push({ sort: v.name, line: `--${v.name}: var(--${v.name})` })
+		}
+	}
+
+	// Sort deterministically
+	entries.sort((a, b) =>
+		a.sort.localeCompare(b.sort, undefined, { numeric: true }),
+	)
+
+	let css = "/**\n"
+	css += " * Tailwind v4 @theme — auto-generated\n"
+	css += ` * Generated on ${new Date().toUTCString()}\n`
+	css += " * Do not edit directly\n"
+	css += " */\n\n"
+	css += "@theme {\n"
+	for (const entry of entries) {
+		css += `\t${entry.line};\n`
+	}
+	css += "}\n"
+
+	return css
+}
+
 // --- Main ---
 
 function main() {
@@ -516,8 +594,14 @@ function main() {
 	)
 	writeFileSync(
 		join(distDir, "index.css"),
-		`/* auto-generated */\n@import "./tokens.base.css";\n@import "./theme.css";\n`,
+		`/* auto-generated */\n@import "tailwindcss";\n@import "./tokens.base.css";\n@import "./theme.css";\n@import "./tokens.tailwind.css";\n@import "./typography.css";\n`,
 	)
+
+	// Copy typography utilities
+	const typographySrc = join(pkgRoot, "src", "typography.css")
+	if (existsSync(typographySrc)) {
+		copyFileSync(typographySrc, join(distDir, "typography.css"))
+	}
 	writeFileSync(
 		join(distDir, "tokens.json"),
 		JSON.stringify(light, null, 2),
@@ -526,6 +610,17 @@ function main() {
 	writeFileSync(
 		join(distDir, "tokens.d.ts"),
 		`declare const tokens: Record<string, unknown>;\nexport default tokens;\n`,
+	)
+
+	// Tailwind v4 @theme
+	const tailwindCss = generateTailwindTheme(
+		baseColorVars,
+		themeColorVars,
+		primitiveVars,
+	)
+	writeFileSync(join(distDir, "tokens.tailwind.css"), tailwindCss, "utf-8")
+	console.log(
+		`🎨 Tailwind @theme: ${tailwindCss.split("\n").filter((l) => l.includes("--")).length} entries`,
 	)
 
 	console.log("🎉 Build completed successfully!")

@@ -1,6 +1,8 @@
-import { useCheckbox } from "@gbgr/react-headless"
-import clsx from "clsx"
 import * as React from "react"
+import { useCheckbox } from "../hooks/checkbox/useCheckbox"
+import { cn } from "../utils/cn"
+
+export type CheckboxStyle = "fill" | "clear" | "outline"
 
 export type CheckboxProps = Omit<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -9,6 +11,7 @@ export type CheckboxProps = Omit<
 	checked?: boolean
 	defaultChecked?: boolean
 	onCheckedChange?: (checked: boolean) => void
+	style?: CheckboxStyle
 }
 
 export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
@@ -17,6 +20,7 @@ export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
 			checked,
 			defaultChecked,
 			onCheckedChange,
+			style = "fill",
 			className,
 			children,
 			...rest
@@ -33,7 +37,7 @@ export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
 			<button
 				{...buttonProps}
 				ref={ref}
-				className={clsx("gbgr-checkbox", className)}
+				className={cn("gbgr-checkbox", `gbgr-checkbox--${style}`, className)}
 			>
 				<span className="gbgr-checkbox__control" aria-hidden="true">
 					<svg

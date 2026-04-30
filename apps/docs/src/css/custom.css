@@ -1,4 +1,4 @@
-@import "@gbgr/css";
+@import "@gbgr/tokens";
 @import "@gbgr/react/styles.css";
 
 :root {

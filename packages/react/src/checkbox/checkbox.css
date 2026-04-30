@@ -1,3 +1,13 @@
+/* ==============================================
+   Checkbox — GBGR Design System
+   3 styles (fill, clear, outline) × 4 states
+
+   20×20 touch target, 16×16 control inside.
+   ============================================== */
+
+/* ==============================================
+   Base
+   ============================================== */
 .gbgr-checkbox {
 	display: inline-flex;
 	align-items: center;
@@ -8,58 +18,258 @@
 	cursor: pointer;
 	user-select: none;
 	-webkit-tap-highlight-color: transparent;
+	outline: none;
 	color: var(--color-text-default, inherit);
 	font-family: inherit;
 	font-size: var(--font-size-3);
 	line-height: 1.4;
+	position: relative;
 }
 
 .gbgr-checkbox:disabled {
 	cursor: not-allowed;
-	opacity: 0.6;
 }
 
+/* --- Control (the 20×20 checkbox area) --- */
 .gbgr-checkbox__control {
-	display: inline-flex;
+	position: relative;
+	display: flex;
 	align-items: center;
 	justify-content: center;
 	width: 20px;
 	height: 20px;
-	border-radius: 10px;
-	background: var(--color-global-grey-100);
-	color: var(--color-global-grey-0);
 	flex: 0 0 auto;
-	transition: background-color 120ms ease;
+	border-radius: 6px;
 }
 
+/* --- Check mark --- */
 .gbgr-checkbox__mark {
-	width: 10.5px;
-	height: 7.5px;
 	display: block;
+	width: 8px;
+	height: 6px;
+	position: relative;
+	z-index: 1;
+	transition: opacity 120ms ease;
 }
 
-.gbgr-checkbox:focus-visible .gbgr-checkbox__control {
-	outline: 2px solid var(--border-active);
-	outline-offset: 2px;
-}
-
-.gbgr-checkbox[data-state="hovered"] .gbgr-checkbox__control,
-.gbgr-checkbox[data-state="pressed"] .gbgr-checkbox__control {
-	background: var(--color-global-grey-200);
-}
-
-.gbgr-checkbox[data-checked="checked"] .gbgr-checkbox__control {
-	background: var(--color-component-button-base-bg-primary-default);
-}
-
-.gbgr-checkbox[data-checked="checked"][data-state="hovered"]
-	.gbgr-checkbox__control,
-.gbgr-checkbox[data-checked="checked"][data-state="pressed"]
-	.gbgr-checkbox__control {
-	background: var(--color-component-button-base-bg-primary-hover);
-}
-
+/* --- Label --- */
 .gbgr-checkbox__label {
 	display: inline-flex;
 	align-items: center;
+}
+
+/* ==============================================
+   Style: Fill
+   ============================================== */
+
+/* Fill — Inner 16×16 box */
+.gbgr-checkbox--fill .gbgr-checkbox__control::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 16px;
+	height: 16px;
+	border-radius: 4px;
+	background: var(
+		--color-semantic-surface-overlay-raised-strong,
+		rgba(255, 255, 255, 0.08)
+	);
+	transition: background-color 120ms ease;
+}
+
+/* Fill — Unchecked border */
+.gbgr-checkbox--fill:not([data-checked="checked"])
+.gbgr-checkbox__control::before {
+	border: 1px solid
+		var(--color-semantic-border-neutral-subtle, rgba(255, 255, 255, 0.05));
+}
+
+/* Fill — Checked (brand bg) */
+.gbgr-checkbox--fill[data-checked="checked"] .gbgr-checkbox__control::before {
+	background: var(--color-semantic-accent-brand-default, #ffc61a);
+	border: none;
+}
+
+/* Fill — Mark hidden when unchecked */
+.gbgr-checkbox--fill:not([data-checked="checked"]) .gbgr-checkbox__mark {
+	opacity: 0;
+}
+
+/* Fill — Mark color */
+.gbgr-checkbox--fill[data-checked="checked"] .gbgr-checkbox__mark {
+	color: var(--color-semantic-static-white, white);
+}
+
+/* Fill — Hover: state layer */
+.gbgr-checkbox--fill:hover:not(:disabled) .gbgr-checkbox__control::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: 6px;
+	pointer-events: none;
+	transition: background-color 120ms ease;
+}
+
+.gbgr-checkbox--fill:not([data-checked="checked"]):hover:not(:disabled)
+	.gbgr-checkbox__control::after {
+	background: var(
+		--color-semantic-interaction-state-layer-neutral-hover,
+		rgba(21, 22, 23, 0.02)
+	);
+}
+
+.gbgr-checkbox--fill[data-checked="checked"]:hover:not(:disabled)
+	.gbgr-checkbox__control::after {
+	background: var(
+		--color-semantic-interaction-state-layer-primary-hover,
+		rgba(112, 60, 0, 0.1)
+	);
+}
+
+/* Fill — Focus ring */
+.gbgr-checkbox--fill:focus-visible .gbgr-checkbox__control::after {
+	content: "";
+	position: absolute;
+	inset: -2px;
+	border: 2px solid var(--color-semantic-accent-brand-default, #ffc61a);
+	border-radius: 8px;
+	pointer-events: none;
+}
+
+/* Fill — Disabled */
+.gbgr-checkbox--fill:disabled:not([data-checked="checked"]) {
+	opacity: var(--color-semantic-interaction-disabled-neutral, 0.46);
+}
+
+.gbgr-checkbox--fill:disabled[data-checked="checked"] {
+	opacity: var(--color-semantic-interaction-disabled-brand, 0.36);
+}
+
+/* ==============================================
+   Style: Clear
+   ============================================== */
+
+/* Clear — No background, just the check mark */
+.gbgr-checkbox--clear .gbgr-checkbox__control::before {
+	content: none;
+}
+
+/* Clear — Mark always visible, styled by checked state */
+.gbgr-checkbox--clear .gbgr-checkbox__mark {
+	opacity: 1;
+	color: var(
+		--color-semantic-icon-neutral-quaternary,
+		rgba(246, 247, 240, 0.19)
+	);
+	transition:
+		color 120ms ease,
+		opacity 120ms ease;
+}
+
+.gbgr-checkbox--clear[data-checked="checked"] .gbgr-checkbox__mark {
+	color: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+/* Clear — Focus ring */
+.gbgr-checkbox--clear:focus-visible .gbgr-checkbox__control::after {
+	content: "";
+	position: absolute;
+	inset: -2px;
+	border: 2px solid var(--color-semantic-accent-brand-default, #ffc61a);
+	border-radius: 8px;
+	pointer-events: none;
+}
+
+/* Clear — Hover: mark color shift */
+.gbgr-checkbox--clear:not([data-checked="checked"]):hover:not(:disabled)
+.gbgr-checkbox__mark {
+	color: var(--color-semantic-icon-neutral-tertiary, rgba(253, 255, 245, 0.27));
+}
+
+.gbgr-checkbox--clear[data-checked="checked"]:hover:not(:disabled)
+	.gbgr-checkbox__mark {
+	color: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+/* Clear — Disabled */
+.gbgr-checkbox--clear:disabled:not([data-checked="checked"]) {
+	opacity: var(--color-semantic-interaction-disabled-neutral, 0.46);
+}
+
+.gbgr-checkbox--clear:disabled[data-checked="checked"] {
+	opacity: var(--color-semantic-interaction-disabled-brand, 0.36);
+}
+
+/* ==============================================
+   Style: Outline
+   ============================================== */
+
+/* Outline — 16×16 box with border */
+.gbgr-checkbox--outline .gbgr-checkbox__control::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 16px;
+	height: 16px;
+	border-radius: 4px;
+	border: 1.5px solid
+		var(--color-semantic-icon-neutral-quaternary, rgba(246, 247, 240, 0.19));
+	background: transparent;
+	transition:
+		border-color 120ms ease,
+		background-color 120ms ease;
+}
+
+/* Outline — Checked (brand border, no fill) */
+.gbgr-checkbox--outline[data-checked="checked"]
+.gbgr-checkbox__control::before {
+	border-color: var(--color-semantic-accent-brand-default, #ffc61a);
+	background: transparent;
+}
+
+/* Outline — Mark hidden when unchecked */
+.gbgr-checkbox--outline:not([data-checked="checked"]) .gbgr-checkbox__mark {
+	opacity: 0;
+}
+
+/* Outline — Mark color (brand, no background) */
+.gbgr-checkbox--outline[data-checked="checked"] .gbgr-checkbox__mark {
+	color: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+/* Outline — Hover: border color shift */
+.gbgr-checkbox--outline:not([data-checked="checked"]):hover:not(:disabled)
+.gbgr-checkbox__control::before {
+	border-color: var(
+		--color-semantic-icon-neutral-tertiary,
+		rgba(253, 255, 245, 0.27)
+	);
+}
+
+.gbgr-checkbox--outline[data-checked="checked"]:hover:not(:disabled)
+	.gbgr-checkbox__control::before {
+	border-color: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+/* Outline — Focus ring */
+.gbgr-checkbox--outline:focus-visible .gbgr-checkbox__control::after {
+	content: "";
+	position: absolute;
+	inset: -2px;
+	border: 2px solid var(--color-semantic-accent-brand-default, #ffc61a);
+	border-radius: 8px;
+	pointer-events: none;
+}
+
+/* Outline — Disabled */
+.gbgr-checkbox--outline:disabled:not([data-checked="checked"]) {
+	opacity: var(--color-semantic-interaction-disabled-neutral, 0.46);
+}
+
+.gbgr-checkbox--outline:disabled[data-checked="checked"] {
+	opacity: 0.24;
 }

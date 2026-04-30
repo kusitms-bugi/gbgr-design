@@ -1,0 +1,236 @@
+/* ==============================================
+   Radio — GBGR Design System
+   2 styles (fill, outline) × 4 states
+
+   20×20 SVG:
+   - Fill: <circle r=8> + <circle r=3> dot + hover overlay
+   - Outline selected: even-odd path + hover overlay
+   ============================================== */
+
+/* ==============================================
+   Base
+   ============================================== */
+.gbgr-radio {
+	display: inline-flex;
+	align-items: center;
+	gap: var(--spacing-2);
+	padding: 0;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	user-select: none;
+	-webkit-tap-highlight-color: transparent;
+	outline: none;
+	color: var(--color-text-default, inherit);
+	font-family: inherit;
+	font-size: var(--font-size-3);
+	line-height: 1.4;
+	position: relative;
+}
+
+.gbgr-radio:disabled {
+	cursor: not-allowed;
+}
+
+/* --- SVG --- */
+.gbgr-radio__svg {
+	display: block;
+	width: 20px;
+	height: 20px;
+	flex: 0 0 auto;
+}
+
+/* --- Circle (outer 16×16) --- */
+.gbgr-radio__circle {
+	transition:
+		fill 120ms ease,
+		stroke 120ms ease;
+}
+
+/* --- Dot (Fill-selected inner, r=3) --- */
+.gbgr-radio__dot {
+	fill: var(--color-semantic-static-white, white);
+	opacity: 0;
+	transition: opacity 120ms ease;
+}
+
+/* --- Outline-selected even-odd path --- */
+.gbgr-radio__outline-dot {
+	opacity: 0;
+	transition:
+		opacity 120ms ease,
+		fill 120ms ease;
+}
+
+/* --- Hover overlay: hidden by default --- */
+.gbgr-radio__hover-overlay {
+	opacity: 0;
+	transition: opacity 120ms ease;
+}
+
+.gbgr-radio__hover-rect {
+	width: 16px;
+	height: 16px;
+}
+
+/* --- Label --- */
+.gbgr-radio__label {
+	display: inline-flex;
+	align-items: center;
+}
+
+/* ==============================================
+   Style: Fill
+   ============================================== */
+
+/* Fill — Unselected: raised strong surface */
+.gbgr-radio--fill .gbgr-radio__circle {
+	fill: var(
+		--color-semantic-surface-overlay-raised-strong,
+		rgba(255, 255, 255, 0.08)
+	);
+	stroke: none;
+}
+
+/* Fill — Selected: brand bg + white dot */
+.gbgr-radio--fill[data-checked="checked"] .gbgr-radio__circle {
+	fill: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+.gbgr-radio--fill[data-checked="checked"] .gbgr-radio__dot {
+	opacity: 1;
+}
+
+/* Fill: hide outline-dot (never used) */
+.gbgr-radio--fill .gbgr-radio__outline-dot {
+	display: none;
+}
+
+/* Fill — Hover unselected: neutral state layer */
+.gbgr-radio--fill:not([data-checked="checked"]):hover:not(:disabled)
+.gbgr-radio__hover-rect {
+	fill: var(
+		--color-semantic-interaction-state-layer-neutral-hover,
+		rgba(237, 237, 233, 0.1)
+	);
+}
+
+.gbgr-radio--fill:not([data-checked="checked"]):hover:not(:disabled)
+	.gbgr-radio__hover-overlay {
+	opacity: 1;
+}
+
+/* Fill — Hover selected: primary state layer */
+.gbgr-radio--fill[data-checked="checked"]:hover:not(:disabled)
+.gbgr-radio__hover-rect {
+	fill: var(
+		--color-semantic-interaction-state-layer-primary-hover,
+		rgba(255, 255, 255, 0.41)
+	);
+}
+
+.gbgr-radio--fill[data-checked="checked"]:hover:not(:disabled)
+	.gbgr-radio__hover-overlay {
+	opacity: 1;
+}
+
+/* Fill — Focus ring */
+.gbgr-radio--fill:focus-visible .gbgr-radio__control::after {
+	content: "";
+	position: absolute;
+	inset: -2px;
+	border: 2px solid var(--color-semantic-accent-brand-default, #ffc61a);
+	border-radius: 9999px;
+	pointer-events: none;
+}
+
+/* Fill — Disabled unselected */
+.gbgr-radio--fill:disabled:not([data-checked="checked"]) {
+	opacity: var(--color-semantic-interaction-disabled-neutral, 0.46);
+}
+
+.gbgr-radio--fill:disabled:not([data-checked="checked"]) .gbgr-radio__circle {
+	stroke: var(--color-semantic-border-neutral-subtle, rgba(36, 34, 31, 0.1));
+	stroke-width: 1px;
+	fill: transparent;
+}
+
+/* Fill — Disabled selected */
+.gbgr-radio--fill:disabled[data-checked="checked"] {
+	opacity: var(--color-semantic-interaction-disabled-brand, 0.36);
+}
+
+/* ==============================================
+   Style: Outline
+   ============================================== */
+
+/* Outline — Unselected: neutral quaternary border */
+.gbgr-radio--outline .gbgr-radio__circle {
+	fill: transparent;
+	stroke: var(
+		--color-semantic-icon-neutral-quaternary,
+		rgba(246, 247, 240, 0.19)
+	);
+	stroke-width: 1.5;
+}
+
+/* Outline: hide fill-dot (never used for outline) */
+.gbgr-radio--outline .gbgr-radio__dot {
+	display: none;
+}
+
+/* Outline — Selected: hide circle, show even-odd path */
+.gbgr-radio--outline[data-checked="checked"] .gbgr-radio__circle {
+	display: none;
+}
+
+.gbgr-radio--outline[data-checked="checked"] .gbgr-radio__outline-dot {
+	opacity: 1;
+	fill: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+/* Outline — Hover unselected: brand border */
+.gbgr-radio--outline:not([data-checked="checked"]):hover:not(:disabled)
+.gbgr-radio__circle {
+	stroke: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+/* Outline — Hover selected: primary state layer */
+.gbgr-radio--outline[data-checked="checked"]:hover:not(:disabled)
+.gbgr-radio__hover-rect {
+	fill: var(
+		--color-semantic-interaction-state-layer-primary-hover,
+		rgba(255, 255, 255, 0.41)
+	);
+}
+
+.gbgr-radio--outline[data-checked="checked"]:hover:not(:disabled)
+	.gbgr-radio__hover-overlay {
+	opacity: 1;
+}
+
+/* Outline — Focus ring */
+.gbgr-radio--outline:focus-visible .gbgr-radio__control::after {
+	content: "";
+	position: absolute;
+	inset: -2px;
+	border: 2px solid var(--color-semantic-accent-brand-default, #ffc61a);
+	border-radius: 9999px;
+	pointer-events: none;
+}
+
+/* Outline — Disabled unselected */
+.gbgr-radio--outline:disabled:not([data-checked="checked"]) {
+	opacity: var(--color-semantic-interaction-disabled-neutral, 0.46);
+}
+
+.gbgr-radio--outline:disabled:not([data-checked="checked"])
+	.gbgr-radio__circle {
+	stroke: var(--color-semantic-border-neutral-subtle, rgba(36, 34, 31, 0.1));
+	fill: var(--color-semantic-surface-overlay-raised, rgba(39, 42, 43, 0.05));
+}
+
+/* Outline — Disabled selected */
+.gbgr-radio--outline:disabled[data-checked="checked"] {
+	opacity: var(--color-semantic-interaction-disabled-brand, 0.36);
+}

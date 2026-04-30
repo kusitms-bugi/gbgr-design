@@ -6,156 +6,368 @@ export type CssToken = { name: string; value: string }
 
 export const tokensBase: CssToken[] = [
 	{
-		"name": "color-global-grey-0",
-		"value": "#ffffff"
-	},
-	{
-		"name": "color-global-grey-25",
-		"value": "#f9f8f7"
-	},
-	{
 		"name": "color-global-grey-50",
-		"value": "#efeeed"
+		"value": "#fafafa"
 	},
 	{
 		"name": "color-global-grey-100",
-		"value": "#e3e1df"
+		"value": "#f4f4f4"
 	},
 	{
 		"name": "color-global-grey-200",
-		"value": "#c6c5c3"
+		"value": "#e9e9e9"
 	},
 	{
 		"name": "color-global-grey-300",
-		"value": "#a8a7a4"
-	},
-	{
-		"name": "color-global-grey-400",
-		"value": "#7e7e7b"
-	},
-	{
-		"name": "color-global-grey-500",
-		"value": "#6a6966"
-	},
-	{
-		"name": "color-global-grey-600",
-		"value": "#3c3b3a"
-	},
-	{
-		"name": "color-global-grey-700",
-		"value": "#2c2c2c"
-	},
-	{
-		"name": "color-global-grey-800",
-		"value": "#212121"
+		"value": "#d6d5d5"
 	},
 	{
 		"name": "color-global-grey-900",
-		"value": "#181817"
+		"value": "#22201a"
 	},
 	{
-		"name": "color-global-grey-950",
-		"value": "#141413"
+		"name": "color-global-grey-800",
+		"value": "#3f3d39"
 	},
 	{
-		"name": "color-global-grey-1000",
-		"value": "#000000"
+		"name": "color-global-grey-700",
+		"value": "#5a5854"
+	},
+	{
+		"name": "color-global-grey-600",
+		"value": "#767470"
+	},
+	{
+		"name": "color-global-grey-500",
+		"value": "#949391"
+	},
+	{
+		"name": "color-global-grey-400",
+		"value": "#b8b7b7"
+	},
+	{
+		"name": "color-global-grey-opacity-800",
+		"value": "#120f0acf"
+	},
+	{
+		"name": "color-global-grey-opacity-900",
+		"value": "#0d0b06eb"
+	},
+	{
+		"name": "color-global-grey-opacity-600",
+		"value": "#17140d96"
+	},
+	{
+		"name": "color-global-grey-opacity-400",
+		"value": "#12110e4d"
+	},
+	{
+		"name": "color-global-grey-opacity-200",
+		"value": "#24221f1a"
+	},
+	{
+		"name": "color-global-grey-opacity-700",
+		"value": "#0f0d08b0"
+	},
+	{
+		"name": "color-global-grey-opacity-500",
+		"value": "#17151075"
+	},
+	{
+		"name": "color-global-grey-opacity-300",
+		"value": "#1a18162e"
+	},
+	{
+		"name": "color-global-grey-opacity-100",
+		"value": "#272a2b0d"
+	},
+	{
+		"name": "color-global-grey-opacity-50",
+		"value": "#15161705"
 	},
 	{
 		"name": "color-global-yellow-50",
 		"value": "#fff9e6"
 	},
 	{
-		"name": "color-global-yellow-100",
-		"value": "#ffebb0"
-	},
-	{
-		"name": "color-global-yellow-200",
-		"value": "#ffe28a"
-	},
-	{
-		"name": "color-global-yellow-300",
-		"value": "#ffd454"
-	},
-	{
-		"name": "color-global-yellow-400",
-		"value": "#ffcb31"
-	},
-	{
-		"name": "color-global-yellow-500",
-		"value": "#ffbf00"
-	},
-	{
-		"name": "color-global-yellow-600",
-		"value": "#e8ae00"
+		"name": "color-global-yellow-800",
+		"value": "#a87900"
 	},
 	{
 		"name": "color-global-yellow-700",
-		"value": "#d29a00"
+		"value": "#cc9800"
 	},
 	{
-		"name": "color-global-yellow-800",
-		"value": "#bd8700"
+		"name": "color-global-yellow-600",
+		"value": "#e6ae00"
+	},
+	{
+		"name": "color-global-yellow-500",
+		"value": "#ffc61a"
+	},
+	{
+		"name": "color-global-yellow-400",
+		"value": "#fdd157"
+	},
+	{
+		"name": "color-global-yellow-300",
+		"value": "#ffdd78"
+	},
+	{
+		"name": "color-global-yellow-200",
+		"value": "#fde6a1"
+	},
+	{
+		"name": "color-global-yellow-100",
+		"value": "#fcefc7"
 	},
 	{
 		"name": "color-global-yellow-900",
-		"value": "#a67100"
+		"value": "#7a5900"
 	},
 	{
-		"name": "radius-xs",
+		"name": "color-global-yellow-opacity-50",
+		"value": "#ffbf0024"
+	},
+	{
+		"name": "color-global-yellow-opacity-100",
+		"value": "#f2b60038"
+	},
+	{
+		"name": "color-global-yellow-opacity-500",
+		"value": "#ffbf00e6"
+	},
+	{
+		"name": "color-global-yellow-opacity-400",
+		"value": "#fcb900a8"
+	},
+	{
+		"name": "color-global-yellow-opacity-200",
+		"value": "#fabb005e"
+	},
+	{
+		"name": "color-global-yellow-opacity-300",
+		"value": "#ffbf0087"
+	},
+	{
+		"name": "color-global-static-white-opacity-900",
+		"value": "#ffffff"
+	},
+	{
+		"name": "color-global-static-white-opacity-800",
+		"value": "#fefefde3"
+	},
+	{
+		"name": "color-global-static-white-opacity-700",
+		"value": "#fffffdbf"
+	},
+	{
+		"name": "color-global-static-white-opacity-600",
+		"value": "#fffefc99"
+	},
+	{
+		"name": "color-global-static-white-opacity-500",
+		"value": "#fffefa78"
+	},
+	{
+		"name": "color-global-static-white-opacity-400",
+		"value": "#fdfff85c"
+	},
+	{
+		"name": "color-global-static-white-opacity-200",
+		"value": "#fffff730"
+	},
+	{
+		"name": "color-global-static-white-opacity-100",
+		"value": "#edede81a"
+	},
+	{
+		"name": "color-global-static-white-opacity-300",
+		"value": "#fffef745"
+	},
+	{
+		"name": "color-global-static-white-opacity-50",
+		"value": "#f2f2f00d"
+	},
+	{
+		"name": "color-global-red-700",
+		"value": "#d22030"
+	},
+	{
+		"name": "color-global-red-900",
+		"value": "#a51926"
+	},
+	{
+		"name": "color-global-red-600",
+		"value": "#e42939"
+	},
+	{
+		"name": "color-global-red-800",
+		"value": "#bc1b2a"
+	},
+	{
+		"name": "color-global-red-opacity-400",
+		"value": "#ed28316e"
+	},
+	{
+		"name": "color-global-red-opacity-500",
+		"value": "#ef222fb0"
+	},
+	{
+		"name": "color-global-red-opacity-300",
+		"value": "#ed28313d"
+	},
+	{
+		"name": "color-global-red-opacity-200",
+		"value": "#ed283121"
+	},
+	{
+		"name": "color-global-red-opacity-100",
+		"value": "#ed283114"
+	},
+	{
+		"name": "color-global-red-opacity-50",
+		"value": "#ef222f0d"
+	},
+	{
+		"name": "color-global-red-400",
+		"value": "#f66570"
+	},
+	{
+		"name": "color-global-red-300",
+		"value": "#fb8890"
+	},
+	{
+		"name": "color-global-red-200",
+		"value": "#feafb4"
+	},
+	{
+		"name": "color-global-red-50",
+		"value": "#ffeeee"
+	},
+	{
+		"name": "color-global-red-500",
+		"value": "#f04452"
+	},
+	{
+		"name": "color-global-red-100",
+		"value": "#ffd4d6"
+	},
+	{
+		"name": "color-global-green-800",
+		"value": "#028450"
+	},
+	{
+		"name": "color-global-green-300",
+		"value": "#3fd599"
+	},
+	{
+		"name": "color-global-green-400",
+		"value": "#15c47e"
+	},
+	{
+		"name": "color-global-green-500",
+		"value": "#03b26c"
+	},
+	{
+		"name": "color-global-green-opacity-500",
+		"value": "#009f6ae0"
+	},
+	{
+		"name": "color-global-green-opacity-400",
+		"value": "#12b26c96"
+	},
+	{
+		"name": "color-global-green-opacity-50",
+		"value": "#00b75c0d"
+	},
+	{
+		"name": "color-global-green-opacity-200",
+		"value": "#00b75c2e"
+	},
+	{
+		"name": "color-global-green-opacity-100",
+		"value": "#00b75c1a"
+	},
+	{
+		"name": "color-global-green-opacity-300",
+		"value": "#00b75c59"
+	},
+	{
+		"name": "color-global-green-200",
+		"value": "#76e4b8"
+	},
+	{
+		"name": "color-global-green-700",
+		"value": "#029359"
+	},
+	{
+		"name": "color-global-green-50",
+		"value": "#f0faf6"
+	},
+	{
+		"name": "color-global-green-900",
+		"value": "#027648"
+	},
+	{
+		"name": "color-global-green-600",
+		"value": "#02a262"
+	},
+	{
+		"name": "color-global-green-100",
+		"value": "#aeefd5"
+	},
+	{
+		"name": "spacing-2",
+		"value": "2px"
+	},
+	{
+		"name": "spacing-4",
 		"value": "4px"
 	},
 	{
-		"name": "radius-sm",
+		"name": "spacing-8",
 		"value": "8px"
 	},
 	{
-		"name": "radius-md",
+		"name": "spacing-12",
 		"value": "12px"
 	},
 	{
-		"name": "radius-lg",
+		"name": "spacing-16",
 		"value": "16px"
 	},
 	{
-		"name": "radius-xl",
-		"value": "20px"
-	},
-	{
-		"name": "radius-2xl",
+		"name": "spacing-24",
 		"value": "24px"
 	},
 	{
-		"name": "radius-full",
-		"value": "999px"
-	},
-	{
-		"name": "radius-3xl",
+		"name": "spacing-32",
 		"value": "32px"
 	},
 	{
-		"name": "radius-4xl",
-		"value": "36px"
+		"name": "spacing-48",
+		"value": "48px"
 	},
 	{
-		"name": "radius-5xl",
-		"value": "44px"
+		"name": "spacing-64",
+		"value": "64px"
+	},
+	{
+		"name": "spacing-80",
+		"value": "80px"
+	},
+	{
+		"name": "spacing-96",
+		"value": "96px"
 	},
 	{
 		"name": "spacing-1",
 		"value": "4px"
 	},
 	{
-		"name": "spacing-2",
-		"value": "8px"
-	},
-	{
 		"name": "spacing-3",
 		"value": "12px"
-	},
-	{
-		"name": "spacing-4",
-		"value": "16px"
 	},
 	{
 		"name": "spacing-5",
@@ -166,52 +378,40 @@ export const tokensBase: CssToken[] = [
 		"value": "32px"
 	},
 	{
-		"name": "spacing-7",
+		"name": "radius-24",
+		"value": "24px"
+	},
+	{
+		"name": "radius-12",
+		"value": "12px"
+	},
+	{
+		"name": "radius-40",
 		"value": "40px"
 	},
 	{
-		"name": "spacing-8",
-		"value": "48px"
+		"name": "radius-4",
+		"value": "4px"
 	},
 	{
-		"name": "spacing-9",
-		"value": "56px"
+		"name": "radius-8",
+		"value": "8px"
 	},
 	{
-		"name": "spacing-10",
-		"value": "64px"
+		"name": "radius-32",
+		"value": "32px"
 	},
 	{
-		"name": "spacing-11",
-		"value": "72px"
+		"name": "radius-16",
+		"value": "16px"
 	},
 	{
-		"name": "spacing-12",
-		"value": "80px"
+		"name": "radius-2",
+		"value": "2px"
 	},
 	{
-		"name": "spacing-13",
-		"value": "88px"
-	},
-	{
-		"name": "spacing-14",
-		"value": "96px"
-	},
-	{
-		"name": "spacing-15",
-		"value": "104px"
-	},
-	{
-		"name": "device-mode-desktop",
-		"value": "1920px"
-	},
-	{
-		"name": "device-mode-laptop",
-		"value": "1440px"
-	},
-	{
-		"name": "device-mode-minimum",
-		"value": "1280px"
+		"name": "radius-full",
+		"value": "9999px"
 	},
 	{
 		"name": "font-families-pretendard",
@@ -219,19 +419,35 @@ export const tokensBase: CssToken[] = [
 	},
 	{
 		"name": "font-weights-pretendard-0",
-		"value": "700"
+		"value": "400"
 	},
 	{
 		"name": "font-weights-pretendard-1",
-		"value": "600"
-	},
-	{
-		"name": "font-weights-pretendard-2",
 		"value": "500"
 	},
 	{
+		"name": "font-weights-pretendard-2",
+		"value": "600"
+	},
+	{
 		"name": "font-weights-pretendard-3",
+		"value": "700"
+	},
+	{
+		"name": "font-weight-regular",
 		"value": "400"
+	},
+	{
+		"name": "font-weight-medium",
+		"value": "500"
+	},
+	{
+		"name": "font-weight-semibold",
+		"value": "600"
+	},
+	{
+		"name": "font-weight-bold",
+		"value": "700"
 	},
 	{
 		"name": "font-size-0",
@@ -259,14 +475,78 @@ export const tokensBase: CssToken[] = [
 	},
 	{
 		"name": "font-size-6",
-		"value": "22px"
+		"value": "24px"
 	},
 	{
 		"name": "font-size-7",
-		"value": "24px"
+		"value": "28px"
 	},
 	{
 		"name": "font-size-8",
 		"value": "32px"
+	},
+	{
+		"name": "font-size-9",
+		"value": "40px"
+	},
+	{
+		"name": "font-size-10",
+		"value": "48px"
+	},
+	{
+		"name": "font-size-11",
+		"value": "56px"
+	},
+	{
+		"name": "letterspacing-0",
+		"value": "-1px"
+	},
+	{
+		"name": "letterspacing-1",
+		"value": "-0.5px"
+	},
+	{
+		"name": "letterspacing-2",
+		"value": "0px"
+	},
+	{
+		"name": "lineheight-0",
+		"value": "14px"
+	},
+	{
+		"name": "lineheight-1",
+		"value": "16px"
+	},
+	{
+		"name": "lineheight-2",
+		"value": "20px"
+	},
+	{
+		"name": "lineheight-3",
+		"value": "24px"
+	},
+	{
+		"name": "lineheight-4",
+		"value": "28px"
+	},
+	{
+		"name": "lineheight-5",
+		"value": "32px"
+	},
+	{
+		"name": "lineheight-6",
+		"value": "40px"
+	},
+	{
+		"name": "lineheight-7",
+		"value": "48px"
+	},
+	{
+		"name": "lineheight-8",
+		"value": "56px"
+	},
+	{
+		"name": "lineheight-9",
+		"value": "64px"
 	}
 ] as const

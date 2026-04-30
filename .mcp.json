@@ -1,0 +1,9 @@
+{
+	"mcpServers": {
+		"plugin_figma_figma": {
+			"type": "sse",
+			"url": "http://127.0.0.1:3845/mcp",
+			"disabled": false
+		}
+	}
+}

@@ -2,8 +2,6 @@
 	"files": [],
 	"references": [
 		{ "path": "./apps/docs" },
-		{ "path": "./packages/css" },
-		{ "path": "./packages/ui" },
 		{ "path": "./packages/icons" },
 		{ "path": "./packages/react" },
 		{ "path": "./packages/tokens" }

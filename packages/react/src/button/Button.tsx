@@ -1,14 +1,18 @@
+import * as React from "react"
 import {
 	type ButtonPressEvent as HeadlessButtonPressEvent,
 	useButton,
-} from "@gbgr/react-headless"
-import clsx from "clsx"
-import * as React from "react"
+} from "../hooks/button/useButton"
 
-export type ButtonStyle = "primary" | "secondary" | "neutral" | "outline" | "ghost"
+import { cn } from "../utils/cn"
+
+export type ButtonStyle =
+	| "primary"
+	| "secondary"
+	| "neutral"
+	| "outline"
+	| "ghost"
 export type ButtonSize = "sm" | "md" | "lg"
-
-export type ButtonPressEvent = HeadlessButtonPressEvent
 
 export type ButtonProps = Omit<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -18,7 +22,7 @@ export type ButtonProps = Omit<
 	size?: ButtonSize
 	loading?: boolean
 	type?: "button" | "submit" | "reset"
-	onPress?: (event: ButtonPressEvent) => void
+	onPress?: (event: HeadlessButtonPressEvent) => void
 	startIcon?: React.ReactNode
 	endIcon?: React.ReactNode
 }
@@ -51,7 +55,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 			<button
 				{...buttonProps}
 				ref={ref}
-				className={clsx(
+				className={cn(
 					"gbgr-button",
 					`gbgr-button--size-${size}`,
 					`gbgr-button--style-${style}`,
@@ -62,9 +66,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 					<span className="gbgr-button__icon">{startIcon}</span>
 				) : null}
 				<span className="gbgr-button__label">{children}</span>
-				{endIcon ? (
-					<span className="gbgr-button__icon">{endIcon}</span>
-				) : null}
+				{endIcon ? <span className="gbgr-button__icon">{endIcon}</span> : null}
 				{loading && (
 					<span className="gbgr-button__loader" aria-hidden="true">
 						<span className="gbgr-button__loader-dot" />

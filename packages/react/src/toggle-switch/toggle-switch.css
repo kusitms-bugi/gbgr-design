@@ -1,0 +1,177 @@
+/* ==============================================
+   ToggleSwitch — GBGR Design System
+   2 sizes (long, short) × 4 states
+
+   Uses @radix-ui/react-switch primitives.
+   ============================================== */
+
+/* --- CSS custom properties --- */
+.gbgr-toggle-switch {
+	--gbgr-toggle-track-h: 18px;
+	--gbgr-toggle-track-padding: 2px;
+	--gbgr-toggle-radius: 9999px;
+}
+
+/* --- Size: Long (46px) --- */
+.gbgr-toggle-switch--long {
+	--gbgr-toggle-track-w: 46px;
+	--gbgr-toggle-thumb-w: 24px;
+	--gbgr-toggle-thumb-h: 14px;
+}
+
+/* --- Size: Short (34px) --- */
+.gbgr-toggle-switch--short {
+	--gbgr-toggle-track-w: 34px;
+	--gbgr-toggle-thumb-w: 15px;
+	--gbgr-toggle-thumb-h: 15px;
+}
+
+/* --- Unselected short: smaller thumb --- */
+.gbgr-toggle-switch--short:not([data-state="checked"]) {
+	--gbgr-toggle-thumb-w: 9px;
+	--gbgr-toggle-thumb-h: 9px;
+}
+
+/* ==============================================
+   Base Track
+   ============================================== */
+.gbgr-toggle-switch {
+	all: unset;
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	box-sizing: border-box;
+	width: var(--gbgr-toggle-track-w);
+	height: var(--gbgr-toggle-track-h);
+	padding: var(--gbgr-toggle-track-padding);
+	border-radius: var(--gbgr-toggle-radius);
+	background: var(
+		--color-semantic-surface-overlay-raised-strong,
+		rgba(36, 34, 31, 0.07)
+	);
+	cursor: pointer;
+	user-select: none;
+	outline: none;
+	-webkit-tap-highlight-color: transparent;
+	transition: background-color 120ms ease;
+}
+
+/* --- Selected track (brand color) --- */
+.gbgr-toggle-switch[data-state="checked"] {
+	background: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+/* ==============================================
+   Thumb
+   ============================================== */
+.gbgr-toggle-switch__thumb {
+	display: block;
+	width: var(--gbgr-toggle-thumb-w);
+	height: var(--gbgr-toggle-thumb-h);
+	border-radius: var(--gbgr-toggle-radius);
+	background: var(--color-semantic-static-white, white);
+	box-shadow: 0px 1px 3px 0px
+		var(--color-semantic-shadow-weak, rgba(36, 34, 31, 0.1));
+	transition:
+		transform 160ms ease,
+		width 160ms ease,
+		height 160ms ease;
+}
+
+/* --- Thumb slide on selected --- */
+.gbgr-toggle-switch--long[data-state="checked"] .gbgr-toggle-switch__thumb {
+	--gbgr-toggle-thumb-w: 24px;
+	--gbgr-toggle-thumb-h: 14px;
+	transform: translateX(
+		calc(
+			var(--gbgr-toggle-track-w) -
+			(var(--gbgr-toggle-track-padding) * 2) -
+			var(--gbgr-toggle-thumb-w)
+		)
+	);
+}
+
+.gbgr-toggle-switch--short[data-state="checked"] .gbgr-toggle-switch__thumb {
+	--gbgr-toggle-thumb-w: 15px;
+	--gbgr-toggle-thumb-h: 15px;
+	transform: translateX(
+		calc(
+			var(--gbgr-toggle-track-w) -
+			(var(--gbgr-toggle-track-padding) * 2) -
+			var(--gbgr-toggle-thumb-w)
+		)
+	);
+}
+
+/* --- Thumb slide back to start (unselected) --- */
+.gbgr-toggle-switch--long:not([data-state="checked"])
+.gbgr-toggle-switch__thumb {
+	--gbgr-toggle-thumb-w: 24px;
+	--gbgr-toggle-thumb-h: 14px;
+	transform: translateX(0);
+}
+
+/* ==============================================
+   State: Hover
+   ============================================== */
+
+/* --- Hover overlay via ::before --- */
+.gbgr-toggle-switch::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: transparent;
+	pointer-events: none;
+	transition: background-color 120ms ease;
+}
+
+/* Unselected hover */
+.gbgr-toggle-switch:not([data-state="checked"]):hover:not(:disabled)::before {
+	background: var(
+		--color-semantic-interaction-state-layer-neutral-hover,
+		rgba(21, 22, 23, 0.02)
+	);
+}
+
+/* Selected hover */
+.gbgr-toggle-switch[data-state="checked"]:hover:not(:disabled)::before {
+	background: var(
+		--color-semantic-interaction-state-layer-primary-hover,
+		rgba(112, 60, 0, 0.1)
+	);
+}
+
+/* ==============================================
+   State: Focus ring (via ::after)
+   ============================================== */
+.gbgr-toggle-switch::after {
+	content: "";
+	position: absolute;
+	inset: -4px;
+	border: 2px solid transparent;
+	border-radius: var(--gbgr-toggle-radius);
+	pointer-events: none;
+	transition: border-color 120ms ease;
+}
+
+.gbgr-toggle-switch:focus-visible::after {
+	border-color: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+/* ==============================================
+   State: Disabled
+   ============================================== */
+.gbgr-toggle-switch:disabled {
+	cursor: not-allowed;
+}
+
+/* Disabled unselected */
+.gbgr-toggle-switch:disabled:not([data-state="checked"]) {
+	opacity: var(--color-semantic-interaction-disabled-neutral, 0.46);
+}
+
+/* Disabled selected */
+.gbgr-toggle-switch:disabled[data-state="checked"] {
+	opacity: var(--color-semantic-interaction-disabled-brand, 0.36);
+}

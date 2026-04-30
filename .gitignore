@@ -101,3 +101,4 @@ apps/*/.cache/
 
 # Workspace symlinks (pnpm workspace links)
 **/node_modules/@gbgr/
+.gstack/

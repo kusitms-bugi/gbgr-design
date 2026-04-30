@@ -1,0 +1,124 @@
+/* ==============================================
+   FilterChip — GBGR Design System
+   1 style (basic) × 6 states
+
+   Pill-shaped toggle chip for filtering.
+   ============================================== */
+
+/* --- Base --- */
+.gbgr-filter-chip {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 6px 12px;
+	border: 1px solid transparent;
+	border-radius: var(--radius-full, 9999px);
+	background: var(
+		--color-semantic-surface-overlay-raised,
+		rgba(39, 42, 43, 0.05)
+	);
+	cursor: pointer;
+	user-select: none;
+	outline: none;
+	-webkit-tap-highlight-color: transparent;
+	white-space: nowrap;
+	transition:
+		background-color 120ms ease,
+		border-color 120ms ease,
+		transform 60ms ease;
+}
+
+/* --- State layer (::before) --- */
+.gbgr-filter-chip::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: inherit;
+	background: transparent;
+	pointer-events: none;
+	transition: background-color 120ms ease;
+}
+
+/* --- Focus ring (::after) --- */
+.gbgr-filter-chip::after {
+	content: "";
+	position: absolute;
+	inset: -4px;
+	border: 2px solid transparent;
+	border-radius: var(--radius-full, 9999px);
+	pointer-events: none;
+	transition: border-color 120ms ease;
+}
+
+/* --- Label --- */
+.gbgr-filter-chip__label {
+	position: relative;
+	z-index: 1;
+	font: var(--label-md-medium);
+	letter-spacing: 0px;
+	color: var(--color-semantic-text-neutral-tertiary);
+	transition: color 120ms ease;
+}
+
+/* ==============================================
+   Selected state
+   ============================================== */
+.gbgr-filter-chip[data-selected="selected"] {
+	background: var(--color-semantic-accent-brand-weak, rgba(255, 191, 0, 0.14));
+	border-color: var(
+		--color-semantic-accent-brand-subtle,
+		rgba(250, 187, 0, 0.37)
+	);
+}
+
+.gbgr-filter-chip[data-selected="selected"] .gbgr-filter-chip__label {
+	color: var(--color-semantic-accent-brand-strong, #e6ae00);
+}
+
+/* ==============================================
+   Hover
+   ============================================== */
+
+/* Unselected hover */
+.gbgr-filter-chip:not([data-selected="selected"]):hover:not(:disabled)::before {
+	background: var(
+		--color-semantic-interaction-state-layer-neutral-hover,
+		rgba(21, 22, 23, 0.02)
+	);
+}
+
+/* Selected hover */
+.gbgr-filter-chip[data-selected="selected"]:hover:not(:disabled)::before {
+	inset: -1px;
+	background: var(
+		--color-semantic-interaction-state-layer-secondary-hover,
+		rgba(255, 196, 0, 0.12)
+	);
+}
+
+/* ==============================================
+   Pressed
+   ============================================== */
+.gbgr-filter-chip:active:not(:disabled) {
+	transform: scale(0.95);
+}
+
+.gbgr-filter-chip:not([data-selected="selected"]):active:not(:disabled) {
+	background: var(--color-semantic-accent-brand-weak, rgba(255, 191, 0, 0.14));
+}
+
+/* ==============================================
+   Focus
+   ============================================== */
+.gbgr-filter-chip:focus-visible::after {
+	border-color: var(--color-semantic-accent-brand-default, #ffc61a);
+}
+
+/* ==============================================
+   Disabled
+   ============================================== */
+.gbgr-filter-chip:disabled {
+	cursor: not-allowed;
+	opacity: 0.46;
+}

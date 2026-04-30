@@ -6,5 +6,6 @@
 		"outDir": "dist",
 		"module": "ESNext",
 		"composite": true
-	}
+	},
+	"exclude": ["src/**/*.stories.tsx", "src/**/*.test.tsx"]
 }

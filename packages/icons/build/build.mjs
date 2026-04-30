@@ -24,6 +24,9 @@ function normalizeSvg(svgCode) {
 	const normalized = svgCode
 		.replace(/stroke="var\(--stroke-0,\s*[^)]+\)"/g, 'stroke="currentColor"')
 		.replace(/fill="var\(--fill-0,\s*[^)]+\)"/g, 'fill="currentColor"')
+		.replace(/fill="#17140D"\s*fill-opacity="0\.59"/g, 'fill="currentColor"')
+		.replace(/fill="black"/g, 'fill="currentColor"')
+		.replace(/stroke="black"/g, 'stroke="currentColor"')
 		.trim()
 	return `${normalized}\n`
 }
@@ -112,7 +115,7 @@ async function buildIcons() {
 		)
 
 		exportsContent.push(
-			`export { default as ${componentName} } from "./components/${componentName}"`,
+			`export { default as ${componentName} } from "./components/${componentName}.js"`,
 		)
 		typesContent.push(
 			`export declare const ${componentName}: (props: IconProps) => React.JSX.Element;\n`,

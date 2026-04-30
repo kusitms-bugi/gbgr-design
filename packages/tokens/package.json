@@ -7,7 +7,10 @@
 		"dist"
 	],
 	"exports": {
+		".": "./dist/index.css",
 		"./index.css": "./dist/index.css",
+		"./tailwind.css": "./dist/tokens.tailwind.css",
+		"./typography.css": "./dist/typography.css",
 		"./tokens.json": "./dist/tokens.json",
 		"./tokens.d.ts": "./dist/tokens.d.ts"
 	},
@@ -16,12 +19,14 @@
 	},
 	"scripts": {
 		"build": "npm run clean && node build/build.mjs",
-		"convert": "node ../../scripts/convert-figma-export.mjs",
 		"dev": "node build/build.mjs && node build/watch.mjs",
 		"watch": "node build/watch.mjs",
 		"clean": "rm -rf dist",
 		"prepublishOnly": "npm run clean && npm run build",
 		"typecheck": "tsc --noEmit"
+	},
+	"peerDependencies": {
+		"tailwindcss": "^4.0.0"
 	},
 	"devDependencies": {
 		"style-dictionary": "^3.9.0"

@@ -1,7 +1,7 @@
 import { HideIcon, InfoCircleIcon, ShowIcon } from "@gbgr/icons"
-import { useTextField } from "@gbgr/react-headless"
 import clsx from "clsx"
 import * as React from "react"
+import { useTextField } from "../hooks/text-field/useTextField"
 
 export type TextFieldState = "default" | "success" | "error"
 

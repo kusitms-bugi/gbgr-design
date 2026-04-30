@@ -1,3 +1,6 @@
 /* auto-generated */
+@import "tailwindcss";
 @import "./tokens.base.css";
 @import "./theme.css";
+@import "./tokens.tailwind.css";
+@import "./typography.css";

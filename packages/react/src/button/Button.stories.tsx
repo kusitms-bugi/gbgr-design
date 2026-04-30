@@ -44,7 +44,13 @@ export const Disabled: Story = {
 export const WithStartIcon: Story = {
 	args: {
 		startIcon: (
-			<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+			<svg
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				strokeWidth="2"
+				aria-hidden="true"
+			>
 				<path d="M12 5v14M5 12h14" />
 			</svg>
 		),
@@ -55,8 +61,13 @@ export const AllVariants: Story = {
 	render: () => (
 		<div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
 			{(["lg", "md", "sm"] as const).map((size) => (
-				<div key={size} style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-					<span style={{ width: "40px", fontSize: "12px", color: "#999" }}>{size}</span>
+				<div
+					key={size}
+					style={{ display: "flex", gap: "12px", alignItems: "center" }}
+				>
+					<span style={{ width: "40px", fontSize: "12px", color: "#999" }}>
+						{size}
+					</span>
 					{(
 						["primary", "secondary", "neutral", "outline", "ghost"] as const
 					).map((style) => (

@@ -1,11 +1,11 @@
 import { MinusIcon, PlusIcon } from "@gbgr/icons"
+import clsx from "clsx"
+import * as React from "react"
 import {
 	type AccordionType,
 	type UseAccordionProps,
 	useAccordion,
-} from "@gbgr/react-headless"
-import clsx from "clsx"
-import * as React from "react"
+} from "../hooks/accordion/useAccordion"
 
 export type AccordionProps = Omit<
 	React.HTMLAttributes<HTMLDivElement>,

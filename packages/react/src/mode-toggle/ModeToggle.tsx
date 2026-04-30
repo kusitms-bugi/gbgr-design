@@ -1,9 +1,10 @@
 import { MoonIcon, SunIcon } from "@gbgr/icons"
-import { useModeToggle } from "@gbgr/react-headless"
 import clsx from "clsx"
 import * as React from "react"
-
-export type ModeToggleValue = "light" | "dark"
+import {
+	type ModeToggleValue,
+	useModeToggle,
+} from "../hooks/mode-toggle/useModeToggle"
 
 export type ModeToggleProps = Omit<
 	React.ButtonHTMLAttributes<HTMLButtonElement>,
