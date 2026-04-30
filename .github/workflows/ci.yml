@@ -25,6 +25,9 @@ jobs:
           version: 10
           run_install: false
 
+      - name: Install turbo globally
+        run: pnpm add -g turbo
+
       - name: Check changeset required
         run: node scripts/check-changeset-required.mjs
 
